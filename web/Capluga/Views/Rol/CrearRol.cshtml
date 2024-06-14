@@ -1,0 +1,34 @@
+﻿@model Capluga.Entities.RoleEnt
+
+@{
+    ViewBag.Title = "CrearRol";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="content-wrapper d-flex align-items-center auth px-0">
+    <div class="row w-100 mx-0">
+        <div class="col-lg-4 mx-auto">
+            <div class="auth-form-light text-left py-5 px-4 px-sm-5">
+                <h2>Crear Rol</h2>
+                @if (ViewBag.Message != null)
+                {
+                    <div class="alert alert-danger" role="alert" style="text-align:center">
+                        @ViewBag.Message
+                    </div>
+                }
+
+             
+
+                @using (Html.BeginForm("CrearRol", "Rol", FormMethod.Post, new { @class = "pt-3" }))
+                {
+                    <div class="form-group">
+                        <label>Nombre del Rol</label>
+                        @Html.TextBoxFor(m => m.RolName, new { @class = "form-control form-control-lg", @placeholder = "Nombre del Rol", @type = "text" })
+                    </div>
+
+                    <button type="submit" class="btn btn-success mr-2">Procesar</button>
+                }
+            </div>
+        </div>
+    </div>
+</div>

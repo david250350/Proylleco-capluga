@@ -1,0 +1,73 @@
+﻿@model IEnumerable<Capluga.Entities.ProductoEnt>
+@{
+    ViewBag.Title = "Productos";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<!-- Inicio -->
+
+<div class="col-12 grid-margin stretch-card">
+    <div class="card">
+        <div class="card-body">
+            <h2 class="card-title">Información de Usuarios</h2>
+
+            @if (Model.Count() > 0)
+            {
+                <table id="tableShow" class="table table-bordered table-hover">
+                    <thead>
+                        <tr>
+                            <th>Nombre</th>
+                            <th>Descripcion</th>
+                            <th>Cantidad</th>
+                            <th>Precio</th>
+                            <th>Imagen</th>
+                            <th>Estado</th>
+                            <th>Cambiar Estado</th>
+                            <th>Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model)
+                        {
+                            <tr>
+                                <td>@item.Name</td>
+                                <td>@item.Description</td>
+                                <td>@item.Quantity</td>
+                                <td>@item.Price.ToString("C", new System.Globalization.CultureInfo("es-CR"))</td>
+                                <td style="text-align:center"><img src="@item.Image" style="width:125px; height:125px; border-radius:0px;"></td>
+                                @if (item.State)
+                                {
+                                    <td>Activo</td>
+                                }
+                                else
+                                {
+                                    <td>Inactivo</td>
+                                }
+
+                                <td style="text-align:center">
+                                    <a href="@Url.Action("ActualizarEstadoProducto", "Producto", new { q = item.MedicalImplementsID })"><i class="fa fa-refresh fa-lg"></i></a>
+                                </td>
+                                <td style="text-align:center">
+                                    <!-- Acciones como editar o eliminar -->
+                                    <a href="@Url.Action("ActualizarProducto", "Producto", new { q = item.MedicalImplementsID })" class="btn btn-success"><i class="fa fa-user fa-lg"></i>&nbsp;&nbsp;Editar</a>
+                                    &nbsp;&nbsp;&nbsp;
+                                    @*<a href="@Url.Action("EliminarProducto", "Producto", new { id = item.MedicalImplementsID })" class="btn btn-danger"><i class="fa fa-trash"></i>Eliminar</a>*@
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+                <form action="@Url.Action("ProductoPDF", "Document")" method="post">
+                    <button type="submit" class="btn btn-primary">Descargar PDF</button>
+                </form>
+            }
+            else
+            {
+         
+            <div class="col-12 alert alert-info" role="alert" style="text-align: center; margin-top: 5%;">
+                No hay productos en este momento
+            </div>
+            }
+        </div>
+    </div>
+</div>

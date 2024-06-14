@@ -1,0 +1,95 @@
+﻿@model IEnumerable<Capluga.Entities.ProductoEnt>
+@{
+    ViewBag.Title = "Productos";
+    if (Session["Rol"] == null)
+    {
+        Layout = "~/Views/Shared/_Layout_Login.cshtml";
+    }
+    else
+    {
+        Layout = "~/Views/Shared/_Layout.cshtml";
+    }
+
+}
+
+<!-- Inicio -->
+<div class="top_bar_content   align-items-center col-4">
+    <input type="text" id="buscarProducto" class="form-control" placeholder="Buscar..." aria-label="Buscar" aria-describedby="button-addon2">
+</div>
+<div class="row">
+
+    @if (Model != null)
+    {
+        foreach (var item in Model)
+        {
+            <div class="col-3">
+                <div class="card text-center">
+                    <div class="card-body">
+                        <img src="@item.Image" width="150" height="150">
+                        <br /><br />
+                        <h5 class="card-title">@item.Name</h5>
+                        <p class="card-text">@item.Description</p>
+                        <p class="card-text">Unidades: @item.Quantity - @item.Price.ToString("C", new System.Globalization.CultureInfo("es-CR"))</p>
+                        @if (Session["UserID"] != null)
+                        {
+                            <div class="row">
+                                <div class="col-3">
+
+                                </div>
+                                <div class="col-4" style="text-align:right!important">
+                                    <input id=prd-@item.MedicalImplementsID type="number" class="form-control">
+                                </div>
+                                <div class="col-4" style="text-align:left">
+
+
+
+                                    <a onclick="RegistrarInscripcion(@item.MedicalImplementsID, @item.Quantity)" class="btn btn-outline-primary"><i class="fa fa-cart-plus"></i></a>
+
+
+                                </div>
+                            </div>
+                        }
+                    </div>
+                </div>
+            </div>
+        }
+
+    }
+    else
+    {
+        <div class="col-12 alert alert-info" role="alert" style="text-align: center; margin-top: 5%;">
+            No hay productos registrados en este momento
+        </div>
+    }
+
+</div>
+
+<script>
+
+    function RegistrarInscripcion(medicalImplementsID, disponible) {
+        let quantity = $("#prd-" + medicalImplementsID).val();
+
+        if (quantity > disponible) {
+
+          alert("Su solicitud supera la cantidad de unidades disponibles");
+
+      }
+      else {
+
+            $.ajax({
+                url: '/Carrito/RegistrarCarrito',
+            type: "GET",
+            data:
+            {
+                "quantity": quantity,
+                "medicalImplementsID": medicalImplementsID
+            },
+            success: function (data) {
+               window.location.href = '@Url.Action("Productos", "Home")';
+            }
+        });
+
+      }
+  }
+
+</script>

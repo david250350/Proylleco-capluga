@@ -1,0 +1,43 @@
+﻿@model Capluga.Entities.UsuarioEnt
+
+@{
+    ViewBag.Title = "RecuperarCuenta";
+    Layout = "~/Views/Shared/_Layout_Login.cshtml";
+}
+
+<br />
+<br />
+
+<div class="content-wrapper d-flex align-items-center auth px-0">
+    <div class="row w-100 mx-0">
+        <div class="col-lg-4 mx-auto">
+            <div class="auth-form-light text-left py-5 px-4 px-sm-5">
+
+                @if (ViewBag.MensajeUsuario != null)
+                {
+                    <div class="alert alert-danger" role="alert" style="text-align:center">
+                        @ViewBag.MensajeUsuario
+                    </div>
+                }
+
+                <h2>Recupera tu cuenta</h2>
+
+                @using (Html.BeginForm("RecuperarCuenta", "Login", FormMethod.Post, new { @class = "pt-3" }))
+                {
+                    <div class="form-group">
+                        <label>Por favor ingrese su correo electrónico</label>
+                        @Html.TextBoxFor(m => m.Email, new { @class = "form-control form-control-lg", @placeholder = "Correo electrónico", @type = "text" })
+                    </div>
+                    <div class="mt-3">
+                        <input type="submit" class="btn btn-block btn-success btn-lg font-weight-medium auth-form-btn" value="RECUPERAR CUENTA">
+                    </div>
+
+                    <div class="text-center mt-4 font-weight-light">
+                        ¿Ya tienes una cuenta? <a href="@Url.Action("IniciarSesion","Login")" class="text-primary">Iniciar Sesión</a>
+                    </div>
+                }
+
+            </div>
+        </div>
+    </div>
+</div>

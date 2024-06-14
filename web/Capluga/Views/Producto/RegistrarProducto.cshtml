@@ -1,0 +1,51 @@
+﻿@model Capluga.Entities.ProductoEnt
+
+
+@{
+    ViewBag.Title = "RegistraProducto";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+
+}
+
+    <div class="content-wrapper d-flex align-items-center auth px-0">
+        <div class="row w-100 mx-0">
+            <div class="col-lg-4 mx-auto">
+                <div class="auth-form-light text-left py-5 px-4 px-sm-5">
+                    <h2>Registrar Producto</h2>
+
+                    @if (ViewBag.MensajeUsuario != null)
+                    {
+                        <div class="alert alert-danger" role="alert" style="text-align:center">
+                            @ViewBag.MensajeUsuario
+                        </div>
+                    }
+
+                    @using (Html.BeginForm("RegistrarProducto", "Producto", FormMethod.Post, new { @class = "pt-3", @enctype = "multipart/form-data" }))
+                    {
+                        <div class="form-group">
+                            <label>Nombre</label>
+                            @Html.TextBoxFor(m => m.Name, new { @class = "form-control form-control-lg", @placeholder = "Nombre", @type = "text" })
+                        </div>
+                        <div class="form-group">
+                            <label>Descripción</label>
+                            @Html.TextBoxFor(m => m.Description, new { @class = "form-control form-control-lg", @placeholder = "Descripción", @type = "text" })
+                        </div>
+                        <div class="form-group">
+                            <label>Cantidad</label>
+                            @Html.TextBoxFor(m => m.Quantity, new { @class = "form-control form-control-lg", @placeholder = "Cantidad", @type = "number" })
+                        </div>
+                        <div class="form-group">
+                            <label>Precio</label>
+                            @Html.TextBoxFor(m => m.Price, new { @class = "form-control form-control-lg", @placeholder = "Precio", @type = "number" })
+                        </div>
+                        <div class="form-group">
+                            <label>Imagen</label>
+                            <input type="file" class="form-control" id="ImgProducto" name="ImgProducto">
+                        </div>
+
+                        <button type="submit" class="btn btn-success mr-2">Procesar</button>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>

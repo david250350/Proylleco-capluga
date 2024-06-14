@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="cf9565adf98b4389bc726e4ec5cba027" Name="Diagram1" ZoomLevel="34">
+        <EntityTypeShape EntityType="CAPLUGAModel.Addresses" Width="1.5" PointX="0.75" PointY="9.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="CAPLUGAModel.AppointmentScheduling" Width="1.5" PointX="3" PointY="9.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="CAPLUGAModel.Cart" Width="1.5" PointX="8.25" PointY="7.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="CAPLUGAModel.Detail" Width="1.5" PointX="10.5" PointY="12.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="CAPLUGAModel.DetailCurse" Width="1.5" PointX="10.5" PointY="16.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="CAPLUGAModel.ErrorLogs" Width="1.5" PointX="8.25" PointY="10" IsExpanded="true" />
+        <EntityTypeShape EntityType="CAPLUGAModel.MasterPurchase" Width="1.5" PointX="8.25" PointY="13.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="CAPLUGAModel.MasterPurchaseCurse" Width="1.5" PointX="8.25" PointY="16.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="CAPLUGAModel.MedicalCourses" Width="1.5" PointX="9" PointY="2.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="CAPLUGAModel.MedicalImplements" Width="1.5" PointX="6" PointY="4.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="CAPLUGAModel.Registeredcourses" Width="1.5" PointX="11.25" PointY="9" IsExpanded="true" />
+        <EntityTypeShape EntityType="CAPLUGAModel.Roles" Width="1.5" PointX="3.75" PointY="7.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="CAPLUGAModel.ScheduleAppointment" Width="1.5" PointX="0.75" PointY="7" IsExpanded="true" />
+        <EntityTypeShape EntityType="CAPLUGAModel.Users" Width="1.5" PointX="6" PointY="8.875" IsExpanded="true" />
+        <AssociationConnector Association="CAPLUGAModel.FK__Appointme__Addre__5441852A" ManuallyRouted="false" />
+        <AssociationConnector Association="CAPLUGAModel.FK_Users_Addresses" ManuallyRouted="false" />
+        <AssociationConnector Association="CAPLUGAModel.FK__Appointme__Sched__534D60F1" ManuallyRouted="false" />
+        <AssociationConnector Association="CAPLUGAModel.FK__Appointme__Sched__5535A963" ManuallyRouted="false" />
+        <AssociationConnector Association="CAPLUGAModel.FK__Cart__MedicalImp__160F4887" ManuallyRouted="false" />
+        <AssociationConnector Association="CAPLUGAModel.FK_Cart_Users" ManuallyRouted="false" />
+        <AssociationConnector Association="CAPLUGAModel.FK__Detail__MasterPu__4BAC3F29" ManuallyRouted="false" />
+        <AssociationConnector Association="CAPLUGAModel.FK__Detail__MedicalI__4AB81AF0" ManuallyRouted="false" />
+        <AssociationConnector Association="CAPLUGAModel.FK__DetailCur__Maste__13F1F5EB" ManuallyRouted="false" />
+        <AssociationConnector Association="CAPLUGAModel.FK__DetailCur__Medic__14E61A24" ManuallyRouted="false" />
+        <AssociationConnector Association="CAPLUGAModel.FK__ErrorLogs__UserI__4E88ABD4" ManuallyRouted="false" />
+        <AssociationConnector Association="CAPLUGAModel.FK__MasterPur__UserI__440B1D61" ManuallyRouted="false" />
+        <AssociationConnector Association="CAPLUGAModel.FK__MasterPur__UserI__0880433F" ManuallyRouted="false" />
+        <AssociationConnector Association="CAPLUGAModel.FK_Registeredcourses_MedicalCourses" ManuallyRouted="false" />
+        <AssociationConnector Association="CAPLUGAModel.FK_Registeredcourses_Users" ManuallyRouted="false" />
+        <AssociationConnector Association="CAPLUGAModel.FK__Users__RolesID__398D8EEE" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

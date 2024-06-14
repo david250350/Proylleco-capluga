@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.10.34916.146
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CaplugaAPI", "CaplugaAPI\CaplugaAPI.csproj", "{AB52F2BB-853F-48A0-B4ED-BB7FFEB6B4B2}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{AB52F2BB-853F-48A0-B4ED-BB7FFEB6B4B2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AB52F2BB-853F-48A0-B4ED-BB7FFEB6B4B2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AB52F2BB-853F-48A0-B4ED-BB7FFEB6B4B2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AB52F2BB-853F-48A0-B4ED-BB7FFEB6B4B2}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {08CF429E-FA20-47B9-9F58-D913011D7555}
+	EndGlobalSection
+EndGlobal

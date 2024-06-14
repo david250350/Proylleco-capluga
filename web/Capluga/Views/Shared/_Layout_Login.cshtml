@@ -1,0 +1,80 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <title>CAPLUGA</title>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="description" content="Proyecto de demostración CareMed">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="~/Template/styles/bootstrap4/bootstrap.min.css">
+    <link rel="stylesheet" href="~/Template/plugins/font-awesome-4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="~/Template/styles/main_styles.css">
+</head>
+<body>
+
+    <div class="super_container">
+        <section>
+            <header>
+                <!-- Contenido del encabezado -->
+                <div class="header_container">
+                    <div class="container">
+                        <div class="row">
+                            <div class="col">
+                                <div class="header_content d-flex flex-row align-items-center justify-content-start">
+                                    <nav class="main_nav ml-auto">
+                                        <ul>
+                                            <li><a href="@Url.Action("About","Home")">Acerca de nosotros</a></li>
+                                            <li><a href="@Url.Action("Productos","Home")">Productos</a></li>
+                                            <li><a href="@Url.Action("IniciarSesion","Login")">Iniciar Sesión</a></li>
+                                        </ul>
+                                    </nav>
+                                    <div class="hamburger ml-auto"><i class="fa fa-bars" aria-hidden="true"></i></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Logo -->
+                <div class="logo_container_outer">
+                    <div class="container">
+                        <div class="row">
+                            <div class="col">
+                                <div class="logo_container">
+                                    <a href="@Url.Action("Index","Home")">
+                                        <div class="logo_content d-flex flex-column align-items-start justify-content-center">
+                                            <div class="logo_line"></div>
+                                            <div class="logo d-flex flex-row align-items-center justify-content-center">
+                                                <div class="logo_text">CAPLUGA</div>
+                                            </div>
+                                            <div class="logo_sub">¡Salvá una vida con tus manos!</div>
+                                        </div>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </header>
+        </section>
+        <!-- Cuerpo de la página -->
+        <section>
+            @RenderBody()
+        </section>
+        <br />
+        <br />
+        <!-- Vista parcial del pie de la página -->
+        @Html.Partial("~/Views/Shared/_Layout_Footer.cshtml")
+    </div>
+    <script>
+        $(document).ready(function () {
+            $("#buscarProducto").on("keyup", function () {
+                var valor = $(this).val().toLowerCase();
+                $(".row .col-3").filter(function () {
+                    $(this).toggle($(this).find('.card-title').text().toLowerCase().indexOf(valor) > -1)
+                });
+            });
+        });
+    </script>
+</body>
+</html>

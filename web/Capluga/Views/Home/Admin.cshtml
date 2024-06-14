@@ -1,0 +1,41 @@
+﻿@{
+    ViewBag.Title = "About Page";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<div class="container">
+    <div class="row">
+        <div class="col col-4">
+            <div class="card">
+                <div class="card-header bg-success">
+                    <h3 class="text-white">Usuarios</h3> 
+                </div>
+                <div class="card-body">
+                    <a href="@Url.Action("Index", "Usuario")" class="btn">Lista de usuarios</a><br />
+                    <a href="@Url.Action("RegistrarCuenta", "Login")" class="btn">Crear usuario</a>
+                </div>
+            </div>
+        </div>
+        <div class="col col-4">
+            <div class="card">
+                <div class="card-header bg-success">
+                    <h3 class="text-white">Citas</h3>
+                </div>
+                <div class="card-body">
+                    <a href="@Url.Action("ConsultaHorarios", "CitaHorario")" class="btn">Lista de citas</a><br />
+                    <a href="@Url.Action("RegistrarHorarios", "CitaHorario")" class="btn">Crear cita</a>
+                </div>
+            </div>
+        </div>
+        <div class="col col-4">
+            <div class="card">
+                <div class="card-header bg-success">
+                    <h3 class="text-white">Productos</h3>
+                </div>
+                <div class="card-body">
+                    <a href="@Url.Action("Productos", "Producto")" class="btn">Lista de productos</a><br />
+                    <a href="@Url.Action("RegistrarProducto", "Producto")" class="btn">Crear producto</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
