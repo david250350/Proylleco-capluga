@@ -12,6 +12,7 @@ namespace CaplugaAPI.Entities
         public string Surnames { get; set; }
         public string Email { get; set; }
         public string Password { get; set; }
+        public string Temporary { get; set; }
         public DateTime RegistrationDate { get; set; }
         public bool State { get; set; }
         public DateTime Age { get; set; }

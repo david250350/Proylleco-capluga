@@ -86,7 +86,7 @@ namespace Capluga.Controllers
 
             if (respuesta == "OK")
             {
-                return RedirectToAction("IniciarSesion", "Login");
+                return RedirectToAction("CambiarContrasenna", "Login");
             }
             else
             {
@@ -94,6 +94,26 @@ namespace Capluga.Controllers
                 return View();
             }
         }
+        [HttpGet]
+        public ActionResult CambiarContrasenna()
+        {
+            return View();
+        }
 
+        [HttpPost]
+        public ActionResult CambiarContrasenna(UsuarioEnt entidad)
+        {
+            string respuesta = usuarioModel.CambiarContrasenna(entidad);
+
+            if (respuesta == "OK")
+            {
+                return RedirectToAction("IniciarSesion", "Login");
+            }
+            else
+            {
+                ViewBag.MensajeUsuario = "No se ha podido cambiar la contraseña";
+                return View();
+            }
+        }
     }
 }

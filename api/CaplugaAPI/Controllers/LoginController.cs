@@ -13,7 +13,7 @@ namespace CaplugaAPI.Controllers
     public class LoginController : ApiController
     {
 
-
+        Utilitarios util = new Utilitarios();
         [HttpPost]
         [Route("RegistrarCuenta")]
         public string RegistrarCuenta(UsuarioEnt entidad)
@@ -192,8 +192,88 @@ namespace CaplugaAPI.Controllers
                 }
             }
 
+        [HttpGet]
+        [Route("RecuperarCuenta")]
 
-       
+        public string RecuperarCuenta(string email)
+        {
+            try
+            {
+                using (var context = new CAPLUGAEntities())
+                {
+                    var usuario = context.Users.FirstOrDefault(
+                        u => u.Email == email);
+                    if (usuario != null)
+                    {
+                        usuario.Password = GenerarContrasenna();
+                        usuario.State = false;
+
+                        string rutaArchivo = AppDomain.CurrentDomain.BaseDirectory + "Templates\\Contrasenna.html";
+                        string html = File.ReadAllText(rutaArchivo);
+
+                        html = html.Replace("@@Nombre", usuario.UserName);
+                        html = html.Replace("@@Usuario", usuario.Email);
+                        html = html.Replace("@@Contrasenna", usuario.Password);
+
+                        util.EnviarCorreo(email, "Contraseña de Acceso", html);
+
+                        context.SaveChanges();
+
+                        return "OK";
+                    }
+                    else { return string.Empty; }
+                }
+            }
+            catch (Exception)
+            {
+                return string.Empty;
+            }
+        }
+
+        public static string GenerarContrasenna()
+        {
+            int tamanno = 8;
+            const string letras = "ABCDEFGHJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!?+-*/%$";
+            var randomBytes = new byte[tamanno];
+            using (var rng = new RNGCryptoServiceProvider())
+            {
+                rng.GetBytes(randomBytes);
+            }
+
+            var chars = new char[tamanno];
+            int validarChar = letras.Length;
+            for (int i = 0; i < tamanno; i++)
+            {
+                chars[i] = letras[randomBytes[i] % validarChar];
+            }
+
+            return new string(chars);
+        }
+
+        [HttpPut]
+        [Route("CambiarContrasenna")]
+        public string CambiarContrasenna(UsuarioEnt entidad)
+        {
+            using (var context = new CAPLUGAEntities())
+            {
+                var user = (from x in context.Users
+                            where x.Email == entidad.Email
+                            && x.Password == entidad.Temporary
+                            select x).FirstOrDefault();
+                if (user != null)
+                {
+                    user.Password = entidad.Password;
+                    user.State = true;
+                    context.SaveChanges();
+                    return "OK";
+                }
+                else
+                {
+                    return null;
+                }
+
+            }
+        }
 
     }
 }

@@ -31,13 +31,23 @@ namespace Capluga.Models
                 return res.Content.ReadFromJsonAsync<UsuarioEnt>().Result;
             }
         }
-
+        
         public string RecuperarCuenta(UsuarioEnt entidad)
         {
             using (var client = new HttpClient())
             {
                 var urlApi = rutaServidor + "RecuperarCuenta?Email=" + entidad.Email;
                 var res = client.GetAsync(urlApi).Result;
+                return res.Content.ReadFromJsonAsync<string>().Result;
+            }
+        }
+        public string CambiarContrasenna(UsuarioEnt entidad)
+        {
+            using (var client = new HttpClient())
+            {
+                var urlApi = rutaServidor + "CambiarContrasenna";
+                var jsonData = JsonContent.Create(entidad);
+                var res = client.PutAsync(urlApi, jsonData).Result;
                 return res.Content.ReadFromJsonAsync<string>().Result;
             }
         }
