@@ -226,12 +226,14 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\SessionFilter.cs" />
+    <Compile Include="Controllers\CarritoController.cs" />
     <Compile Include="Controllers\DocumentController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\LoginController.cs" />
     <Compile Include="Controllers\ProductoController.cs" />
     <Compile Include="Controllers\RolController.cs" />
     <Compile Include="Controllers\UsuarioController.cs" />
+    <Compile Include="Entities\CarritoEnt.cs" />
     <Compile Include="Entities\ProductoEnt.cs" />
     <Compile Include="Entities\RoleEnt.cs" />
     <Compile Include="Entities\UbicacionEnt.cs" />
@@ -239,6 +241,7 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Models\CarritoModel.cs" />
     <Compile Include="Models\ProductoModel.cs" />
     <Compile Include="Models\RolesModel.cs" />
     <Compile Include="Models\UsuarioModel.cs" />
@@ -405,9 +408,11 @@
     <Content Include="Views\Rol\ActualizarRol.cshtml" />
     <Content Include="Views\Rol\CrearRol.cshtml" />
     <Content Include="Views\Rol\ListaRoles.cshtml" />
+    <Content Include="Views\Carrito\ConsultaCarrito.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Data\" />
     <Folder Include="Views\Document\" />
   </ItemGroup>
   <ItemGroup>
