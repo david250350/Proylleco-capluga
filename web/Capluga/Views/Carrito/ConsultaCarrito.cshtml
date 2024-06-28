@@ -1,0 +1,75 @@
+﻿@model IEnumerable<Capluga.Entities.CarritoEnt>
+@{
+    ViewBag.Title = "ConsultaCarrito";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="col-12 grid-margin stretch-card">
+    <div class="card">
+        <div class="card-body">
+            <h4 class="card-title">Información del Carrito</h4>
+            <br>
+
+            @if (ViewBag.MensajeUsuario != null)
+            {
+                <div class="alert alert-danger" role="alert" style="text-align:center">
+                    @ViewBag.MensajeUsuario
+                </div>
+            }
+
+            @if (Model.Any())
+            {
+
+                <table id="tableShow" class="table table-bordered table-hover">
+                    <thead>
+                        <tr>
+                            <th>Nombre</th>
+                            <th>Cantidad</th>
+                            <th>Precio Unitario</th>
+                            <th>SubTotal</th>
+                            <th>Impuesto</th>
+                            <th>Total</th>
+                            <th>Eliminar</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model)
+                        {
+                            <tr>
+                                <td>@item.Name</td>
+                                <td>@item.Quantity</td>
+                                <td>@item.Price.ToString("C", new System.Globalization.CultureInfo("es-CR"))</td>
+                                <td>@item.SubTotal.ToString("C", new System.Globalization.CultureInfo("es-CR"))</td>
+                                <td>@item.Impuestos.ToString("C", new System.Globalization.CultureInfo("es-CR"))</td>
+                                <td>@item.Total.ToString("C", new System.Globalization.CultureInfo("es-CR"))</td>
+
+                                <td style="text-align:center">
+                                    <a href="@Url.Action("EliminarRegistroCarrito", "Carrito", new { q = item.CartID })"><i class="fa fa-remove fa-lg"></i></a>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+
+                <div class="row" style="margin-top: 2%;">
+                    <div class="col-3">
+                        <p style="font-weight:bold; text-align:center; line-height: 40px;"> El monto total a pagar es de: @decimal.Parse(Session["TotalPago"].ToString()).ToString("C", new System.Globalization.CultureInfo("es-CR")) </p>
+                    </div>
+                    <div class="col-4">
+                        @using (Html.BeginForm("PagarCarrito", "Carrito", FormMethod.Post))
+                        {
+                            <input type="submit" class="btn btn-primary" value="Pagar">
+                        }
+                    </div>
+                </div>
+            }
+            else
+            {
+                <div class="col-12 alert alert-info" role="alert" style="text-align: center; margin-top: 5%;">
+                    No hay productos agregados en este momento
+                </div>
+            }
+
+        </div>
+    </div>
+</div>
