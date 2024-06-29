@@ -4,8 +4,15 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<!-- Inicio -->
+<!-- Incluir CSS de DataTables -->
+<link rel="stylesheet" href="https://cdn.datatables.net/1.11.5/css/jquery.dataTables.min.css">
 
+<!-- Incluir jQuery y JS de DataTables -->
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js"></script>
+<form action="@Url.Action("ProductoPDF", "Document")" method="post">
+    <button type="submit" class="btn btn-primary">Descargar PDF</button>
+</form>
 <div class="col-12 grid-margin stretch-card">
     <div class="card">
         <div class="card-body">
@@ -13,7 +20,9 @@
 
             @if (Model.Count() > 0)
             {
-                <table id="tableShow" class="table table-bordered table-hover">
+
+                <table id="DataTable" class="table table-bordered table-hover">
+
                     <thead>
                         <tr>
                             <th>Nombre</th>
@@ -57,17 +66,33 @@
                         }
                     </tbody>
                 </table>
-                <form action="@Url.Action("ProductoPDF", "Document")" method="post">
-                    <button type="submit" class="btn btn-primary">Descargar PDF</button>
-                </form>
+
             }
             else
             {
-         
-            <div class="col-12 alert alert-info" role="alert" style="text-align: center; margin-top: 5%;">
-                No hay productos en este momento
-            </div>
+                <div class="col-12 alert alert-info" role="alert" style="text-align: center; margin-top: 5%;">
+                    No hay productos en este momento
+                </div>
             }
         </div>
     </div>
 </div>
+
+<!-- Inicializar DataTables -->
+<script>
+    $(document).ready(function () {
+        console.log("Document ready, initializing DataTable...");
+        console.log("jQuery version:", $.fn.jquery);
+        console.log("DataTable function exists:", typeof $.fn.DataTable === 'function');
+
+        if (typeof $.fn.DataTable === 'function') {
+            $('#DataTable').DataTable({
+                "language": {
+                    "url": "//cdn.datatables.net/plug-ins/1.10.19/i18n/Spanish.json"
+                }
+            });
+        } else {
+            console.error("DataTable function is not available. Check if DataTables script is loaded correctly.");
+        }
+    });
+</script>

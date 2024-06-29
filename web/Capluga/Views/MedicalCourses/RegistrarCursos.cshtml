@@ -1,0 +1,65 @@
+﻿@model Capluga.Entities.CursoEnt
+
+@{
+    ViewBag.Title = "Registrar Nuevos Cursos";
+    Layout = "~/Views/Shared/_Layout.cshtml"; 
+}
+
+
+<main>
+    <div class="col-12 grid-margin stretch-card">
+        <div class="card">
+            <div class="card-body">
+                <h4 class="card-title">Registrar Curso</h4>
+
+                @if (ViewBag.MensajeUsuario != null)
+                {
+                    <div class="alert alert-danger" role="alert" style="text-align:center">
+                        @ViewBag.MensajeUsuario
+                    </div>
+                }
+
+                @using (Html.BeginForm("RegistrarCursos", "MedicalCourses", FormMethod.Post, new { @class = "pt-3", @enctype = "multipart/form-data" }))
+                {
+                    <div class="form-group">
+                        <label>Nombre</label>
+                        @Html.TextBoxFor(m => m.Name, new
+                        {
+                            @class = "form-control form-control-lg",
+                            @placeholder = "Nombre",
+                           @type = "text"
+                       })
+                    </div>
+                    <div class="form-group">
+                        <label>Descripción</label>
+                        @Html.TextBoxFor(m => m.Description, new { @class = "form-control form-control-lg", @placeholder = "Descripción", @type = "text" })
+                    </div>
+                    <div class="form-group">
+                        <label>Cantidad</label>
+                        @Html.TextBoxFor(m => m.Quantity, new { @class = "form-control form-control-lg", @placeholder = "Cantidad", @type = "number" })
+                    </div>
+                    <div class="form-group">
+                        <label>Precio</label>
+                        @Html.TextBoxFor(m => m.Price, new { @class = "form-control form-control-lg", @placeholder = "Precio", @type = "number" })
+                    </div>
+
+                    <div class="form-group">
+                        <label class="control-label" for="DateandTime">
+                            <i class="fas fa-clock"></i> Fecha y Hora
+                        </label>
+                        @Html.EditorFor(model => model.DateandTime, new { htmlAttributes = new { @class = "form-control", @type = "datetime-local" } })
+                        @Html.ValidationMessageFor(model => model.DateandTime, "", new { @class = "text-danger" })
+
+                    </div>
+
+                    <div class="form-group">
+                        <label>Imagen</label>
+                        <input type="file" class="form-control" id="ImgCurso" name="ImgCurso">
+                    </div>
+
+                    <button type="submit" class="btn btn-primary mr-2">Procesar</button>
+                }
+            </div>
+        </div>
+    </div>
+</main>

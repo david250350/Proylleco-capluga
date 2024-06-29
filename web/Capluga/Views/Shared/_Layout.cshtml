@@ -180,24 +180,5 @@
             time_24hr: true
         });
     </script>
-    <script>
-        $(document).ready(function () {
-            $('#horariosTable').DataTable({
-                "language": {
-                    "url": "//cdn.datatables.net/plug-ins/1.10.25/i18n/Spanish.json"
-                }
-            });
-        });
-    </script>
-    <script>
-        $(document).ready(function () {
-            $("#buscarProducto").on("keyup", function () {
-                var valor = $(this).val().toLowerCase();
-                $(".row .col-3").filter(function () {
-                    $(this).toggle($(this).find('.card-title').text().toLowerCase().indexOf(valor) > -1)
-                });
-            });
-        });
-    </script>
 </body>
 </html>

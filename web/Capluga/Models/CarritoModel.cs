@@ -35,30 +35,6 @@ namespace Capluga.Models
             }
         }
 
-        public List<FacturaEnt> ConsultaCarritoadm()
-        {
-            using (var client = new HttpClient())
-            {
-                var urlApi = rutaServidor + "ConsultaCarritoadm";
-                var res = client.GetAsync(urlApi).Result;
-                return res.Content.ReadFromJsonAsync<List<FacturaEnt>>().Result;
-            }
-        }
-
-
-
-
-
-        public int PagarCarrito(CarritoEnt entidad)
-        {
-            using (var client = new HttpClient())
-            {
-                var urlApi = rutaServidor + "PagarCarrito";
-                var jsonData = JsonContent.Create(entidad);
-                var res = client.PostAsync(urlApi, jsonData).Result;
-                return res.Content.ReadFromJsonAsync<int>().Result;
-            }
-        }
 
         public void EliminarRegistroCarrito(long q)
         {

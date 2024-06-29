@@ -51,15 +51,6 @@ namespace Capluga.Controllers
             Session["SubT"] = datos.AsEnumerable().Sum(x => x.SubTotal);
             return RedirectToAction("ConsultaCarrito", "Carrito");
         }
-        [HttpGet]
-        public ActionResult ConsultaCarritoadm()
-        {
-            var datos = modelCarrito.ConsultaCarritoadm();
-            return View(datos);
-        }
-
-
-
 
     }
 }
