@@ -30,13 +30,23 @@ namespace Capluga.Controllers
         }
 
         [HttpGet]
-        public ActionResult ConsultaCarrito()
+        public ActionResult ConsultaCarrito(string orderByName, string orderByPrice)
         {
             var datos = modelCarrito.ConsultarCarrito(long.Parse(Session["UserID"].ToString()));
+
+            if (!string.IsNullOrEmpty(orderByName))
+            {
+                datos = orderByName == "asc" ? datos.OrderBy(x => x.Name).ToList() : datos.OrderByDescending(x => x.Name).ToList();
+            }
+
+            if (!string.IsNullOrEmpty(orderByPrice))
+            {
+                datos = orderByPrice == "asc" ? datos.OrderBy(x => x.Price).ToList() : datos.OrderByDescending(x => x.Price).ToList();
+            }
+
             Session["TotalPago"] = datos.AsEnumerable().Sum(x => x.Total);
             return View(datos);
         }
-
 
 
 
