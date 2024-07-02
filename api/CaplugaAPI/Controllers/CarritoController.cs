@@ -62,40 +62,6 @@ namespace CaplugaAPI.Controllers
             }
         }
 
-        [HttpGet]
-        [Route("ConsultaCarritoadm")]
-        public List<Detail> ConsultaCarritoadm()
-        {
-            try
-            {
-
-                using (var context = new CAPLUGAEntities())
-                {
-                    context.Configuration.LazyLoadingEnabled = false;
-                    return (from x in context.Detail
-                            select x).ToList();
-                }
-            }
-            catch (Exception)
-            {
-                return new List<Detail>();
-            }
-        }
-
-
-
-
-
-        [HttpPost]
-        [Route("PagarCarrito")]
-        public int PagarCarrito(Cart cart)
-        {
-            using (var context = new CAPLUGAEntities())
-            {
-                return context.PayCart(cart.UserID);
-            }
-        }
-
         [HttpDelete]
         [Route("EliminarRegistroCarrito")]
         public void EliminarRegistroCarrito(long q)
@@ -109,19 +75,6 @@ namespace CaplugaAPI.Controllers
                 context.Cart.Remove(datos);
                 context.SaveChanges();
             }
-        }
-
-        [HttpPut]
-        [Route("ActualizarEstadoPago")]
-        public string ActualizarEstadoPago(FacturaEnt entidad)
-        {
-            using (var context = new CAPLUGAEntities())
-            {
-                context.ApprovePaymentDetails(entidad.MasterPurchaseID);
-
-                return "OK";
-            }
-
-        }
+        }     
     }
 }

@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-    <Schema Namespace="CAPLUGAModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+      <Schema Namespace="CAPLUGAModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="Addresses">
           <Key>
             <PropertyRef Name="AddressID" />
@@ -157,7 +157,7 @@
           <Property Name="RolesID" Type="bigint" Nullable="false" />
           <Property Name="AddressID" Type="bigint" />
         </EntityType>
-        <Association Name="FK__Appointme__Addre__656C112C">
+        <Association Name="FK__Appointme__Addre__5441852A">
           <End Role="Addresses" Type="Self.Addresses" Multiplicity="1" />
           <End Role="AppointmentScheduling" Type="Self.AppointmentScheduling" Multiplicity="*" />
           <ReferentialConstraint>
@@ -169,7 +169,19 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Appointme__Sched__6754599E">
+        <Association Name="FK__Appointme__Sched__534D60F1">
+          <End Role="Users" Type="Self.Users" Multiplicity="1" />
+          <End Role="AppointmentScheduling" Type="Self.AppointmentScheduling" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="UserID" />
+            </Principal>
+            <Dependent Role="AppointmentScheduling">
+              <PropertyRef Name="UserID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Appointme__Sched__5535A963">
           <End Role="ScheduleAppointment" Type="Self.ScheduleAppointment" Multiplicity="1" />
           <End Role="AppointmentScheduling" Type="Self.AppointmentScheduling" Multiplicity="*" />
           <ReferentialConstraint>
@@ -181,19 +193,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Appointme__UserI__66603565">
-          <End Role="Users" Type="Self.Users" Multiplicity="1" />
-          <End Role="AppointmentScheduling" Type="Self.AppointmentScheduling" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Users">
-              <PropertyRef Name="UserID" />
-            </Principal>
-            <Dependent Role="AppointmentScheduling">
-              <PropertyRef Name="UserID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK__Cart__MedicalImp__68487DD7">
+        <Association Name="FK__Cart__MedicalImp__160F4887">
           <End Role="MedicalImplements" Type="Self.MedicalImplements" Multiplicity="1" />
           <End Role="Cart" Type="Self.Cart" Multiplicity="*" />
           <ReferentialConstraint>
@@ -205,7 +205,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Detail__MasterPu__6A30C649">
+        <Association Name="FK__Detail__MasterPu__4BAC3F29">
           <End Role="MasterPurchase" Type="Self.MasterPurchase" Multiplicity="1" />
           <End Role="Detail" Type="Self.Detail" Multiplicity="*" />
           <ReferentialConstraint>
@@ -217,7 +217,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Detail__MedicalI__6B24EA82">
+        <Association Name="FK__Detail__MedicalI__4AB81AF0">
           <End Role="MedicalImplements" Type="Self.MedicalImplements" Multiplicity="1" />
           <End Role="Detail" Type="Self.Detail" Multiplicity="*" />
           <ReferentialConstraint>
@@ -229,7 +229,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__DetailCur__Maste__6C190EBB">
+        <Association Name="FK__DetailCur__Maste__13F1F5EB">
           <End Role="MasterPurchaseCurse" Type="Self.MasterPurchaseCurse" Multiplicity="1" />
           <End Role="DetailCurse" Type="Self.DetailCurse" Multiplicity="*" />
           <ReferentialConstraint>
@@ -241,7 +241,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__DetailCur__Medic__6D0D32F4">
+        <Association Name="FK__DetailCur__Medic__14E61A24">
           <End Role="MedicalCourses" Type="Self.MedicalCourses" Multiplicity="1" />
           <End Role="DetailCurse" Type="Self.DetailCurse" Multiplicity="*" />
           <ReferentialConstraint>
@@ -253,7 +253,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__ErrorLogs__UserI__6E01572D">
+        <Association Name="FK__ErrorLogs__UserI__4E88ABD4">
           <End Role="Users" Type="Self.Users" Multiplicity="1" />
           <End Role="ErrorLogs" Type="Self.ErrorLogs" Multiplicity="*" />
           <ReferentialConstraint>
@@ -265,19 +265,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__MasterPur__UserI__6EF57B66">
-          <End Role="Users" Type="Self.Users" Multiplicity="1" />
-          <End Role="MasterPurchase" Type="Self.MasterPurchase" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Users">
-              <PropertyRef Name="UserID" />
-            </Principal>
-            <Dependent Role="MasterPurchase">
-              <PropertyRef Name="UserID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK__MasterPur__UserI__6FE99F9F">
+        <Association Name="FK__MasterPur__UserI__0880433F">
           <End Role="Users" Type="Self.Users" Multiplicity="1" />
           <End Role="MasterPurchaseCurse" Type="Self.MasterPurchaseCurse" Multiplicity="*" />
           <ReferentialConstraint>
@@ -289,7 +277,19 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Users__RolesID__72C60C4A">
+        <Association Name="FK__MasterPur__UserI__440B1D61">
+          <End Role="Users" Type="Self.Users" Multiplicity="1" />
+          <End Role="MasterPurchase" Type="Self.MasterPurchase" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="UserID" />
+            </Principal>
+            <Dependent Role="MasterPurchase">
+              <PropertyRef Name="UserID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Users__RolesID__398D8EEE">
           <End Role="Roles" Type="Self.Roles" Multiplicity="1" />
           <End Role="Users" Type="Self.Users" Multiplicity="*" />
           <ReferentialConstraint>
@@ -400,51 +400,51 @@
           <EntitySet Name="Roles" EntityType="Self.Roles" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="ScheduleAppointment" EntityType="Self.ScheduleAppointment" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Users" EntityType="Self.Users" Schema="dbo" store:Type="Tables" />
-          <AssociationSet Name="FK__Appointme__Addre__656C112C" Association="Self.FK__Appointme__Addre__656C112C">
+          <AssociationSet Name="FK__Appointme__Addre__5441852A" Association="Self.FK__Appointme__Addre__5441852A">
             <End Role="Addresses" EntitySet="Addresses" />
             <End Role="AppointmentScheduling" EntitySet="AppointmentScheduling" />
           </AssociationSet>
-          <AssociationSet Name="FK__Appointme__Sched__6754599E" Association="Self.FK__Appointme__Sched__6754599E">
+          <AssociationSet Name="FK__Appointme__Sched__534D60F1" Association="Self.FK__Appointme__Sched__534D60F1">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="AppointmentScheduling" EntitySet="AppointmentScheduling" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Appointme__Sched__5535A963" Association="Self.FK__Appointme__Sched__5535A963">
             <End Role="ScheduleAppointment" EntitySet="ScheduleAppointment" />
             <End Role="AppointmentScheduling" EntitySet="AppointmentScheduling" />
           </AssociationSet>
-          <AssociationSet Name="FK__Appointme__UserI__66603565" Association="Self.FK__Appointme__UserI__66603565">
-            <End Role="Users" EntitySet="Users" />
-            <End Role="AppointmentScheduling" EntitySet="AppointmentScheduling" />
-          </AssociationSet>
-          <AssociationSet Name="FK__Cart__MedicalImp__68487DD7" Association="Self.FK__Cart__MedicalImp__68487DD7">
+          <AssociationSet Name="FK__Cart__MedicalImp__160F4887" Association="Self.FK__Cart__MedicalImp__160F4887">
             <End Role="MedicalImplements" EntitySet="MedicalImplements" />
             <End Role="Cart" EntitySet="Cart" />
           </AssociationSet>
-          <AssociationSet Name="FK__Detail__MasterPu__6A30C649" Association="Self.FK__Detail__MasterPu__6A30C649">
+          <AssociationSet Name="FK__Detail__MasterPu__4BAC3F29" Association="Self.FK__Detail__MasterPu__4BAC3F29">
             <End Role="MasterPurchase" EntitySet="MasterPurchase" />
             <End Role="Detail" EntitySet="Detail" />
           </AssociationSet>
-          <AssociationSet Name="FK__Detail__MedicalI__6B24EA82" Association="Self.FK__Detail__MedicalI__6B24EA82">
+          <AssociationSet Name="FK__Detail__MedicalI__4AB81AF0" Association="Self.FK__Detail__MedicalI__4AB81AF0">
             <End Role="MedicalImplements" EntitySet="MedicalImplements" />
             <End Role="Detail" EntitySet="Detail" />
           </AssociationSet>
-          <AssociationSet Name="FK__DetailCur__Maste__6C190EBB" Association="Self.FK__DetailCur__Maste__6C190EBB">
+          <AssociationSet Name="FK__DetailCur__Maste__13F1F5EB" Association="Self.FK__DetailCur__Maste__13F1F5EB">
             <End Role="MasterPurchaseCurse" EntitySet="MasterPurchaseCurse" />
             <End Role="DetailCurse" EntitySet="DetailCurse" />
           </AssociationSet>
-          <AssociationSet Name="FK__DetailCur__Medic__6D0D32F4" Association="Self.FK__DetailCur__Medic__6D0D32F4">
+          <AssociationSet Name="FK__DetailCur__Medic__14E61A24" Association="Self.FK__DetailCur__Medic__14E61A24">
             <End Role="MedicalCourses" EntitySet="MedicalCourses" />
             <End Role="DetailCurse" EntitySet="DetailCurse" />
           </AssociationSet>
-          <AssociationSet Name="FK__ErrorLogs__UserI__6E01572D" Association="Self.FK__ErrorLogs__UserI__6E01572D">
+          <AssociationSet Name="FK__ErrorLogs__UserI__4E88ABD4" Association="Self.FK__ErrorLogs__UserI__4E88ABD4">
             <End Role="Users" EntitySet="Users" />
             <End Role="ErrorLogs" EntitySet="ErrorLogs" />
           </AssociationSet>
-          <AssociationSet Name="FK__MasterPur__UserI__6EF57B66" Association="Self.FK__MasterPur__UserI__6EF57B66">
-            <End Role="Users" EntitySet="Users" />
-            <End Role="MasterPurchase" EntitySet="MasterPurchase" />
-          </AssociationSet>
-          <AssociationSet Name="FK__MasterPur__UserI__6FE99F9F" Association="Self.FK__MasterPur__UserI__6FE99F9F">
+          <AssociationSet Name="FK__MasterPur__UserI__0880433F" Association="Self.FK__MasterPur__UserI__0880433F">
             <End Role="Users" EntitySet="Users" />
             <End Role="MasterPurchaseCurse" EntitySet="MasterPurchaseCurse" />
           </AssociationSet>
-          <AssociationSet Name="FK__Users__RolesID__72C60C4A" Association="Self.FK__Users__RolesID__72C60C4A">
+          <AssociationSet Name="FK__MasterPur__UserI__440B1D61" Association="Self.FK__MasterPur__UserI__440B1D61">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="MasterPurchase" EntitySet="MasterPurchase" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Users__RolesID__398D8EEE" Association="Self.FK__Users__RolesID__398D8EEE">
             <End Role="Roles" EntitySet="Roles" />
             <End Role="Users" EntitySet="Users" />
           </AssociationSet>
@@ -465,7 +465,8 @@
             <End Role="Users" EntitySet="Users" />
           </AssociationSet>
         </EntityContainer>
-      </Schema></edmx:StorageModels>
+      </Schema>
+    </edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="CAPLUGAModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -480,7 +481,7 @@
           <Property Name="ZipCode" Type="String" MaxLength="10" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="Country" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="District" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <NavigationProperty Name="AppointmentScheduling" Relationship="Self.FK__Appointme__Addre__656C112C" FromRole="Addresses" ToRole="AppointmentScheduling" />
+          <NavigationProperty Name="AppointmentScheduling" Relationship="Self.FK__Appointme__Addre__5441852A" FromRole="Addresses" ToRole="AppointmentScheduling" />
           <NavigationProperty Name="Users" Relationship="Self.FK_Users_Addresses" FromRole="Addresses" ToRole="Users" />
         </EntityType>
         <EntityType Name="AppointmentScheduling">
@@ -493,9 +494,9 @@
           <Property Name="Name" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="Description" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="ScheduleID" Type="Int64" Nullable="false" />
-          <NavigationProperty Name="Addresses" Relationship="Self.FK__Appointme__Addre__656C112C" FromRole="AppointmentScheduling" ToRole="Addresses" />
-          <NavigationProperty Name="ScheduleAppointment" Relationship="Self.FK__Appointme__Sched__6754599E" FromRole="AppointmentScheduling" ToRole="ScheduleAppointment" />
-          <NavigationProperty Name="Users" Relationship="Self.FK__Appointme__UserI__66603565" FromRole="AppointmentScheduling" ToRole="Users" />
+          <NavigationProperty Name="Addresses" Relationship="Self.FK__Appointme__Addre__5441852A" FromRole="AppointmentScheduling" ToRole="Addresses" />
+          <NavigationProperty Name="Users" Relationship="Self.FK__Appointme__Sched__534D60F1" FromRole="AppointmentScheduling" ToRole="Users" />
+          <NavigationProperty Name="ScheduleAppointment" Relationship="Self.FK__Appointme__Sched__5535A963" FromRole="AppointmentScheduling" ToRole="ScheduleAppointment" />
         </EntityType>
         <EntityType Name="Cart">
           <Key>
@@ -505,7 +506,7 @@
           <Property Name="MedicalImplementsID" Type="Int64" Nullable="false" />
           <Property Name="Quantity" Type="Int32" Nullable="false" />
           <Property Name="UserID" Type="Int64" Nullable="false" />
-          <NavigationProperty Name="MedicalImplements" Relationship="Self.FK__Cart__MedicalImp__68487DD7" FromRole="Cart" ToRole="MedicalImplements" />
+          <NavigationProperty Name="MedicalImplements" Relationship="Self.FK__Cart__MedicalImp__160F4887" FromRole="Cart" ToRole="MedicalImplements" />
           <NavigationProperty Name="Users" Relationship="Self.FK_Cart_Users" FromRole="Cart" ToRole="Users" />
         </EntityType>
         <EntityType Name="Detail">
@@ -519,8 +520,8 @@
           <Property Name="Tax" Type="Decimal" Precision="18" Scale="2" Nullable="false" />
           <Property Name="MasterPurchaseID" Type="Int64" Nullable="false" />
           <Property Name="PaymentStatus" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="MasterPurchase" Relationship="Self.FK__Detail__MasterPu__6A30C649" FromRole="Detail" ToRole="MasterPurchase" />
-          <NavigationProperty Name="MedicalImplements" Relationship="Self.FK__Detail__MedicalI__6B24EA82" FromRole="Detail" ToRole="MedicalImplements" />
+          <NavigationProperty Name="MasterPurchase" Relationship="Self.FK__Detail__MasterPu__4BAC3F29" FromRole="Detail" ToRole="MasterPurchase" />
+          <NavigationProperty Name="MedicalImplements" Relationship="Self.FK__Detail__MedicalI__4AB81AF0" FromRole="Detail" ToRole="MedicalImplements" />
         </EntityType>
         <EntityType Name="DetailCurse">
           <Key>
@@ -533,8 +534,8 @@
           <Property Name="Tax" Type="Decimal" Precision="18" Scale="2" Nullable="false" />
           <Property Name="MasterPurchaseCurseID" Type="Int64" Nullable="false" />
           <Property Name="PaymentStatus" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="MasterPurchaseCurse" Relationship="Self.FK__DetailCur__Maste__6C190EBB" FromRole="DetailCurse" ToRole="MasterPurchaseCurse" />
-          <NavigationProperty Name="MedicalCourses" Relationship="Self.FK__DetailCur__Medic__6D0D32F4" FromRole="DetailCurse" ToRole="MedicalCourses" />
+          <NavigationProperty Name="MasterPurchaseCurse" Relationship="Self.FK__DetailCur__Maste__13F1F5EB" FromRole="DetailCurse" ToRole="MasterPurchaseCurse" />
+          <NavigationProperty Name="MedicalCourses" Relationship="Self.FK__DetailCur__Medic__14E61A24" FromRole="DetailCurse" ToRole="MedicalCourses" />
         </EntityType>
         <EntityType Name="ErrorLogs">
           <Key>
@@ -546,7 +547,7 @@
           <Property Name="Source" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="AdditionalInformation" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="UserID" Type="Int64" Nullable="false" />
-          <NavigationProperty Name="Users" Relationship="Self.FK__ErrorLogs__UserI__6E01572D" FromRole="ErrorLogs" ToRole="Users" />
+          <NavigationProperty Name="Users" Relationship="Self.FK__ErrorLogs__UserI__4E88ABD4" FromRole="ErrorLogs" ToRole="Users" />
         </EntityType>
         <EntityType Name="MasterPurchase">
           <Key>
@@ -556,8 +557,8 @@
           <Property Name="UserID" Type="Int64" Nullable="false" />
           <Property Name="PurchaseDate" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="TotalPurchase" Type="Decimal" Precision="18" Scale="2" Nullable="false" />
-          <NavigationProperty Name="Detail" Relationship="Self.FK__Detail__MasterPu__6A30C649" FromRole="MasterPurchase" ToRole="Detail" />
-          <NavigationProperty Name="Users" Relationship="Self.FK__MasterPur__UserI__6EF57B66" FromRole="MasterPurchase" ToRole="Users" />
+          <NavigationProperty Name="Detail" Relationship="Self.FK__Detail__MasterPu__4BAC3F29" FromRole="MasterPurchase" ToRole="Detail" />
+          <NavigationProperty Name="Users" Relationship="Self.FK__MasterPur__UserI__440B1D61" FromRole="MasterPurchase" ToRole="Users" />
         </EntityType>
         <EntityType Name="MasterPurchaseCurse">
           <Key>
@@ -567,8 +568,8 @@
           <Property Name="UserID" Type="Int64" Nullable="false" />
           <Property Name="PurchaseDate" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="TotalPurchase" Type="Decimal" Precision="18" Scale="2" Nullable="false" />
-          <NavigationProperty Name="DetailCurse" Relationship="Self.FK__DetailCur__Maste__6C190EBB" FromRole="MasterPurchaseCurse" ToRole="DetailCurse" />
-          <NavigationProperty Name="Users" Relationship="Self.FK__MasterPur__UserI__6FE99F9F" FromRole="MasterPurchaseCurse" ToRole="Users" />
+          <NavigationProperty Name="DetailCurse" Relationship="Self.FK__DetailCur__Maste__13F1F5EB" FromRole="MasterPurchaseCurse" ToRole="DetailCurse" />
+          <NavigationProperty Name="Users" Relationship="Self.FK__MasterPur__UserI__0880433F" FromRole="MasterPurchaseCurse" ToRole="Users" />
         </EntityType>
         <EntityType Name="MedicalCourses">
           <Key>
@@ -582,7 +583,7 @@
           <Property Name="Image" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="State" Type="Boolean" Nullable="false" />
           <Property Name="DateandTime" Type="DateTime" Precision="3" />
-          <NavigationProperty Name="DetailCurse" Relationship="Self.FK__DetailCur__Medic__6D0D32F4" FromRole="MedicalCourses" ToRole="DetailCurse" />
+          <NavigationProperty Name="DetailCurse" Relationship="Self.FK__DetailCur__Medic__14E61A24" FromRole="MedicalCourses" ToRole="DetailCurse" />
           <NavigationProperty Name="Registeredcourses" Relationship="Self.FK_Registeredcourses_MedicalCourses" FromRole="MedicalCourses" ToRole="Registeredcourses" />
         </EntityType>
         <EntityType Name="MedicalImplements">
@@ -596,8 +597,8 @@
           <Property Name="Price" Type="Decimal" Precision="18" Scale="2" Nullable="false" />
           <Property Name="Quantity" Type="Int32" Nullable="false" />
           <Property Name="Image" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
-          <NavigationProperty Name="Cart" Relationship="Self.FK__Cart__MedicalImp__68487DD7" FromRole="MedicalImplements" ToRole="Cart" />
-          <NavigationProperty Name="Detail" Relationship="Self.FK__Detail__MedicalI__6B24EA82" FromRole="MedicalImplements" ToRole="Detail" />
+          <NavigationProperty Name="Cart" Relationship="Self.FK__Cart__MedicalImp__160F4887" FromRole="MedicalImplements" ToRole="Cart" />
+          <NavigationProperty Name="Detail" Relationship="Self.FK__Detail__MedicalI__4AB81AF0" FromRole="MedicalImplements" ToRole="Detail" />
         </EntityType>
         <EntityType Name="Registeredcourses">
           <Key>
@@ -617,7 +618,7 @@
           </Key>
           <Property Name="RolesID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="RoleName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
-          <NavigationProperty Name="Users" Relationship="Self.FK__Users__RolesID__72C60C4A" FromRole="Roles" ToRole="Users" />
+          <NavigationProperty Name="Users" Relationship="Self.FK__Users__RolesID__398D8EEE" FromRole="Roles" ToRole="Users" />
         </EntityType>
         <EntityType Name="ScheduleAppointment">
           <Key>
@@ -627,7 +628,7 @@
           <Property Name="Dname" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="DateandTime" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="IsBooked" Type="Boolean" Nullable="false" />
-          <NavigationProperty Name="AppointmentScheduling" Relationship="Self.FK__Appointme__Sched__6754599E" FromRole="ScheduleAppointment" ToRole="AppointmentScheduling" />
+          <NavigationProperty Name="AppointmentScheduling" Relationship="Self.FK__Appointme__Sched__5535A963" FromRole="ScheduleAppointment" ToRole="AppointmentScheduling" />
         </EntityType>
         <EntityType Name="Users">
           <Key>
@@ -645,15 +646,15 @@
           <Property Name="RolesID" Type="Int64" Nullable="false" />
           <Property Name="AddressID" Type="Int64" />
           <NavigationProperty Name="Addresses" Relationship="Self.FK_Users_Addresses" FromRole="Users" ToRole="Addresses" />
-          <NavigationProperty Name="AppointmentScheduling" Relationship="Self.FK__Appointme__UserI__66603565" FromRole="Users" ToRole="AppointmentScheduling" />
+          <NavigationProperty Name="AppointmentScheduling" Relationship="Self.FK__Appointme__Sched__534D60F1" FromRole="Users" ToRole="AppointmentScheduling" />
           <NavigationProperty Name="Cart" Relationship="Self.FK_Cart_Users" FromRole="Users" ToRole="Cart" />
-          <NavigationProperty Name="ErrorLogs" Relationship="Self.FK__ErrorLogs__UserI__6E01572D" FromRole="Users" ToRole="ErrorLogs" />
-          <NavigationProperty Name="MasterPurchase" Relationship="Self.FK__MasterPur__UserI__6EF57B66" FromRole="Users" ToRole="MasterPurchase" />
-          <NavigationProperty Name="MasterPurchaseCurse" Relationship="Self.FK__MasterPur__UserI__6FE99F9F" FromRole="Users" ToRole="MasterPurchaseCurse" />
+          <NavigationProperty Name="ErrorLogs" Relationship="Self.FK__ErrorLogs__UserI__4E88ABD4" FromRole="Users" ToRole="ErrorLogs" />
+          <NavigationProperty Name="MasterPurchase" Relationship="Self.FK__MasterPur__UserI__440B1D61" FromRole="Users" ToRole="MasterPurchase" />
+          <NavigationProperty Name="MasterPurchaseCurse" Relationship="Self.FK__MasterPur__UserI__0880433F" FromRole="Users" ToRole="MasterPurchaseCurse" />
           <NavigationProperty Name="Registeredcourses" Relationship="Self.FK_Registeredcourses_Users" FromRole="Users" ToRole="Registeredcourses" />
-          <NavigationProperty Name="Roles" Relationship="Self.FK__Users__RolesID__72C60C4A" FromRole="Users" ToRole="Roles" />
+          <NavigationProperty Name="Roles" Relationship="Self.FK__Users__RolesID__398D8EEE" FromRole="Users" ToRole="Roles" />
         </EntityType>
-        <Association Name="FK__Appointme__Addre__656C112C">
+        <Association Name="FK__Appointme__Addre__5441852A">
           <End Role="Addresses" Type="Self.Addresses" Multiplicity="1" />
           <End Role="AppointmentScheduling" Type="Self.AppointmentScheduling" Multiplicity="*" />
           <ReferentialConstraint>
@@ -677,19 +678,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Appointme__Sched__6754599E">
-          <End Role="ScheduleAppointment" Type="Self.ScheduleAppointment" Multiplicity="1" />
-          <End Role="AppointmentScheduling" Type="Self.AppointmentScheduling" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="ScheduleAppointment">
-              <PropertyRef Name="ScheduleID" />
-            </Principal>
-            <Dependent Role="AppointmentScheduling">
-              <PropertyRef Name="ScheduleID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK__Appointme__UserI__66603565">
+        <Association Name="FK__Appointme__Sched__534D60F1">
           <End Role="Users" Type="Self.Users" Multiplicity="1" />
           <End Role="AppointmentScheduling" Type="Self.AppointmentScheduling" Multiplicity="*" />
           <ReferentialConstraint>
@@ -701,7 +690,19 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Cart__MedicalImp__68487DD7">
+        <Association Name="FK__Appointme__Sched__5535A963">
+          <End Role="ScheduleAppointment" Type="Self.ScheduleAppointment" Multiplicity="1" />
+          <End Role="AppointmentScheduling" Type="Self.AppointmentScheduling" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ScheduleAppointment">
+              <PropertyRef Name="ScheduleID" />
+            </Principal>
+            <Dependent Role="AppointmentScheduling">
+              <PropertyRef Name="ScheduleID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Cart__MedicalImp__160F4887">
           <End Role="MedicalImplements" Type="Self.MedicalImplements" Multiplicity="1" />
           <End Role="Cart" Type="Self.Cart" Multiplicity="*" />
           <ReferentialConstraint>
@@ -725,7 +726,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Detail__MasterPu__6A30C649">
+        <Association Name="FK__Detail__MasterPu__4BAC3F29">
           <End Role="MasterPurchase" Type="Self.MasterPurchase" Multiplicity="1" />
           <End Role="Detail" Type="Self.Detail" Multiplicity="*" />
           <ReferentialConstraint>
@@ -737,7 +738,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Detail__MedicalI__6B24EA82">
+        <Association Name="FK__Detail__MedicalI__4AB81AF0">
           <End Role="MedicalImplements" Type="Self.MedicalImplements" Multiplicity="1" />
           <End Role="Detail" Type="Self.Detail" Multiplicity="*" />
           <ReferentialConstraint>
@@ -749,7 +750,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__DetailCur__Maste__6C190EBB">
+        <Association Name="FK__DetailCur__Maste__13F1F5EB">
           <End Role="MasterPurchaseCurse" Type="Self.MasterPurchaseCurse" Multiplicity="1" />
           <End Role="DetailCurse" Type="Self.DetailCurse" Multiplicity="*" />
           <ReferentialConstraint>
@@ -761,7 +762,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__DetailCur__Medic__6D0D32F4">
+        <Association Name="FK__DetailCur__Medic__14E61A24">
           <End Role="MedicalCourses" Type="Self.MedicalCourses" Multiplicity="1" />
           <End Role="DetailCurse" Type="Self.DetailCurse" Multiplicity="*" />
           <ReferentialConstraint>
@@ -773,7 +774,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__ErrorLogs__UserI__6E01572D">
+        <Association Name="FK__ErrorLogs__UserI__4E88ABD4">
           <End Role="Users" Type="Self.Users" Multiplicity="1" />
           <End Role="ErrorLogs" Type="Self.ErrorLogs" Multiplicity="*" />
           <ReferentialConstraint>
@@ -785,7 +786,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__MasterPur__UserI__6EF57B66">
+        <Association Name="FK__MasterPur__UserI__440B1D61">
           <End Role="Users" Type="Self.Users" Multiplicity="1" />
           <End Role="MasterPurchase" Type="Self.MasterPurchase" Multiplicity="*" />
           <ReferentialConstraint>
@@ -797,7 +798,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__MasterPur__UserI__6FE99F9F">
+        <Association Name="FK__MasterPur__UserI__0880433F">
           <End Role="Users" Type="Self.Users" Multiplicity="1" />
           <End Role="MasterPurchaseCurse" Type="Self.MasterPurchaseCurse" Multiplicity="*" />
           <ReferentialConstraint>
@@ -833,7 +834,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Users__RolesID__72C60C4A">
+        <Association Name="FK__Users__RolesID__398D8EEE">
           <End Role="Roles" Type="Self.Roles" Multiplicity="1" />
           <End Role="Users" Type="Self.Users" Multiplicity="*" />
           <ReferentialConstraint>
@@ -860,7 +861,7 @@
           <EntitySet Name="Roles" EntityType="Self.Roles" />
           <EntitySet Name="ScheduleAppointment" EntityType="Self.ScheduleAppointment" />
           <EntitySet Name="Users" EntityType="Self.Users" />
-          <AssociationSet Name="FK__Appointme__Addre__656C112C" Association="Self.FK__Appointme__Addre__656C112C">
+          <AssociationSet Name="FK__Appointme__Addre__5441852A" Association="Self.FK__Appointme__Addre__5441852A">
             <End Role="Addresses" EntitySet="Addresses" />
             <End Role="AppointmentScheduling" EntitySet="AppointmentScheduling" />
           </AssociationSet>
@@ -868,15 +869,15 @@
             <End Role="Addresses" EntitySet="Addresses" />
             <End Role="Users" EntitySet="Users" />
           </AssociationSet>
-          <AssociationSet Name="FK__Appointme__Sched__6754599E" Association="Self.FK__Appointme__Sched__6754599E">
-            <End Role="ScheduleAppointment" EntitySet="ScheduleAppointment" />
-            <End Role="AppointmentScheduling" EntitySet="AppointmentScheduling" />
-          </AssociationSet>
-          <AssociationSet Name="FK__Appointme__UserI__66603565" Association="Self.FK__Appointme__UserI__66603565">
+          <AssociationSet Name="FK__Appointme__Sched__534D60F1" Association="Self.FK__Appointme__Sched__534D60F1">
             <End Role="Users" EntitySet="Users" />
             <End Role="AppointmentScheduling" EntitySet="AppointmentScheduling" />
           </AssociationSet>
-          <AssociationSet Name="FK__Cart__MedicalImp__68487DD7" Association="Self.FK__Cart__MedicalImp__68487DD7">
+          <AssociationSet Name="FK__Appointme__Sched__5535A963" Association="Self.FK__Appointme__Sched__5535A963">
+            <End Role="ScheduleAppointment" EntitySet="ScheduleAppointment" />
+            <End Role="AppointmentScheduling" EntitySet="AppointmentScheduling" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Cart__MedicalImp__160F4887" Association="Self.FK__Cart__MedicalImp__160F4887">
             <End Role="MedicalImplements" EntitySet="MedicalImplements" />
             <End Role="Cart" EntitySet="Cart" />
           </AssociationSet>
@@ -884,31 +885,31 @@
             <End Role="Users" EntitySet="Users" />
             <End Role="Cart" EntitySet="Cart" />
           </AssociationSet>
-          <AssociationSet Name="FK__Detail__MasterPu__6A30C649" Association="Self.FK__Detail__MasterPu__6A30C649">
+          <AssociationSet Name="FK__Detail__MasterPu__4BAC3F29" Association="Self.FK__Detail__MasterPu__4BAC3F29">
             <End Role="MasterPurchase" EntitySet="MasterPurchase" />
             <End Role="Detail" EntitySet="Detail" />
           </AssociationSet>
-          <AssociationSet Name="FK__Detail__MedicalI__6B24EA82" Association="Self.FK__Detail__MedicalI__6B24EA82">
+          <AssociationSet Name="FK__Detail__MedicalI__4AB81AF0" Association="Self.FK__Detail__MedicalI__4AB81AF0">
             <End Role="MedicalImplements" EntitySet="MedicalImplements" />
             <End Role="Detail" EntitySet="Detail" />
           </AssociationSet>
-          <AssociationSet Name="FK__DetailCur__Maste__6C190EBB" Association="Self.FK__DetailCur__Maste__6C190EBB">
+          <AssociationSet Name="FK__DetailCur__Maste__13F1F5EB" Association="Self.FK__DetailCur__Maste__13F1F5EB">
             <End Role="MasterPurchaseCurse" EntitySet="MasterPurchaseCurse" />
             <End Role="DetailCurse" EntitySet="DetailCurse" />
           </AssociationSet>
-          <AssociationSet Name="FK__DetailCur__Medic__6D0D32F4" Association="Self.FK__DetailCur__Medic__6D0D32F4">
+          <AssociationSet Name="FK__DetailCur__Medic__14E61A24" Association="Self.FK__DetailCur__Medic__14E61A24">
             <End Role="MedicalCourses" EntitySet="MedicalCourses" />
             <End Role="DetailCurse" EntitySet="DetailCurse" />
           </AssociationSet>
-          <AssociationSet Name="FK__ErrorLogs__UserI__6E01572D" Association="Self.FK__ErrorLogs__UserI__6E01572D">
+          <AssociationSet Name="FK__ErrorLogs__UserI__4E88ABD4" Association="Self.FK__ErrorLogs__UserI__4E88ABD4">
             <End Role="Users" EntitySet="Users" />
             <End Role="ErrorLogs" EntitySet="ErrorLogs" />
           </AssociationSet>
-          <AssociationSet Name="FK__MasterPur__UserI__6EF57B66" Association="Self.FK__MasterPur__UserI__6EF57B66">
+          <AssociationSet Name="FK__MasterPur__UserI__440B1D61" Association="Self.FK__MasterPur__UserI__440B1D61">
             <End Role="Users" EntitySet="Users" />
             <End Role="MasterPurchase" EntitySet="MasterPurchase" />
           </AssociationSet>
-          <AssociationSet Name="FK__MasterPur__UserI__6FE99F9F" Association="Self.FK__MasterPur__UserI__6FE99F9F">
+          <AssociationSet Name="FK__MasterPur__UserI__0880433F" Association="Self.FK__MasterPur__UserI__0880433F">
             <End Role="Users" EntitySet="Users" />
             <End Role="MasterPurchaseCurse" EntitySet="MasterPurchaseCurse" />
           </AssociationSet>
@@ -920,15 +921,15 @@
             <End Role="Users" EntitySet="Users" />
             <End Role="Registeredcourses" EntitySet="Registeredcourses" />
           </AssociationSet>
-          <AssociationSet Name="FK__Users__RolesID__72C60C4A" Association="Self.FK__Users__RolesID__72C60C4A">
+          <AssociationSet Name="FK__Users__RolesID__398D8EEE" Association="Self.FK__Users__RolesID__398D8EEE">
             <End Role="Roles" EntitySet="Roles" />
             <End Role="Users" EntitySet="Users" />
           </AssociationSet>
           <FunctionImport Name="ApprovePaymentDetails">
-          <Parameter Name="MasterPurchaseID" Mode="In" Type="Int64" />
+            <Parameter Name="MasterPurchaseID" Mode="In" Type="Int64" />
           </FunctionImport>
           <FunctionImport Name="ApprovePaymentTuition">
-          <Parameter Name="MasterPurchaseCurseID" Mode="In" Type="Int64" />
+            <Parameter Name="MasterPurchaseCurseID" Mode="In" Type="Int64" />
           </FunctionImport>
           <FunctionImport Name="InsertAppointment">
             <Parameter Name="UserID" Mode="In" Type="Int64" />
@@ -942,10 +943,10 @@
             <Parameter Name="DateandTime" Mode="In" Type="DateTime" />
           </FunctionImport>
           <FunctionImport Name="PayCart" ReturnType="Collection(String)">
-          <Parameter Name="UserID" Mode="In" Type="Int64" />
+            <Parameter Name="UserID" Mode="In" Type="Int64" />
           </FunctionImport>
           <FunctionImport Name="tuition" ReturnType="Collection(String)">
-          <Parameter Name="UserID" Mode="In" Type="Int64" />
+            <Parameter Name="UserID" Mode="In" Type="Int64" />
           </FunctionImport>
           <FunctionImport Name="UpdateAppointment">
             <Parameter Name="AppointmentID" Mode="In" Type="Int64" />
