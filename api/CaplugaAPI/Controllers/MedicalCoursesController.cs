@@ -74,21 +74,28 @@ namespace CaplugaAPI.Controllers
             }
         }
 
-        [HttpPut]
-        [Route("ActualizarCurso")]
-        public string ActualizarCurso(MedicalCourses medicalCourses)
+       [HttpPut]
+[Route("ActualizarCurso")]
+public IHttpActionResult ActualizarCurso(MedicalCourses medicalCourses)
+{
+    using (var context = new CAPLUGAEntities())
+    {
+        var datos = context.MedicalCourses.Where(x => x.MedicalCourseID == medicalCourses.MedicalCourseID).FirstOrDefault();
+        if (datos == null)
         {
-            using (var context = new CAPLUGAEntities())
-            {
-                var datos = context.MedicalCourses.Where(x => x.MedicalCourseID == medicalCourses.MedicalCourseID).FirstOrDefault();
-                datos.Name = medicalCourses.Name;
-                datos.Description = medicalCourses.Description;
-                datos.Quantity = medicalCourses.Quantity;
-                datos.Price = medicalCourses.Price;
-                datos.DateandTime = medicalCourses.DateandTime;
-                context.SaveChanges();
-                return "OK";
-            }
+            return Content(HttpStatusCode.NotFound, new { Message = "No se encontró el curso con el ID proporcionado." });
         }
+
+        datos.Name = medicalCourses.Name;
+        datos.Description = medicalCourses.Description;
+        datos.Quantity = medicalCourses.Quantity;
+        datos.Price = medicalCourses.Price;
+        datos.DateandTime = medicalCourses.DateandTime;
+        context.SaveChanges();
+        
+        return Ok(new { Message = "OK" });
+    }
+}
+
     }
 }

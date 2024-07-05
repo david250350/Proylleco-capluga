@@ -11,14 +11,15 @@ namespace Capluga.Models
     {
         public string rutaServidor = ConfigurationManager.AppSettings["RutaApi"];
 
-        public long CrearRol(RoleEnt entidad)
+        public string CrearRol(RoleEnt entidad)
         {
             using (var client = new HttpClient())
             {
                 var urlApi = rutaServidor + "CrearRol";
                 var jsonData = JsonContent.Create(entidad);
                 var res = client.PostAsync(urlApi, jsonData).Result;
-                return res.Content.ReadFromJsonAsync<long>().Result;
+                return res.Content.ReadFromJsonAsync<string>().Result;
+
             }
         }
 
@@ -39,10 +40,19 @@ namespace Capluga.Models
             {
                 var urlApi = rutaServidor + "Rol?q=" + q;
                 var res = client.GetAsync(urlApi).Result;
-                return res.Content.ReadFromJsonAsync<RoleEnt>().Result;
 
+                if (res.IsSuccessStatusCode)
+                {
+                    return res.Content.ReadFromJsonAsync<RoleEnt>().Result;
+                }
+                else
+                {
+                    var errorContent = res.Content.ReadAsStringAsync().Result;
+                    throw new Exception($"No se pudo obtener el rol: {errorContent}");
+                }
             }
         }
+
 
         public string ActualizarRol(RoleEnt entidad)
         {
@@ -52,6 +62,15 @@ namespace Capluga.Models
                 var jsonData = JsonContent.Create(entidad);
                 var res = client.PutAsync(urlApi, jsonData).Result;
                 return res.Content.ReadFromJsonAsync<string>().Result;
+            }
+        }
+
+        public void EliminarRol(long q)
+        {
+            using (var client = new HttpClient())
+            {
+                var urlApi = rutaServidor + "EliminarRol?q=" + q;
+                var res = client.DeleteAsync(urlApi).Result;
             }
         }
     }

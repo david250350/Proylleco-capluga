@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="CAPLUGAModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="CAPLUGAModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="Addresses">
           <Key>
             <PropertyRef Name="AddressID" />
@@ -362,6 +362,9 @@
           <Parameter Name="Description" Type="nvarchar(max)" Mode="In" />
           <Parameter Name="ScheduleID" Type="bigint" Mode="In" />
         </Function>
+        <Function Name="InsertRol" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="RoleName" Type="nvarchar" Mode="In" />
+        </Function>
         <Function Name="InsertScheduleAppointment" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="Dname" Type="nvarchar" Mode="In" />
           <Parameter Name="DateandTime" Type="datetime" Mode="In" />
@@ -379,6 +382,10 @@
           <Parameter Name="Name" Type="nvarchar" Mode="In" />
           <Parameter Name="Description" Type="nvarchar(max)" Mode="In" />
           <Parameter Name="ScheduleID" Type="bigint" Mode="In" />
+        </Function>
+        <Function Name="UpdateRol" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="RolesID" Type="bigint" Mode="In" />
+          <Parameter Name="RoleName" Type="nvarchar" Mode="In" />
         </Function>
         <Function Name="UpdateScheduleAppointment" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="ScheduleID" Type="bigint" Mode="In" />
@@ -465,8 +472,7 @@
             <End Role="Users" EntitySet="Users" />
           </AssociationSet>
         </EntityContainer>
-      </Schema>
-    </edmx:StorageModels>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="CAPLUGAModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -926,10 +932,10 @@
             <End Role="Users" EntitySet="Users" />
           </AssociationSet>
           <FunctionImport Name="ApprovePaymentDetails">
-            <Parameter Name="MasterPurchaseID" Mode="In" Type="Int64" />
+          <Parameter Name="MasterPurchaseID" Mode="In" Type="Int64" />
           </FunctionImport>
           <FunctionImport Name="ApprovePaymentTuition">
-            <Parameter Name="MasterPurchaseCurseID" Mode="In" Type="Int64" />
+          <Parameter Name="MasterPurchaseCurseID" Mode="In" Type="Int64" />
           </FunctionImport>
           <FunctionImport Name="InsertAppointment">
             <Parameter Name="UserID" Mode="In" Type="Int64" />
@@ -943,10 +949,10 @@
             <Parameter Name="DateandTime" Mode="In" Type="DateTime" />
           </FunctionImport>
           <FunctionImport Name="PayCart" ReturnType="Collection(String)">
-            <Parameter Name="UserID" Mode="In" Type="Int64" />
+          <Parameter Name="UserID" Mode="In" Type="Int64" />
           </FunctionImport>
           <FunctionImport Name="tuition" ReturnType="Collection(String)">
-            <Parameter Name="UserID" Mode="In" Type="Int64" />
+          <Parameter Name="UserID" Mode="In" Type="Int64" />
           </FunctionImport>
           <FunctionImport Name="UpdateAppointment">
             <Parameter Name="AppointmentID" Mode="In" Type="Int64" />
@@ -960,6 +966,13 @@
             <Parameter Name="ScheduleID" Mode="In" Type="Int64" />
             <Parameter Name="DName" Mode="In" Type="String" />
             <Parameter Name="DateandTime" Mode="In" Type="DateTime" />
+          </FunctionImport>
+          <FunctionImport Name="InsertRol">
+            <Parameter Name="RoleName" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="UpdateRol">
+            <Parameter Name="RolesID" Mode="In" Type="Int64" />
+            <Parameter Name="RoleName" Mode="In" Type="String" />
           </FunctionImport>
         </EntityContainer>
       </Schema>
@@ -1142,6 +1155,8 @@
           <FunctionImportMapping FunctionImportName="tuition" FunctionName="CAPLUGAModel.Store.tuition" />
           <FunctionImportMapping FunctionImportName="UpdateAppointment" FunctionName="CAPLUGAModel.Store.UpdateAppointment" />
           <FunctionImportMapping FunctionImportName="UpdateScheduleAppointment" FunctionName="CAPLUGAModel.Store.UpdateScheduleAppointment" />
+          <FunctionImportMapping FunctionImportName="InsertRol" FunctionName="CAPLUGAModel.Store.InsertRol" />
+          <FunctionImportMapping FunctionImportName="UpdateRol" FunctionName="CAPLUGAModel.Store.UpdateRol" />
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

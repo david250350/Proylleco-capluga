@@ -129,68 +129,9 @@ namespace CaplugaAPI.Controllers
         }
 
 
-        [HttpGet]
-        [Route("ListaRoles")]
-        public List<RoleEnt> ListaRoles()
-        {
-
-            using (var context = new CAPLUGAEntities())
-            {
-                var datos = (from x in context.Roles
-                             select x).ToList();
-
-                List<RoleEnt> listaEntidadResultado = new List<RoleEnt>();
-                foreach (var item in datos)
-                {
-                    listaEntidadResultado.Add(new RoleEnt
-                    {
-                        RoleID = item.RolesID,
-                        RolName = item.RoleName
-                    });
-                }
-
-                return listaEntidadResultado;
-            }
-        }
+        
     
-        [HttpGet]
-        [Route("Rol")]
-        public Roles Rol(long q)
-        {
-            using (var context = new CAPLUGAEntities())
-            {
-                context.Configuration.LazyLoadingEnabled = false;
-                return (from x in context.Roles
-                        where x.RolesID == q
-                        select x).FirstOrDefault();
-            }
-        }
-
-        [HttpPost]
-        [Route("CrearRol")]
-        public long CrearRol(Roles roles)
-        {
-            using (var context = new CAPLUGAEntities())
-            {
-                context.Roles.Add(roles);
-                context.SaveChanges();
-                return roles.RolesID;
-
-            }
-        }
-
-            [HttpPut]
-            [Route("ActualizarRol")]
-            public string ActualizarRol(Roles roles)
-            {
-                using (var context = new CAPLUGAEntities())
-                {
-                    var datos = context.Roles.Where(x => x.RolesID == roles.RolesID).FirstOrDefault();
-                    datos.RoleName = roles.RoleName;      
-                    context.SaveChanges();
-                    return "OK";
-                }
-            }
+        
 
         [HttpGet]
         [Route("RecuperarCuenta")]

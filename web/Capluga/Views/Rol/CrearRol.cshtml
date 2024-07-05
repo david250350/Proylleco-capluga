@@ -1,34 +1,71 @@
 ﻿@model Capluga.Entities.RoleEnt
 
 @{
-    ViewBag.Title = "CrearRol";
+    ViewBag.Title = "Registrar Nuevo Rol";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
+
 <div class="content-wrapper d-flex align-items-center auth px-0">
     <div class="row w-100 mx-0">
-        <div class="col-lg-4 mx-auto">
+        <div class="col-lg-10 mx-auto">
             <div class="auth-form-light text-left py-5 px-4 px-sm-5">
-                <h2>Crear Rol</h2>
-                @if (ViewBag.Message != null)
-                {
-                    <div class="alert alert-danger" role="alert" style="text-align:center">
-                        @ViewBag.Message
+
+
+                <main>
+                    <div class="content-wrapper d-flex align-items-center auth px-0">
+                        <div class="row w-100 mx-0">
+                            <div class="col-lg-8 mx-auto">
+                                <div class="auth-form-light text-left py-5 px-4 px-sm-5">
+                                    @using (Html.BeginForm("CrearRol", "Rol", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+                                    {
+                                        @Html.AntiForgeryToken()
+
+                                        <h2>Registrar Horario</h2>
+                                        <div class="form-group">
+                                            <label class="control-label" for="RolName">
+                                                <i class="fas fa-calendar-alt"></i> Rol
+                                            </label>
+                                            @Html.EditorFor(model => model.RolName, new { htmlAttributes = new { @class = "form-control" } })
+                                            @Html.ValidationMessageFor(model => model.RolName, "", new { @class = "text-danger" })
+                                        </div>
+
+                                      
+                                       
+                                        <div class="form-group">
+                                            <div class="col-md-offset-2 col-md-10">
+                                                <button type="button" class="btn btn-primary" onclick="confirmInsert()">
+                                                     Registrar
+                                                </button>
+                                            </div>
+                                        </div>
+                                    }
+                                </div>
+                            </div>
+                        </div>
                     </div>
-                }
+                </main>
 
-             
-
-                @using (Html.BeginForm("CrearRol", "Rol", FormMethod.Post, new { @class = "pt-3" }))
-                {
-                    <div class="form-group">
-                        <label>Nombre del Rol</label>
-                        @Html.TextBoxFor(m => m.RolName, new { @class = "form-control form-control-lg", @placeholder = "Nombre del Rol", @type = "text" })
-                    </div>
-
-                    <button type="submit" class="btn btn-success mr-2">Procesar</button>
-                }
             </div>
         </div>
     </div>
 </div>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+<script>
+    function confirmInsert() {
+        Swal.fire({
+            title: '¿Está seguro?',
+            text: "Seguro de agregar.",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Aceptar!',
+            cancelButtonText: 'Cancelar'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                $("form").submit(); // asume que solo hay un formulario en tu página
+            }
+        });
+    }
+</script>

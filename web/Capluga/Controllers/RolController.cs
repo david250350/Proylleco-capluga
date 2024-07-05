@@ -31,13 +31,10 @@ namespace Capluga.Controllers
         public ActionResult CrearRol(RoleEnt entidad)
         {
 
-            long RoleID = modelroles.CrearRol(entidad);
+            string respuesta = modelroles.CrearRol(entidad);
 
-            if (RoleID > 0)
-            {
-
-                entidad.RoleID = RoleID;
-
+            if (respuesta == "OK")
+            { 
                 return RedirectToAction("ListaRoles", "Rol");
             }
             else
@@ -48,13 +45,13 @@ namespace Capluga.Controllers
         }
 
 
+
         [HttpGet]
         public ActionResult ActualizarRol(long q)
         {
             var datos = modelroles.Rol(q);
             return View(datos);
         }
-
         [HttpPost]
         public ActionResult ActualizarRol(RoleEnt entidad)
         {
@@ -62,9 +59,6 @@ namespace Capluga.Controllers
 
             if (respuesta == "OK")
             {
-                entidad.RoleID = entidad.RoleID;
-
-
                 return RedirectToAction("ListaRoles", "Rol");
             }
             else
@@ -72,6 +66,16 @@ namespace Capluga.Controllers
                 ViewBag.MensajeUsuario = "No se ha podido actualizar la información";
                 return View();
             }
+        }
+
+        [HttpGet]
+        public ActionResult EliminarRol(long q)
+        {
+            modelroles.EliminarRol(q);
+
+
+            
+            return RedirectToAction("ListaRoles", "Rol");
         }
     }
 }

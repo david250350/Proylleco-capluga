@@ -9,6 +9,11 @@ using System.Web;
 
 namespace Capluga.Models
 {
+    public class ApiResponse
+    {
+        public string Message { get; set; }
+    }
+
     public class MedicalCoursesModel
     {
 
@@ -64,9 +69,11 @@ namespace Capluga.Models
                 var urlApi = rutaServidor + "ActualizarCurso";
                 var jsonData = JsonContent.Create(entidad);
                 var res = client.PutAsync(urlApi, jsonData).Result;
-                return res.Content.ReadFromJsonAsync<string>().Result;
+                var result = res.Content.ReadFromJsonAsync<ApiResponse>().Result;
+                return result?.Message;
             }
         }
+
 
         public string ActualizarEstadoCurso(CursoEnt entidad)
         {

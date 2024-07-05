@@ -7,6 +7,7 @@ namespace Capluga.Entities
 {
     public class CursoEnt
     {
+        public long UserID { get; set; }
         public long MedicalCourseID { get; set; }
         public string Name { get; set; }
         public string Description { get; set; }
@@ -15,5 +16,7 @@ namespace Capluga.Entities
         public string Image { get; set; }
         public bool State { get; set; }
         public DateTime DateandTime { get; set; }
+
+
     }
 }

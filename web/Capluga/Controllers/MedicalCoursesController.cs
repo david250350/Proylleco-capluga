@@ -85,8 +85,17 @@ namespace Capluga.Controllers
         public ActionResult ActualizarCurso(long q)
         {
             var datos = CursoModel.ConsultaCurso(q);
+            if (datos == null)
+            {
+                return HttpNotFound();
+            }
+            if (datos.DateandTime == DateTime.MinValue)
+            {
+                datos.DateandTime = DateTime.Now; // Set a default value if needed
+            }
             return View(datos);
         }
+
 
         [HttpPost]
         public ActionResult ActualizarCurso(HttpPostedFileBase ImgCurso, CursoEnt entidad)

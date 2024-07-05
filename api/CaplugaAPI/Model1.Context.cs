@@ -161,5 +161,27 @@ namespace CaplugaAPI
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("UpdateScheduleAppointment", scheduleIDParameter, dNameParameter, dateandTimeParameter);
         }
+    
+        public virtual int InsertRol(string roleName)
+        {
+            var roleNameParameter = roleName != null ?
+                new ObjectParameter("RoleName", roleName) :
+                new ObjectParameter("RoleName", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("InsertRol", roleNameParameter);
+        }
+    
+        public virtual int UpdateRol(Nullable<long> rolesID, string roleName)
+        {
+            var rolesIDParameter = rolesID.HasValue ?
+                new ObjectParameter("RolesID", rolesID) :
+                new ObjectParameter("RolesID", typeof(long));
+    
+            var roleNameParameter = roleName != null ?
+                new ObjectParameter("RoleName", roleName) :
+                new ObjectParameter("RoleName", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("UpdateRol", rolesIDParameter, roleNameParameter);
+        }
     }
 }
