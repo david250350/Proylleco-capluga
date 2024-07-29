@@ -21,6 +21,7 @@ namespace Capluga.Controllers
         
         ProductoModel modelProducto = new ProductoModel();
         MedicalCoursesModel modelCurso = new MedicalCoursesModel();
+        AgendaCitaModel modelAgenda = new AgendaCitaModel();
 
         [HttpPost]
         public ActionResult ProductoPDF()
@@ -191,6 +192,85 @@ namespace Capluga.Controllers
             }
         }
 
+
+        [HttpPost]
+        public ActionResult CitasPDF()
+        {
+            // Suponemos que esta llamada obtiene los datos necesarios
+            List<AgendaEnt> citas = modelAgenda.ConsultaCitas();
+
+            if (citas == null || !citas.Any())
+            {
+                return Content("No se encontraron datos para generar el informe de citas.");
+            }
+
+            using (MemoryStream memoryStream = new MemoryStream())
+            {
+                Document documento = new Document(PageSize.A4);
+                PdfWriter writer = PdfWriter.GetInstance(documento, memoryStream);
+                documento.Open();
+
+                // Definir fuentes
+                Font fontTitulo = FontFactory.GetFont(FontFactory.HELVETICA_BOLD, 16, BaseColor.BLACK);
+                Font fontSubtitulo = FontFactory.GetFont(FontFactory.HELVETICA_BOLD, 12, BaseColor.BLACK);
+                Font fontCuerpo = FontFactory.GetFont(FontFactory.HELVETICA, 10, BaseColor.BLACK);
+
+                // Agregar un logo
+                string imageURL = Server.MapPath("~/Images/Logo.png"); // Asegúrate de tener esta imagen en tu proyecto
+                Image logo = Image.GetInstance(imageURL);
+                logo.ScaleToFit(50f, 50f);
+                logo.SpacingBefore = 10;
+                logo.SpacingAfter = 10;
+                logo.Alignment = Element.ALIGN_RIGHT;
+                documento.Add(logo);
+
+                // Título del documento
+                documento.Add(new Paragraph("Lista de Citas", fontTitulo));
+
+                // Línea separadora
+                LineSeparator separator = new LineSeparator(1f, 100f, BaseColor.DARK_GRAY, Element.ALIGN_CENTER, -1);
+                documento.Add(new Chunk(separator));
+
+                // Datos del documento
+                documento.Add(new Paragraph($"Fecha: {DateTime.Now.ToString("dd/MM/yyyy")}", fontCuerpo));
+                documento.Add(new Paragraph("\n"));
+
+                // Crear una tabla para los detalles de las citas
+                PdfPTable table = new PdfPTable(new float[] { 1, 2, 3, 2, 2, 2 }) { WidthPercentage = 100 };
+                table.DefaultCell.Padding = 5;
+
+                // Definir el estilo del encabezado de la tabla
+                BaseColor colorEncabezado = new BaseColor(0, 121, 182); // Un azul oscuro
+                Font fontEncabezado = FontFactory.GetFont(FontFactory.HELVETICA_BOLD, 10, BaseColor.WHITE);
+
+                // Añadir los encabezados de la tabla
+                table.AddCell(new PdfPCell(new Phrase("ID", fontEncabezado)) { BackgroundColor = colorEncabezado });
+                table.AddCell(new PdfPCell(new Phrase("Nombre del Paciente", fontEncabezado)) { BackgroundColor = colorEncabezado });
+                table.AddCell(new PdfPCell(new Phrase("Dirección", fontEncabezado)) { BackgroundColor = colorEncabezado });
+                table.AddCell(new PdfPCell(new Phrase("Asunto", fontEncabezado)) { BackgroundColor = colorEncabezado });
+                table.AddCell(new PdfPCell(new Phrase("Descripción", fontEncabezado)) { BackgroundColor = colorEncabezado });
+                table.AddCell(new PdfPCell(new Phrase("Fecha y Hora", fontEncabezado)) { BackgroundColor = colorEncabezado });
+
+                // Rellenar la tabla con los detalles de las citas
+                foreach (var item in citas)
+                {
+                    table.AddCell(new Phrase(item.AppointmentID.ToString(), fontCuerpo));
+                    table.AddCell(new Phrase(item.UserName + " " + item.Surnames, fontCuerpo));
+                    table.AddCell(new Phrase($"País: {item.Country}\nEstado: {item.State}\nCiudad: {item.City}\nDistrito: {item.District}\nOtras señas: {item.Street}\nCod. Postal: {item.ZipCode}", fontCuerpo));
+                    table.AddCell(new Phrase(item.Name, fontCuerpo));
+                    table.AddCell(new Phrase(item.Description, fontCuerpo));
+                    table.AddCell(new Phrase(item.DateandTime.ToString("dd/MM/yyyy HH:mm"), fontCuerpo));
+                }
+
+                // Añadir la tabla al documento
+                documento.Add(table);
+
+                documento.Close();
+
+                byte[] bytes = memoryStream.ToArray();
+                return File(bytes, "application/pdf", "Lista_Citas.pdf");
+            }
+        }
 
     }
 }

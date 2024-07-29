@@ -182,7 +182,9 @@
     <Compile Include="Cart.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
+    <Compile Include="Controllers\AgendaCitaController.cs" />
     <Compile Include="Controllers\CarritoController.cs" />
+    <Compile Include="Controllers\CitaHorarioController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\LoginController.cs" />
     <Compile Include="Controllers\MedicalCoursesController.cs" />
@@ -196,7 +198,9 @@
     <Compile Include="DetailCurse.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
+    <Compile Include="Entities\AgendaEnt.cs" />
     <Compile Include="Entities\CarritoEnt.cs" />
+    <Compile Include="Entities\HorarioEnt.cs" />
     <Compile Include="Entities\ProductoEnt.cs" />
     <Compile Include="Entities\RoleEnt.cs" />
     <Compile Include="Entities\UbicacionEnt.cs" />

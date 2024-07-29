@@ -8,59 +8,56 @@
     <div class="card">
         <div class="card-body">
             <h2 class="card-title">Informacion de Usuarios</h2>
-
-            @if (Model.Count() > 0)
-            {
-                <table id="DataTable" class="table table-bordered table-hover">
-                    <thead>
-                        <tr>
-                            <th>ID</th>
-                            <th>Correo Electronico</th>
-                            <th>Nombre</th>
-                            <th>Apellidos</th>
-                            <th>Estado</th>
-                            <th>Cambiar Estado</th>
-                            <th>Actualizar</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @foreach (var item in Model)
-                        {
+            <div class="container">
+                @if (Model.Count() > 0)
+                {
+                    <table id="DataTable" class="table table-bordered table-hover">
+                        <thead>
                             <tr>
-                                <td>@item.UserID</td>
-                                <td>@item.Email</td>
-                                <td class="card-title">@item.UserName</td>
-                                <td>@item.Surnames</td>
-
-                                @if (item.State)
-                                {
-                                    <td>Activo</td>
-                                }
-                                else
-                                {
-                                    <td>Inactivo</td>
-                                }
-
-                                <td style="text-align:center">
-                                    <a href="@Url.Action("ActualizarEstadoUsuario","Usuario", new { q = item.UserID })"><i class="fa fa-refresh fa-lg"></i></a>
-                                </td>
-
-                                <td style="text-align:center">
-                                    <a href="@Url.Action("ActualizarUsuario","Usuario", new { q = item.UserID })"><i class="fa fa-edit fa-lg"></i></a>
-                                </td>
-
+                                <th>ID</th>
+                                <th>Correo Electronico</th>
+                                <th>Nombre</th>
+                                <th>Apellidos</th>
+                                <th>Estado</th>
+                                <th>Cambiar Estado</th>
+                                <th>Actualizar</th>
                             </tr>
-                        }
-                    </tbody>
-                </table>
-            }
-            else
-            {
-                <div class="col-12 alert alert-info" role="alert" style="text-align: center; margin-top: 5%;">
-                    No hay usuarios registrados en este momento
-                </div>
-            }
+                        </thead>
+                        <tbody>
+                            @foreach (var item in Model)
+                            {
+                                <tr>
+                                    <td>@item.UserID</td>
+                                    <td>@item.Email</td>
+                                    <td class="card-title">@item.UserName</td>
+                                    <td>@item.Surnames</td>
+                                    <td>@(item.State ? "Activo" : "Inactivo")</td>
 
+
+                               
+                                    <td style="text-align:center">
+                                        <a onclick="confirmStateChange('@Url.Action("ActualizarEstadoUsuario", "Usuario", new { q = item.UserID })')">
+                                            <i class="fa fa-refresh fa-lg"></i>
+                                        </a>
+
+                                    </td>
+                                    <td style="text-align:center">
+                                        <a href="@Url.Action("ActualizarUsuario","Usuario", new { q = item.UserID })"><i class="fa fa-edit fa-lg"></i></a>
+                                    </td>
+
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                }
+                else
+                {
+                    <div class="col-12 alert alert-info" role="alert" style="text-align: center; margin-top: 5%;">
+                        No hay usuarios registrados en este momento
+                    </div>
+                }
+
+            </div>
         </div>
-    </div>
+</div>
 </div>

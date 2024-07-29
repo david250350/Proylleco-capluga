@@ -1,6 +1,6 @@
-﻿@model IEnumerable<Capluga.Entities.RoleEnt>
+﻿@model IEnumerable<Capluga.Entities.HorarioEnt>
 @{
-    ViewBag.Title = "Consulta Rol";
+    ViewBag.Title = "Consulta Horarios";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
@@ -8,56 +8,46 @@
 <div class="col-12 grid-margin stretch-card">
     <div class="card">
         <div class="card-body">
-            <h2 class="card-title">Roles</h2>
+
+
+
+            <h2>Horarios Registrados</h2>
+
             <div class="container">
                 @if (Model.Count() > 0)
                 {
-
                     <table id="DataTable" class="table table-bordered table-hover">
-
                         <thead>
                             <tr>
                                 <th>ID</th>
-                                <th>Nombre</th>
-
-                                <th>Actualizar</th>
-                                <th>Eliminar</th>
+                                <th>Nombre del Horario</th>
+                                <th>Fecha y Hora</th>
+                                <th>Acciones</th>
                             </tr>
                         </thead>
                         <tbody>
-                            @foreach (var item in Model)
+                            @foreach (var horario in Model)
                             {
                                 <tr>
-                                    <td>@item.RoleID</td>
-                                    <td>@item.RolName</td>
-
-
-
+                                    <td>@horario.ScheduleID</td>
+                                    <td>@horario.Dname</td>
+                                    <td>@horario.DateandTime.ToString("dd/MM/yyyy HH:mm")</td>
                                     <td style="text-align:center">
                                         <!-- Acciones como editar o eliminar -->
-                                        <a href="@Url.Action("ActualizarRol", "Rol", new { q = item.RoleID })"><i class="fa fa-edit fa-lg"></i>&nbsp;&nbsp;</a>
-                                        &nbsp;&nbsp;&nbsp;
-
-                                    </td>
-
-                                    <td style="text-align:center">
-                                        <a href="#" onclick="confirmDelete('@Url.Action("EliminarRol", "Rol", new { q = item.RoleID })')">
-                                            <i class="fa fa-remove fa-lg"></i>
-                                        </a>
+                                        <a href="@Url.Action("ActualizarHorarios", "CitaHorario", new { q = horario.ScheduleID })"><i class="fa fa-edit fa-lg"></i></a>
                                     </td>
                                 </tr>
                             }
                         </tbody>
                     </table>
-
                 }
                 else
                 {
                     <div class="col-12 alert alert-info" role="alert" style="text-align: center; margin-top: 5%;">
-                        No hay productos en este momento
+                        No hay horarios registrados en este momento
                     </div>
                 }
             </div>
         </div>
-        </div>
+    </div>
 </div>

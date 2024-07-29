@@ -133,5 +133,16 @@ namespace Capluga.Controllers
             return View(datos);
         }
 
-    }
+        [HttpGet]
+        public ActionResult DetallesCurso(long id)
+        {
+            var curso = CursoModel.ConsultaCurso(id);
+            if (curso == null)
+            {
+                return HttpNotFound();
+            }
+            return View(curso);
+        }
+    
+}
 }

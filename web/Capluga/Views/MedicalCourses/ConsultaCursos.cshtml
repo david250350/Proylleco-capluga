@@ -8,61 +8,63 @@
 <div class="col-12 grid-margin stretch-card">
     <div class="card">
         <div class="card-body">
-            <h4 class="card-title">Información de los cursos</h4>
+            <h2 class="card-title">Información de los cursos</h2>
 
             <div style="text-align:center">
-                
+
                 <form action="@Url.Action("CursoPDF", "Document")" method="post" style="display:inline;">
                     <button type="submit" class="btn btn-success">Generar PDF</button>
                 </form>
             </div>
-
-            @if (Model.Count() > 0)
-            {
-                <table id="DataTable" class="table table-bordered table-hover">
-                    <thead>
-                        <tr>
-                            <th>Nombre</th>
-                            <th>Descripción</th>
-                            <th>Fecha</th>
-                            <th>Cupos</th>
-                            <th>Precio</th>
-                            <th>Estado</th>
-                            <th>Vista Previa</th>
-                            <th>Cambiar Estado</th>
-                            <th>Actualizar</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @foreach (var item in Model)
-                        {
+            <div class="container">
+                @if (Model.Count() > 0)
+                {
+                    <table id="DataTable" class="table table-bordered table-hover">
+                        <thead>
                             <tr>
-                                <td>@item.Name</td>
-                                <td>@item.Description</td>
-                                <td>@item.DateandTime.ToString("dd/MM/yyyy HH:mm")</td>
-                                <td>@item.Quantity</td>
-                                <td>@item.Price.ToString("C", new System.Globalization.CultureInfo("es-CR"))</td>
-                                <td>@(item.State ? "Activo" : "Inactivo")</td>
-                                <td style="text-align:center">
-                                    <img src="@item.Image" style="width:125px; height:125px; border-radius:0px;">
-                                </td>
-                                <td style="text-align:center">
-                                    <a href="@Url.Action("ActualizarEstadoCurso", "MedicalCourses", new { q = item.MedicalCourseID })"><i class="fa fa-refresh fa-lg"></i></a>
-                                </td>
-                                <td style="text-align:center">
-                                    <a href="@Url.Action("ActualizarCurso", "MedicalCourses", new { q = item.MedicalCourseID })"><i class="fa fa-edit fa-lg"></i></a>
-                                </td>
+                                <th>Nombre</th>
+                                <th>Descripción</th>
+                                <th>Fecha</th>
+                                <th>Cupos</th>
+                                <th>Precio</th>
+                                <th>Estado</th>
+                                <th>Vista Previa</th>
+                                <th>Cambiar Estado</th>
+                                <th>Actualizar</th>
                             </tr>
-                        }
-                    </tbody>
-                </table>
-            }
-            else
-            {
-                <div class="col-12 alert alert-info" role="alert" style="text-align: center; margin-top: 5%;">
-                    No hay cursos registrados en este momento
-                </div>
-            }
+                        </thead>
+                        <tbody>
+                            @foreach (var item in Model)
+                            {
+                                <tr>
+                                    <td>@item.Name</td>
+                                    <td>@item.Description</td>
+                                    <td>@item.DateandTime.ToString("dd/MM/yyyy HH:mm")</td>
+                                    <td>@item.Quantity</td>
+                                    <td>@item.Price.ToString("C", new System.Globalization.CultureInfo("es-CR"))</td>
+                                    <td>@(item.State ? "Activo" : "Inactivo")</td>
+                                    <td style="text-align:center">
+                                        <img src="@item.Image" style="width:125px; height:125px; border-radius:0px;">
+                                    </td>
+                                    <td style="text-align:center">
+                                        <a onclick="confirmStateChange('@Url.Action("ActualizarEstadoCurso", "MedicalCourses", new { q = item.MedicalCourseID })')">
+                                            <i class="fa fa-refresh fa-lg"></i></a>
+                                        </td>
+                                    <td style="text-align:center">
+                                        <a href="@Url.Action("ActualizarCurso", "MedicalCourses", new { q = item.MedicalCourseID })"><i class="fa fa-edit fa-lg"></i></a>
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                }
+                else
+                {
+                    <div class="col-12 alert alert-info" role="alert" style="text-align: center; margin-top: 5%;">
+                        No hay cursos registrados en este momento
+                    </div>
+                }
+            </div>
         </div>
     </div>
 </div>

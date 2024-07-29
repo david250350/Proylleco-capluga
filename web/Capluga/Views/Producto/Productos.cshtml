@@ -16,8 +16,8 @@
                 <form action="@Url.Action("ProductoPDF", "Document")" method="post">
                     <button type="submit" class="btn btn-success">Descargar PDF</button>
                 </form>
-                </div>
-
+            </div>
+            <div class="container">
                 @if (Model.Count() > 0)
                 {
 
@@ -43,21 +43,17 @@
                                     <td>@item.Description</td>
                                     <td>@item.Quantity</td>
                                     <td>@item.Price.ToString("C", new System.Globalization.CultureInfo("es-CR"))</td>
-                                    <td style="text-align:center"><img src="@item.Image" style="width:125px; height:125px; border-radius:0px;"></td>
-                                    @if (item.State)
-                                    {
-                                        <td>Activo</td>
-                                    }
-                                    else
-                                    {
-                                        <td>Inactivo</td>
-                                    }
+                                    <td>@(item.State ? "Activo" : "Inactivo")</td>
+                                    <td style="text-align:center">
+                                    <img src="@item.Image" style="width:125px; height:125px; border-radius:0px;">
+                                    </td>
+                                 
+                                    <td style="text-align:center">
+                                        <a onclick="confirmStateChange('@Url.Action("ActualizarEstadoProducto", "Producto", new { q = item.MedicalImplementsID })')">
+                                        <i class="fa fa-refresh fa-lg"></i></a>
 
-                                <td style="text-align:center">
-                                    <a href="@Url.Action("ActualizarEstadoProducto", "Producto", new { q = item.MedicalImplementsID })"><i  onclick="confirmPayment()" class="fa fa-refresh fa-lg"></i></a>
-                                    
-                                </td>
-                                    
+                                    </td>
+
 
                                     <td style="text-align:center">
                                         <!-- Acciones como editar o eliminar -->
@@ -80,7 +76,7 @@
             </div>
         </div>
 </div>
-
+    </div>
 
 <script>
     function confirmPayment() {

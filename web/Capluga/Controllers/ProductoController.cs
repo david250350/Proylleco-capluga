@@ -110,8 +110,18 @@ namespace Capluga.Controllers
                 return View();
             }
         }
+        [HttpGet]
+        public ActionResult DetallesProducto(long id)
+        {
+            var producto = modelProducto.Producto(id);
+            if (producto == null)
+            {
+                return HttpNotFound();
+            }
+            return View(producto);
+        }
 
-        
+
 
     }
 }

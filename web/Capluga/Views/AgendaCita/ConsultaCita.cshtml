@@ -1,0 +1,69 @@
+﻿@model IEnumerable<Capluga.Entities.AgendaEnt>
+
+@{
+    ViewBag.Title = "ConsultaCita";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+<div class="col-12 grid-margin stretch-card">
+    <div class="card">
+        <div class="card-body">
+            <h2 class="card-title">Mis Citas</h2>
+            <br>
+            @if (ViewBag.MensajeUsuario != null)
+            {
+                <div class="alert alert-danger" role="alert" style="text-align:center">
+                    @ViewBag.MensajeUsuario
+                </div>
+            }
+            <div class="container">
+                @if (Model.Any())
+                {
+
+                    <table id="tableShow" class="table table-bordered table-hover">
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Nombre</th>
+                                <th>Asunto</th>
+                                <th>Descripcion</th>
+                                <th>Fecha de la Cita</th>
+
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var item in Model)
+                            {
+                                <tr>
+                                    <td>@item.AppointmentID</td>
+                                    <td>@Model.FirstOrDefault().UserName @Model.FirstOrDefault().Surnames</td>
+                                    <td>@item.Name</td>
+                                    <td>@item.Description</td>
+                                    <td>@Model.FirstOrDefault().Dname @Model.FirstOrDefault().DateandTime</td>
+
+
+                                    <td style="text-align:center">
+                                        <a href="#" onclick="confirmDelete('@Url.Action("EliminarRegistroCita", "AgendaCita", new { q = item.AppointmentID })')">
+                                            <i class="fa fa-remove fa-lg"></i>
+                                        </a>
+                                    </td>
+
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                }
+                else
+                {
+                    <div class="col-12 alert alert-info" role="alert" style="text-align: center; margin-top: 5%;">
+                        No hay Citas Programadas en este momento
+                    </div>
+                }
+
+            </div>
+
+        </div>
+</div>
+    </div>
+

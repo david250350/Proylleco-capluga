@@ -7,7 +7,7 @@
 <div class="col-12 grid-margin stretch-card">
     <div class="card">
         <div class="card-body">
-            <h4 class="card-title">Información del Carrito</h4>
+            <h2 class="card-title">Información del Carrito</h2>
             <br>
 
             @if (ViewBag.MensajeUsuario != null)
@@ -16,105 +16,69 @@
                     @ViewBag.MensajeUsuario
                 </div>
             }
+            <div class="container">
+                @if (Model.Any())
+                {
 
-            @if (Model.Any())
-            {
-
-                <table id="DataTable" class="table table-bordered table-hover">
-                    <thead>
-                        <tr>
-                            <th>Nombre</th>
-                            <th>Cantidad</th>
-                            <th>Precio Unitario</th>
-                            <th>SubTotal</th>
-                            <th>Impuesto</th>
-                            <th>Total</th>
-                            <th>Eliminar</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @foreach (var item in Model)
-                        {
+                    <table id="DataTable" class="table table-bordered table-hover">
+                        <thead>
                             <tr>
-                                <td>@item.Name</td>
-                                <td>@item.Quantity</td>
-                                <td>@item.Price.ToString("C", new System.Globalization.CultureInfo("es-CR"))</td>
-                                <td>@item.SubTotal.ToString("C", new System.Globalization.CultureInfo("es-CR"))</td>
-                                <td>@item.Impuestos.ToString("C", new System.Globalization.CultureInfo("es-CR"))</td>
-                                <td>@item.Total.ToString("C", new System.Globalization.CultureInfo("es-CR"))</td>
-
-
-                                <td style="text-align:center">
-                                    <a href="#" onclick="confirmDelete('@Url.Action("EliminarRegistroCarrito", "Carrito", new { q = item.CartID })')">
-                                        <i class="fa fa-remove fa-lg"></i>
-                                    </a>
-                                </td>
+                                <th>Nombre</th>
+                                <th>Cantidad</th>
+                                <th>Precio Unitario</th>
+                                <th>SubTotal</th>
+                                <th>Impuesto</th>
+                                <th>Total</th>
+                                <th>Eliminar</th>
                             </tr>
-                        }
-                    </tbody>
-                </table>
+                        </thead>
+                        <tbody>
+                            @foreach (var item in Model)
+                            {
+                                <tr>
+                                    <td>@item.Name</td>
+                                    <td>@item.Quantity</td>
+                                    <td>@item.Price.ToString("C", new System.Globalization.CultureInfo("es-CR"))</td>
+                                    <td>@item.SubTotal.ToString("C", new System.Globalization.CultureInfo("es-CR"))</td>
+                                    <td>@item.Impuestos.ToString("C", new System.Globalization.CultureInfo("es-CR"))</td>
+                                    <td>@item.Total.ToString("C", new System.Globalization.CultureInfo("es-CR"))</td>
 
-                <div class="row" style="margin-top: 2%;">
-                    <div class="col-3">
-                        <p style="font-weight:bold; text-align:center; line-height: 40px;"> El monto total a pagar es de: @decimal.Parse(Session["TotalPago"].ToString()).ToString("C", new System.Globalization.CultureInfo("es-CR")) </p>
+
+                                    <td style="text-align:center">
+                                        <a href="#" onclick="confirmDelete('@Url.Action("EliminarRegistroCarrito", "Carrito", new { q = item.CartID })')">
+                                            <i class="fa fa-remove fa-lg"></i>
+                                        </a>
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+
+                    <div class="row" style="margin-top: 2%;">
+                        <div class="col-4">
+                            <p style="font-weight:900; text-align:initial; line-height: 40px;"> El monto total a pagar es de: @decimal.Parse(Session["TotalPago"].ToString()).ToString("C", new System.Globalization.CultureInfo("es-CR")) </p>
+                        </div>
+                        <div class="col-4">
+
+                            @using (Html.BeginForm("PagarCarrito", "Carrito", FormMethod.Post, new { id = "paymentForm" }))
+                            {
+                                <button type="button" onclick="confirmPayment()" class="btn btn-primary">Pedir</button>
+                            }
+
+                        </div>
                     </div>
-                    <div class="col-4">
-
-                        @using (Html.BeginForm("PagarCarrito", "Carrito", FormMethod.Post, new { id = "paymentForm" }))
-                        {
-                            <button type="button" onclick="confirmPayment()" class="btn btn-primary">Pedir</button>
-                        }
-
+                }
+                else
+                {
+                    <div class="col-12 alert alert-info" role="alert" style="text-align: center; margin-top: 5%;">
+                        No hay productos agregados en este momento
                     </div>
-                </div>
-            }
-            else
-            {
-                <div class="col-12 alert alert-info" role="alert" style="text-align: center; margin-top: 5%;">
-                    No hay productos agregados en este momento
-                </div>
-            }
+                }
 
+            </div>
         </div>
-    </div>
+</div>
 </div>
 
-<script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
 
-<script>
-    function confirmDelete(url) {
-        Swal.fire({
-            title: '¿Estás seguro?',
-            text: "Eliminar Producto del Carrito",
-            icon: 'warning',
-            showCancelButton: true,
-            confirmButtonColor: '#3085d6',
-            cancelButtonColor: '#d33',
-            confirmButtonText: 'Eliminar!',
-            cancelButtonText: 'Cancelar'
-        }).then((result) => {
-            if (result.isConfirmed) {
-                window.location.href = url; // Redirige para eliminar la cita si el usuario confirma
-            }
-        });
-    }
-</script>
 
-<script>
-    function confirmPayment() {
-        Swal.fire({
-            title: '¿Estás seguro?',
-            text: "Confirmar Pedido.",
-            icon: 'question',
-            showCancelButton: true,
-            confirmButtonColor: '#3085d6',
-            cancelButtonColor: '#d33',
-            confirmButtonText: 'Confirmar ',
-            cancelButtonText: 'Cancelar'
-        }).then((result) => {
-            if (result.isConfirmed) {
-                document.getElementById('paymentForm').submit(); // Envía el formulario de pago
-            }
-        });
-    }
-</script>

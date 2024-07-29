@@ -1,0 +1,85 @@
+﻿@model IEnumerable<Capluga.Entities.AgendaEnt>
+@{
+    ViewBag.Title = "Consulta Citas";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+   
+}
+
+<div class="col-12 grid-margin stretch-card">
+    <div class="card">
+        <div class="card-body">
+            <h2 class="card-title">Listas de Citas</h2>
+            <br>
+
+            @if (ViewBag.MensajeUsuario != null)
+            {
+                <div class="alert alert-danger" role="alert" style="text-align:center">
+                    @ViewBag.MensajeUsuario
+                </div>
+            }
+
+            <div style="text-align:center">
+
+                <form action="@Url.Action("CitasPDF", "Document")" method="post" style="display:inline;">
+                    <button type="submit" class="btn btn-success">Generar PDF</button>
+                </form>
+            </div>
+            <div class="container">
+                @if (Model.Any())
+                {
+
+                    <table id="DataTable" class="table table-bordered table-hover">
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+
+                                <th>N.Paciente</th>
+                                <th>ID Direccion</th>
+                                <th>Asunto</th>
+                                <th>Descripcion</th>
+
+                                <th>Fecha cita</th>
+                                <th>Acciones</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var item in Model)
+                            {
+
+                                <tr>
+                                    <td>@item.AppointmentID</td>
+
+                                    <td>@item.UserName @item.Surnames</td>
+                                    <td>
+                                        Pais: @item.Country<br>
+                                        Estado: @item.State<br>
+                                        Ciudad: @item.City<br>
+                                        Distrito: @item.District<br>
+                                        Otras señas: @item.Street<br>
+                                        Cod.Postal: @item.ZipCode
+                                    </td>
+                                    <td>@item.Name</td>
+                                    <td>@item.Description</td>
+
+                                    <td>@item.Dname @item.DateandTime</td>
+                                    <td style="text-align:center">
+                                        <!-- Acciones como editar o eliminar -->
+                                        <a href="@Url.Action("Actualizarcita", "AgendaCita", new { q = item.AppointmentID })"><i class="fa fa-edit fa-lg"></i></a>
+
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                }
+                else
+                {
+                    <div class="col-12 alert alert-info" role="alert" style="text-align: center; margin-top: 5%;">
+                        No hay productos agregados en este momento
+                    </div>
+                }
+
+            </div>
+        </div>
+    </div>
+</div>

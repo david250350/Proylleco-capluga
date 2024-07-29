@@ -4,77 +4,64 @@
 
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-<div class="col-12 grid-margin stretch-card">
-    <div class="card">
-        <div class="card-body">
-            <h4 class="card-title">Información del Producto</h4>
+<main>
+    <div class="col-12 grid-margin stretch-card">
+        <div class="card">
+            <div class="card-body">
+                <div class="container">
 
-            @if (ViewBag.MensajeUsuario != null)
-            {
-                <div class="alert alert-danger" role="alert" style="text-align:center">
-                    @ViewBag.MensajeUsuario
-                </div>
-            }
+                    <h2 class="card-title">Actualizar Producto</h2>
 
-            @using (Html.BeginForm("ActualizarProducto", "Producto", FormMethod.Post, new { @class = "pt-3", @enctype = "multipart/form-data" }))
-            {
-                @Html.HiddenFor(m => m.MedicalImplementsID)
-
-                <div class="form-group">
-                    <label>Nombre</label>
-                    @Html.TextBoxFor(m => m.Name, new
+                    @if (ViewBag.MensajeUsuario != null)
                     {
-                        @class = "form-control form-control-lg",
-                        @placeholder = "Nombre",
-                       @type = "text"
-                   })
-                </div>
-                <div class="form-group">
-                    <label>Descripción</label>
-                    @Html.TextBoxFor(m => m.Description, new { @class = "form-control form-control-lg", @placeholder = "Descripción", @type = "text" })
-                </div>
-                <div class="form-group">
-                    <label>Cantidad</label>
-                    @Html.TextBoxFor(m => m.Quantity, new { @class = "form-control form-control-lg", @placeholder = "Cantidad", @type = "number" })
-                </div>
-                <div class="form-group">
-                    <label>Precio</label>
-                    @Html.TextBoxFor(m => m.Price, new { @class = "form-control form-control-lg", @placeholder = "Precio", @type = "number" })
-                </div>
-                <div class="form-group">
-                    <label>Imagen</label>
-                    <input type="file" class="form-control" id="Image" name="Image">
-                </div>
-                <div class="form-group">
-                    <div class="col-md-offset-2 col-md-10">
-                        <button type="button" class="btn btn-primary" onclick="confirmUpdate()">
-                            Actualizar
-                        </button>
+                        <div class="alert alert-danger" role="alert" style="text-align:center">
+                            @ViewBag.MensajeUsuario
+                        </div>
+                    }
 
-                    </div>
-                </div>
+                    @using (Html.BeginForm("ActualizarProducto", "Producto", FormMethod.Post, new { @class = "pt-3", @enctype = "multipart/form-data" }))
+                    {
+                        @Html.HiddenFor(m => m.MedicalImplementsID)
 
-            }
+                        <div class="form-group">
+                            <label>Nombre</label>
+                            @Html.TextBoxFor(m => m.Name, new
+                            {
+                                @class = "form-control form-control-lg",
+                                @placeholder = "Nombre",
+                               @type = "text"
+                           })
+                        </div>
+                        <div class="form-group">
+                            <label>Descripción</label>
+                            @Html.TextBoxFor(m => m.Description, new { @class = "form-control form-control-lg", @placeholder = "Descripción", @type = "text" })
+                        </div>
+                        <div class="form-group">
+                            <label>Cantidad</label>
+                            @Html.TextBoxFor(m => m.Quantity, new { @class = "form-control form-control-lg", @placeholder = "Cantidad", @type = "number" })
+                        </div>
+                        <div class="form-group">
+                            <label>Precio</label>
+                            @Html.TextBoxFor(m => m.Price, new { @class = "form-control form-control-lg", @placeholder = "Precio", @type = "number" })
+                        </div>
+                        <div class="form-group">
+                            <label>Imagen</label>
+                            <input type="file" class="form-control" id="Image" name="Image">
+                        </div>
+                        <div class="form-group">
+                            <div class="col-md-offset-2 col-md-10">
+                                <button type="button" class="btn btn-primary" onclick="confirmUpdate()">
+                                    Actualizar
+                                </button>
+
+                            </div>
+                        </div>
+
+                    }
+                </div>
+            </div>
         </div>
     </div>
-</div>
-
-<script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
-<script>
-    function confirmUpdate() {
-        Swal.fire({
-            title: '¿Está seguro?',
-            text: "Seguro de actualizar.",
-            icon: 'warning',
-            showCancelButton: true,
-            confirmButtonColor: '#3085d6',
-            cancelButtonColor: '#d33',
-            confirmButtonText: 'Aceptar!',
-            cancelButtonText: 'Cancelar'
-        }).then((result) => {
-            if (result.isConfirmed) {
-                $("form").submit(); // asume que solo hay un formulario en tu página
-            }
-        });
-    }
-</script>
+ 
+    </main>
+     

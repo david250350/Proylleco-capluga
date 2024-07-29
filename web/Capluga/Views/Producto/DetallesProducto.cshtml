@@ -1,0 +1,77 @@
+﻿@model Capluga.Entities.ProductoEnt
+
+@{
+    ViewBag.Title = "Detalles del Producto";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="container mt-4">
+    <div class="row">
+        <div class="col-md-6">
+            <img src="@Model.Image" class="img-fluid" alt="@Model.Name" />
+        </div>
+        <div class="col-md-6">
+            <h2>@Model.Name</h2>
+           
+            <hr />
+            <p><strong>Descripción:</strong> @Model.Description</p>
+            <p><strong>Unidades:</strong> @Model.Quantity</p>
+            <h3 class="text-dark">₡ @Model.Price.ToString("N0", new System.Globalization.CultureInfo("es-CR"))</h3>
+
+            <div class="input-group mb-3" style="max-width: 250px;">
+                <div class="input-group-prepend">
+                    <button class="btn btn-outline-secondary" type="button" id="button-minus" onclick="updateQuantity(-1)" style="height: 35px; width: 35px;">-</button>
+                </div>
+                <input type="text" id="prd-@Model.MedicalImplementsID" class="form-control" placeholder="Cantidad" aria-label="Cantidad" value="1" style="height: 35px;">
+                <div class="input-group-append">
+                    <button class="btn btn-outline-secondary" type="button" id="button-plus" onclick="updateQuantity(1)" style="height: 35px; width: 35px;">+</button>
+                </div>
+            </div>
+            <button class="btn btn-success btn-block" style="max-width: 250px;" onclick="AgrearCarrito(@Model.MedicalImplementsID, @Model.Quantity)">Añadir al carrito</button>
+        </div>
+    </div>
+</div>
+
+<style>
+    .input-group-btn {
+        display: flex;
+        justify-content: center;
+    }
+
+    .btn-number {
+        width: 35px;
+        height: 35px;
+    }
+
+    .input-number {
+        width: 60px;
+        text-align: center;
+    }
+
+    .form-control {
+        font-size: 1rem;
+        line-height: 1.5;
+        border-radius: .25rem;
+    }
+
+    .btn {
+        font-size: 1rem;
+        line-height: 1.5;
+        border-radius: .25rem;
+    }
+</style>
+
+<script>
+ function updateQuantity(change) {
+     var quantityInput = document.getElementById('prd-@Model.MedicalImplementsID');
+     var currentQuantity = parseInt(quantityInput.value);
+     if (isNaN(currentQuantity)) {
+         currentQuantity = 1;
+     }
+     var newQuantity = currentQuantity + change;
+     if (newQuantity < 1) {
+         newQuantity = 1;
+     }
+     quantityInput.value = newQuantity;
+ }
+</script>

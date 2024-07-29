@@ -12,171 +12,81 @@
 }
 
 <!-- Filtros -->
-<div class="top_bar_content align-items-center col-7">
-    <input type="text" id="buscarProducto" class="form-control" placeholder="Buscar..." aria-label="Buscar" aria-describedby="button-addon2">
+<div class="container">
+    <div class="row mt-3 flex-column align-items-center col-3">
+            <input type="text" id="buscar" class="form-control" placeholder="Buscar..." aria-label="Buscar" aria-describedby="button-addon2">
+        </div>
 
-    <div class="row mt-3">
-        <div class="col-3">
-            <label for="rangoPrecio">Rango de Precio:</label>
-            <input type="number" id="precioMin" class="form-control" placeholder="Mínimo">
-            <input type="number" id="precioMax" class="form-control mt-1" placeholder="Máximo">
-        </div>
-        <div class="col-3">
-            <label for="ordenPrecio">Ordenar por Precio:</label>
-            <select id="ordenPrecio" class="form-control">
-                <option value="none">Seleccionar</option>
-                <option value="asc">Menor a Mayor</option>
-                <option value="desc">Mayor a Menor</option>
-            </select>
-        </div>
-        <div class="col-3">
-            <label for="ordenNombre">Ordenar por Nombre:</label>
-            <select id="ordenNombre" class="form-control">
-                <option value="none">Seleccionar</option>
-                <option value="asc">A a Z</option>
-                <option value="desc">Z a A</option>
-            </select>
-        </div>
-        <div class="col-3">
-            <button class="btn btn-primary mt-4" onclick="aplicarFiltros()">Aplicar Filtros</button>
+        <div class="row mt-3">
+            <div class="col-2">
+                <label for="rangoPrecio">Rango de Precio:</label>
+                <input type="number" id="precioMin" class="form-control" placeholder="Mínimo">
+                <input type="number" id="precioMax" class="form-control mt-1" placeholder="Máximo">
+            </div>
+            <div class="col-3">
+                <label for="ordenFiltro">Ordenar por:</label>
+                <select id="ordenFiltro" class="form-control">
+                    <option value="none">Seleccionar</option>
+                    <option value="precioAsc">Precio: Menor a Mayor</option>
+                    <option value="precioDesc">Precio: Mayor a Menor</option>
+                    <option value="nombreAsc">Nombre: A a Z</option>
+                    <option value="nombreDesc">Nombre: Z a A</option>
+                </select>
+            </div>
+            <div class="col-2">
+                <button class="btn btn-primary mt-4" onclick="aplicarFiltros()">Aplicar Filtros</button>
+            </div>
         </div>
     </div>
-</div>
 
-<br />
-<br />
-<br />
-<br />
-<br />
-<!-- Productos -->
-<div class="row mt-3 justify-content-center" id="productosContainer">
-    @if (Model != null)
-    {
-        foreach (var item in Model)
-        {
-            <div class="col-3 producto-card" data-precio="@item.Price" data-nombre="@item.Name">
-                <div class="card text-center w-100">
-                    <div class="card-body">
-                        <img src="@item.Image" width="150" height="150">
-                        <br /><br />
-                        <h5 class="card-title">@item.Name</h5>
-                        <p class="card-text">@item.Description</p>
-                        <p class="card-text">Unidades: @item.Quantity - @item.Price.ToString("C", new System.Globalization.CultureInfo("es-CR"))</p>
-                        @if (Session["UserID"] != null)
-                        {
-                            <div class="row">
-                                <div class="col-3"></div>
-                                <div class="col-4" style="text-align:right!important">
-                                    <input id="prd-@item.MedicalImplementsID" type="number" class="form-control">
-                                </div>
-                                <div class="col-4" style="text-align:left">
-                                    <a onclick="RegistrarInscripcion(@item.MedicalImplementsID, @item.Quantity)" class="btn btn-outline-primary"><i class="fa fa-cart-plus"></i></a>
-                                </div>
+    @*<br />
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />*@
+    <br />
+    <!-- Productos -->
+    <div class="container">
+        <div class="row mt-12 justify-content-start" id="FiltroContainer">
+            @if (Model != null)
+            {
+                foreach (var item in Model)
+                {
+                    <div class="col-12 col-sm-6 col-md-4 col-lg-4 mb-4 align-items-stretch filtro-card" data-precio="@item.Price" data-nombre="@item.Name">
+                        <div class="card text-center w-100">
+                            <div class="card-body">
+                                <a href="@Url.Action("DetallesProducto", "Producto", new { id = item.MedicalImplementsID })">
+                                    <img src="@item.Image" width="150" height="150"></a>
+                                    <br /><br />
+                                    <h4 class="card-title">
+                                        <a href="@Url.Action("DetallesProducto", "Producto", new { id = item.MedicalImplementsID })">@item.Name</a>
+                                    </h4>
+                                    @*<p class="card-text">@item.Description</p>*@
+                                    <p class="card-text">Unidades: @item.Quantity - @item.Price.ToString("C", new System.Globalization.CultureInfo("es-CR"))</p>
+                                    @if (Session["UserID"] != null)
+                                    {
+                                        <div class="row">
+                                            <div class="col-3"></div>
+                                            <div class="col-4" style="text-align:right!important">
+                                                <input id="prd-@item.MedicalImplementsID" type="number" class="form-control">
+                                            </div>
+                                            <div class="col-4" style="text-align:left">
+                                                <a onclick="AgrearCarrito(@item.MedicalImplementsID, @item.Quantity)" class="btn btn-outline-primary"><i class="fa fa-cart-plus"></i></a>
+                                            </div>
+                                        </div>
+                                    }
                             </div>
-                        }
+                        </div>
                     </div>
-                </div>
-            </div>
-        }
-    }
-    else
-    {
-        <div class="col-12 alert alert-info" role="alert" style="text-align: center; margin-top: 5%;">
-            No hay productos registrados en este momento
-        </div>
-    }
-</div>
-
-<script>
-    document.getElementById('buscarProducto').addEventListener('keyup', function () {
-        var searchText = this.value.toLowerCase();
-        filtrarProductos(searchText, 'buscar');
-    });
-
-    function aplicarFiltros() {
-        var searchText = document.getElementById('buscarProducto').value.toLowerCase();
-        var precioMin = parseFloat(document.getElementById('precioMin').value) || 0;
-        var precioMax = parseFloat(document.getElementById('precioMax').value) || Infinity;
-        var ordenPrecio = document.getElementById('ordenPrecio').value;
-        var ordenNombre = document.getElementById('ordenNombre').value;
-
-        filtrarProductos(searchText, 'buscar');
-        filtrarProductos(precioMin, precioMax, 'rangoPrecio');
-        ordenarProductos(ordenPrecio, 'precio');
-        ordenarProductos(ordenNombre, 'nombre');
-    }
-
-    function filtrarProductos(valor1, valor2 = null, tipo = 'buscar') {
-        var productCards = document.querySelectorAll('.producto-card');
-
-        productCards.forEach(function (card) {
-            var productName = card.querySelector('.card-title').textContent.toLowerCase();
-            var productDescription = card.querySelector('.card-text').textContent.toLowerCase();
-            var productPrice = parseFloat(card.dataset.precio);
-
-            if (tipo === 'buscar') {
-                if (productName.includes(valor1) || productDescription.includes(valor1)) {
-                    card.style.display = '';
-                } else {
-                    card.style.display = 'none';
-                }
-            } else if (tipo === 'rangoPrecio') {
-                if (productPrice >= valor1 && productPrice <= valor2) {
-                    card.style.display = '';
-                } else {
-                    card.style.display = 'none';
                 }
             }
-        });
-    }
+            else
+            {
+                <div class="col-12 alert alert-info" role="alert" style="text-align: center; margin-top: 5%;">
+                    No hay productos registrados en este momento
+                </div>
+            }
+        </div>
+    </div>
 
-    function ordenarProductos(orden, tipo) {
-        var container = document.getElementById('productosContainer');
-        var productCards = Array.from(container.getElementsByClassName('producto-card'));
-
-        if (tipo === 'precio') {
-            productCards.sort(function (a, b) {
-                var precioA = parseFloat(a.dataset.precio);
-                var precioB = parseFloat(b.dataset.precio);
-
-                if (orden === 'asc') return precioA - precioB;
-                if (orden === 'desc') return precioB - precioA;
-                return 0;
-            });
-        } else if (tipo === 'nombre') {
-            productCards.sort(function (a, b) {
-                var nombreA = a.dataset.nombre.toLowerCase();
-                var nombreB = b.dataset.nombre.toLowerCase();
-
-                if (orden === 'asc') return nombreA.localeCompare(nombreB);
-                if (orden === 'desc') return nombreB.localeCompare(nombreA);
-                return 0;
-            });
-        }
-
-        container.innerHTML = '';
-        productCards.forEach(function (card) {
-            container.appendChild(card);
-        });
-    }
-
-    function RegistrarInscripcion(medicalImplementsID, disponible) {
-        let quantity = $("#prd-" + medicalImplementsID).val();
-
-        if (quantity > disponible) {
-            alert("Su solicitud supera la cantidad de unidades disponibles");
-        } else {
-            $.ajax({
-                url: '/Carrito/RegistrarCarrito',
-                type: "GET",
-                data: {
-                    "quantity": quantity,
-                    "medicalImplementsID": medicalImplementsID
-                },
-                success: function (data) {
-                    window.location.href = '@Url.Action("Productos", "Home")';
-                }
-            });
-        }
-    }
-</script>

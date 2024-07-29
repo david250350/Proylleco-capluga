@@ -1,89 +1,82 @@
 ﻿@model IEnumerable<Capluga.Entities.CursoEnt>
 
 @{
-    ViewBag.Title = "Productos";
+    ViewBag.Title = "Cursos";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
+<!-- Filtros -->
+<div class="container">
+    <div class="row mt-3 flex-column align-items-center col-3">
+        <input type="text" id="buscar" class="form-control" placeholder="Buscar..." aria-label="Buscar" aria-describedby="button-addon2">
+    </div>
 
+    <div class="row mt-3">
+        <div class="col-2">
+            <label for="rangoPrecio">Rango de Precio:</label>
+            <input type="number" id="precioMin" class="form-control" placeholder="Mínimo">
+            <input type="number" id="precioMax" class="form-control mt-1" placeholder="Máximo">
+        </div>
+        <div class="col-3">
+            <label for="ordenFiltro">Ordenar por:</label>
+            <select id="ordenFiltro" class="form-control">
+                <option value="none">Seleccionar</option>
+                <option value="precioAsc">Precio: Menor a Mayor</option>
+                <option value="precioDesc">Precio: Mayor a Menor</option>
+                <option value="nombreAsc">Nombre: A a Z</option>
+                <option value="nombreDesc">Nombre: Z a A</option>
+            </select>
+        </div>
+        <div class="col-2">
+            <button class="btn btn-primary mt-4" onclick="aplicarFiltros()">Aplicar Filtros</button>
+        </div>
+    </div>
+</div>
 
+<br />
 
-<div class="row mt-3 justify-content-center" id="Container">
-
-    @if (Model != null)
-    {
-        foreach (var item in Model)
+<div class="container">
+    <div class="row mt-12 justify-content-start" id="FiltroContainer">
+        @if (Model != null)
         {
-            <div class="col-12 col-sm-6 col-md-4 col-lg-3 mb-4 d-flex align-items-stretch">
-                <div class="card text-center w-100">
-                    <div class="card-body">
-                        <img src="@item.Image" width="150" height="150">
-                        <br /><br />
-                        <h5 class="card-title">@item.Name</h5>
-                        <p class="card-text">@item.Description</p>
-                        <p class="card-text">Fecha Del Curso:@item.DateandTime</p>
-                        <p class="card-text">Cupos: @item.Quantity - @item.Price.ToString("C", new System.Globalization.CultureInfo("es-CR"))</p>
-                        @if (Session["UserID"] != null)
-                        {
-                            <div class="row">
-                                <div class="col-3">
-
+            foreach (var item in Model)
+            {
+                <div class="col-12 col-sm-6 col-md-4 col-lg-4 mb-4 align-items-stretch filtro-card" data-precio="@item.Price" data-nombre="@item.Name">
+                    <div class="card text-center w-100">
+                        <div class="card-body">
+                            <a href="@Url.Action("DetallesCurso", "MedicalCourses", new { id = item.MedicalCourseID })">
+                                <img src="@item.Image" width="150" height="150">
+                            </a>
+                            <br /><br />
+                            <h4 class="card-title">
+                                <a href="@Url.Action("DetallesCurso", "MedicalCourses", new { id = item.MedicalCourseID })">@item.Name</a>
+                            </h4>
+                            <p class="card-text">Fecha del Curso: @item.DateandTime</p>
+                            <p class="card-text">Cupos: @item.Quantity - @item.Price.ToString("C", new System.Globalization.CultureInfo("es-CR"))</p>
+                            @if (Session["UserID"] != null)
+                            {
+                                <div class="row">
+                                    <div class="col-3"></div>
+                                    <div class="col-4" style="text-align:right!important">
+                                        <input id="prd-@item.MedicalCourseID" type="number" class="form-control" />
+                                    </div>
+                                    <div class="col-4" style="text-align:left">
+                                        <a onclick="RegistrarInscripcion(@item.MedicalCourseID, @item.Quantity)" class="btn btn-outline-primary"><i class="fa fa-cart-plus"></i></a>
+                                    </div>
                                 </div>
-                                <div class="col-4" style="text-align:right!important">
-                                    <input id=prd-@item.MedicalCourseID type="number" class="form-control">
-                                </div>
-                                <div class="col-4" style="text-align:left">
-
-
-
-                                    <a onclick="RegistrarInscripcion(@item.MedicalCourseID, @item.Quantity)" class="btn btn-info"><i class="fa fa-cart-plus"></i></a>
-
-
-                                </div>
-                            </div>
-                        }
+                            }
+                        </div>
                     </div>
                 </div>
+            }
+        }
+        else
+        {
+            <div class="col-12 alert alert-info" role="alert" style="text-align: center; margin-top: 5%;">
+                No hay cursos registrados en este momento
             </div>
         }
-
-    }
-    else
-    {
-        <div class="col-12 alert alert-info" role="alert" style="text-align: center; margin-top: 5%;">
-            No hay productos registrados en este momento
-        </div>
-    }
-
+    </div>
 </div>
 
 
 
-<script>
-
-    function RegistrarInscripcion(medicalCourseID, disponible) {
-        let quantity = $("#prd-" + medicalCourseID).val();
-
-        if (quantity > disponible) {
-
-          alert("Su solicitud supera la cantidad de unidades disponibles");
-
-      }
-      else {
-
-            $.ajax({
-                url: '/Registeredcourses/RegistrarInscripcion',
-            type: "GET",
-            data:
-            {
-                "quantity": quantity,
-                "medicalCourseID": medicalCourseID
-            },
-            success: function (data) {
-               window.location.href = '@Url.Action("VistaCurso", "MedicalCourses")';
-            }
-        });
-
-      }
-  }
-
-</script>
