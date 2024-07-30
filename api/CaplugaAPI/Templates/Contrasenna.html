@@ -1,71 +1,91 @@
 ﻿<html>
-<style>
-    .logo-container {
-        font-family: Arial, sans-serif; /* You can change the font to match your design */
-        color: #000; /* Adjust the color to match your design */
-        text-align: center;
-        margin-top: 20px;
-    }
+<head>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #F7F9FA;
+            padding: 24px;
+            margin: 0;
+        }
 
-    .logo-title {
-        font-size: 24px; /* Adjust the size as needed */
-        font-weight: bold;
-        color: darkblue
-    }
+        .container {
+            max-width: 600px;
+            background-color: #FFF;
+            margin: 0 auto;
+            padding: 24px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
 
-    .logo-plus {
-        color: #4CAF50; /* Adjust the color to match the plus sign in your design */
-    }
+        .logo-container {
+            text-align: center;
+            margin-bottom: 24px;
+        }
 
-    .logo-subtitle {
-        font-size: 16px; /* Adjust the size as needed */
-        color: #707070; /* Adjust the color to match your design */
-        margin-top: 5px;
-    }
-</style>
-<table id="x_udemy-email" width="100%" cellpadding="0" cellspacing="0" style="background-color:#F7F9FA; padding:24px">
-    <tbody>
-        <tr>
-            <td>&nbsp;</td>
-            <td width="600">
-                <table width="100%" cellpadding="0" cellspacing="0" style="background-color:#FFF">
-                    <thead>
-                        <tr>
-                            <th>
-                                <div class="logo-container">
-                                    <h1 class="logo-title">CAPLUGA</h1>
-                                    <p class="logo-subtitle">¡Salvá una vida con tus manos!</p>
-                                </div>
-                            </th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td style="padding:24px 24px 0 24px">
-                                <H1>Hola: @@Nombre </H1>
-                                <br />
-                                <H3>Hemos recibido una solicitud para recuperar tu cuenta.</H3>
-                                <br />
-                                <p>Tu usuario es: @@Usuario </p>
-                                <p>Tu contraseña temporal es: @@Contrasenna </p>
-                                <p>Recurde que debe cambiar su contraseña para poder ingresar a CAPLUGA</p>
+        .logo-title {
+            font-size: 24px;
+            font-weight: bold;
+            color: #283290;
+        }
 
-                                <link URL="https://localhost:44304/Login/CambiarContrasenna">Cambiar Contraseña
-                            </td>
-                        </tr>
-                        <tr>
-                            <td style="padding:48px 24px 0 24px">
-                                <p style="font-size:12px; font-weight:400; line-height:1.4; color:#6A6F73; margin:0">CAPLUGA +</p>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td style="padding:24px 0 0 0"></td>
-                        </tr>
-                    </tbody>
-                </table>
-            </td>
-            <td>&nbsp;</td>
-        </tr>
-    </tbody>
-</table>
+        .logo-subtitle {
+            font-size: 16px;
+            color: #4CAF50;
+        }
+
+        h1 {
+            font-size: 24px;
+            color: #333;
+        }
+
+        h3 {
+            font-size: 18px;
+            color: #333;
+        }
+
+        p {
+            font-size: 16px;
+            color: #333;
+        }
+
+        .button {
+            display: inline-block;
+            padding: 12px 24px;
+            background-color: #4CAF50;
+            color: #FFF;
+            text-decoration: none;
+            border-radius: 4px;
+            font-size: 16px;
+            margin-top: 24px;
+        }
+            .button-gray {
+                display: inline-block;
+                padding: 12px 24px;
+                background-color: #333;
+                color: #FFF;
+                text-decoration: none;
+                border-radius: 4px;
+                font-size: 16px;
+                margin-top: 24px;
+            }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="logo-container">
+            <h1 class="logo-title">CAPLUGA</h1>
+            <p class="logo-subtitle">¡Salvá una vida con tus manos!</p>
+        </div>
+        <h1>Hola: @@Nombre</h1>
+        <h3>Hemos recibido una solicitud para recuperar tu cuenta.</h3>
+        <p>Tu usuario es: @@Usuario</p>
+        <p>Tu contraseña temporal es: @@Contrasenna</p>
+        <p>Recuerde que debe cambiar su contraseña para poder ingresar a CAPLUGA</p>
+        <a href="https://localhost:44304/Login/CambiarContrasenna" class="button">Cambiar Contraseña</a></br>
+        <h3>Coctactenos en:</h3>
+        <a href="https://www.instagram.com/caplugacr?igsh=MXB0bGJxenBmYW01cQ==" class="button-gray">Instagram</a>
+        <a href="mailto:capluga2020@gmail.com" class="button-gray">capluga2020@gmail.com</a>
+        <a href="https://www.facebook.com/share/8p33ioNg9jM1rE8A/?mibextid=qi2Omg" class="button-gray">Facebook</a>
+    </div>
+</body>
 </html>

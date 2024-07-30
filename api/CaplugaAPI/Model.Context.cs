@@ -85,6 +85,15 @@ namespace CaplugaAPI
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("InsertAppointment", userIDParameter, addressIDParameter, nameParameter, descriptionParameter, scheduleIDParameter);
         }
     
+        public virtual int InsertRol(string roleName)
+        {
+            var roleNameParameter = roleName != null ?
+                new ObjectParameter("RoleName", roleName) :
+                new ObjectParameter("RoleName", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("InsertRol", roleNameParameter);
+        }
+    
         public virtual int InsertScheduleAppointment(string dname, Nullable<System.DateTime> dateandTime)
         {
             var dnameParameter = dname != null ?
@@ -145,6 +154,19 @@ namespace CaplugaAPI
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("UpdateAppointment", appointmentIDParameter, userIDParameter, addressIDParameter, nameParameter, descriptionParameter, scheduleIDParameter);
         }
     
+        public virtual int UpdateRol(Nullable<long> rolesID, string roleName)
+        {
+            var rolesIDParameter = rolesID.HasValue ?
+                new ObjectParameter("RolesID", rolesID) :
+                new ObjectParameter("RolesID", typeof(long));
+    
+            var roleNameParameter = roleName != null ?
+                new ObjectParameter("RoleName", roleName) :
+                new ObjectParameter("RoleName", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("UpdateRol", rolesIDParameter, roleNameParameter);
+        }
+    
         public virtual int UpdateScheduleAppointment(Nullable<long> scheduleID, string dName, Nullable<System.DateTime> dateandTime)
         {
             var scheduleIDParameter = scheduleID.HasValue ?
@@ -160,28 +182,6 @@ namespace CaplugaAPI
                 new ObjectParameter("DateandTime", typeof(System.DateTime));
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("UpdateScheduleAppointment", scheduleIDParameter, dNameParameter, dateandTimeParameter);
-        }
-    
-        public virtual int InsertRol(string roleName)
-        {
-            var roleNameParameter = roleName != null ?
-                new ObjectParameter("RoleName", roleName) :
-                new ObjectParameter("RoleName", typeof(string));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("InsertRol", roleNameParameter);
-        }
-    
-        public virtual int UpdateRol(Nullable<long> rolesID, string roleName)
-        {
-            var rolesIDParameter = rolesID.HasValue ?
-                new ObjectParameter("RolesID", rolesID) :
-                new ObjectParameter("RolesID", typeof(long));
-    
-            var roleNameParameter = roleName != null ?
-                new ObjectParameter("RoleName", roleName) :
-                new ObjectParameter("RoleName", typeof(string));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("UpdateRol", rolesIDParameter, roleNameParameter);
         }
     }
 }
