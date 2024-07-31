@@ -48,5 +48,52 @@ namespace Capluga.Controllers
             Session["SubT"] = datos.AsEnumerable().Sum(x => x.SubTotal);
             return RedirectToAction("ConsultaCarrito", "Carrito");
         }
+        [HttpGet]
+        public ActionResult ConsultaCarritoadm()
+        {
+            var datos = modelCarrito.ConsultaCarritoadm();
+            return View(datos);
+        }
+
+        [HttpPost]
+        public ActionResult PagarCarrito()
+        {
+            var entidad = new CarritoEnt();
+            entidad.UserID = long.Parse(Session["UserID"].ToString());
+
+            var respuesta = modelCarrito.PagarCarrito(entidad);
+            var datos = modelCarrito.ConsultarCarrito(long.Parse(Session["UserID"].ToString()));
+            Session["Cant"] = datos.AsEnumerable().Sum(x => x.Quantity);
+            Session["SubT"] = datos.AsEnumerable().Sum(x => x.SubTotal);
+
+            if (respuesta > 0)
+            {
+                return RedirectToAction("ConsultaFacturas", "Carrito");
+            }
+            else
+            {
+                ViewBag.MensajeUsuario = "No se ha podido procesar su pago, verifica las unidades disponibles";
+                return View("ConsultaCarrito", datos);
+            }
+        }
+
+        [HttpGet]
+        public ActionResult ActualizarEstadoPago(long q)
+        {
+            var entidad = new FacturaEnt();
+            entidad.MasterPurchaseID = q;
+
+            string respuesta = modelCarrito.ActualizarEstadoPago(entidad);
+
+            if (respuesta == "OK")
+            {
+                return RedirectToAction("ConsultaCarritoadm", "Carrito");
+            }
+            else
+            {
+                ViewBag.MensajeUsuario = "No se ha podido cambiar el estado del usuario";
+                return View();
+            }
+        }
     }
 }

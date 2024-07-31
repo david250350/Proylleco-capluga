@@ -75,6 +75,29 @@ namespace CaplugaAPI.Controllers
                 context.Cart.Remove(datos);
                 context.SaveChanges();
             }
-        }     
+        }
+
+        [HttpPost]
+        [Route("PagarCarrito")]
+        public int PagarCarrito(Cart cart)
+        {
+            using (var context = new CAPLUGAEntities())
+            {
+                return context.PayCart(userID: cart.UserID);
+            }
+        }
+
+        [HttpPut]
+        [Route("ActualizarEstadoPago")]
+        public string ActualizarEstadoPago(FacturaEnt entidad)
+        {
+            using (var context = new CAPLUGAEntities())
+            {
+                context.ApprovePaymentDetails(entidad.MasterPurchaseID);
+
+                return "OK";
+            }
+
+        }
     }
 }

@@ -4,7 +4,7 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="304f9ea8eede42919b264034f4688f9e" Name="Diagram1" ZoomLevel="64">
+      <Diagram DiagramId="eedae6e3370b447296a4d2f81790f169" Name="Diagram1">
         <EntityTypeShape EntityType="CAPLUGAModel.Addresses" Width="1.5" PointX="0.75" PointY="9.875" IsExpanded="true" />
         <EntityTypeShape EntityType="CAPLUGAModel.AppointmentScheduling" Width="1.5" PointX="3" PointY="9.875" IsExpanded="true" />
         <EntityTypeShape EntityType="CAPLUGAModel.Cart" Width="1.5" PointX="8.25" PointY="7.125" IsExpanded="true" />
@@ -19,22 +19,22 @@
         <EntityTypeShape EntityType="CAPLUGAModel.Roles" Width="1.5" PointX="3.75" PointY="7.375" IsExpanded="true" />
         <EntityTypeShape EntityType="CAPLUGAModel.ScheduleAppointment" Width="1.5" PointX="0.75" PointY="7" IsExpanded="true" />
         <EntityTypeShape EntityType="CAPLUGAModel.Users" Width="1.5" PointX="6" PointY="8.875" IsExpanded="true" />
-        <AssociationConnector Association="CAPLUGAModel.FK__Appointme__Addre__5441852A" ManuallyRouted="false" />
+        <AssociationConnector Association="CAPLUGAModel.FK__Appointme__Addre__534D60F1" ManuallyRouted="false" />
         <AssociationConnector Association="CAPLUGAModel.FK_Users_Addresses" ManuallyRouted="false" />
-        <AssociationConnector Association="CAPLUGAModel.FK__Appointme__Sched__534D60F1" ManuallyRouted="false" />
         <AssociationConnector Association="CAPLUGAModel.FK__Appointme__Sched__5535A963" ManuallyRouted="false" />
-        <AssociationConnector Association="CAPLUGAModel.FK__Cart__MedicalImp__160F4887" ManuallyRouted="false" />
+        <AssociationConnector Association="CAPLUGAModel.FK__Appointme__UserI__5441852A" ManuallyRouted="false" />
+        <AssociationConnector Association="CAPLUGAModel.FK__Cart__MedicalImp__5629CD9C" ManuallyRouted="false" />
         <AssociationConnector Association="CAPLUGAModel.FK_Cart_Users" ManuallyRouted="false" />
-        <AssociationConnector Association="CAPLUGAModel.FK__Detail__MasterPu__4BAC3F29" ManuallyRouted="false" />
-        <AssociationConnector Association="CAPLUGAModel.FK__Detail__MedicalI__4AB81AF0" ManuallyRouted="false" />
-        <AssociationConnector Association="CAPLUGAModel.FK__DetailCur__Maste__13F1F5EB" ManuallyRouted="false" />
-        <AssociationConnector Association="CAPLUGAModel.FK__DetailCur__Medic__14E61A24" ManuallyRouted="false" />
-        <AssociationConnector Association="CAPLUGAModel.FK__ErrorLogs__UserI__4E88ABD4" ManuallyRouted="false" />
-        <AssociationConnector Association="CAPLUGAModel.FK__MasterPur__UserI__440B1D61" ManuallyRouted="false" />
-        <AssociationConnector Association="CAPLUGAModel.FK__MasterPur__UserI__0880433F" ManuallyRouted="false" />
+        <AssociationConnector Association="CAPLUGAModel.FK__Detail__MasterPu__5812160E" ManuallyRouted="false" />
+        <AssociationConnector Association="CAPLUGAModel.FK__Detail__MedicalI__59063A47" ManuallyRouted="false" />
+        <AssociationConnector Association="CAPLUGAModel.FK__DetailCur__Maste__59FA5E80" ManuallyRouted="false" />
+        <AssociationConnector Association="CAPLUGAModel.FK__DetailCur__Medic__5AEE82B9" ManuallyRouted="false" />
+        <AssociationConnector Association="CAPLUGAModel.FK__ErrorLogs__UserI__5BE2A6F2" ManuallyRouted="false" />
+        <AssociationConnector Association="CAPLUGAModel.FK__MasterPur__UserI__5CD6CB2B" ManuallyRouted="false" />
+        <AssociationConnector Association="CAPLUGAModel.FK__MasterPur__UserI__5DCAEF64" ManuallyRouted="false" />
         <AssociationConnector Association="CAPLUGAModel.FK_Registeredcourses_MedicalCourses" ManuallyRouted="false" />
         <AssociationConnector Association="CAPLUGAModel.FK_Registeredcourses_Users" ManuallyRouted="false" />
-        <AssociationConnector Association="CAPLUGAModel.FK__Users__RolesID__398D8EEE" ManuallyRouted="false" />
+        <AssociationConnector Association="CAPLUGAModel.FK__Users__RolesID__60A75C0F" ManuallyRouted="false" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

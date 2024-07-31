@@ -1,0 +1,36 @@
+﻿@model IEnumerable<Capluga.Entities.FacturaEnt>
+@{
+    ViewBag.Title = "Consulta Carritos";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<h2>Horarios Registrados</h2>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>MasterPurchaseID</th>
+
+            <th>Estado</th>
+            <th>Acción</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var detail in Model)
+        {
+            <tr>
+                <td>@detail.MasterPurchaseID</td>
+
+
+                <td>@detail.PaymentStatus</td>
+
+                @if (detail.PaymentStatus == "PENDIENTE")
+                {
+                    <td style="text-align:center">
+                        <a href="@Url.Action("ActualizarEstadoPago", "Carrito", new { q = detail.MasterPurchaseID })"><i class="fa fa-refresh fa-lg"></i></a>
+                    </td>
+
+                }
+            </tr>
+        }
+    </tbody>
+</table>

@@ -200,6 +200,7 @@
     </Compile>
     <Compile Include="Entities\AgendaEnt.cs" />
     <Compile Include="Entities\CarritoEnt.cs" />
+    <Compile Include="Entities\FacturaEnt.cs" />
     <Compile Include="Entities\HorarioEnt.cs" />
     <Compile Include="Entities\ProductoEnt.cs" />
     <Compile Include="Entities\RoleEnt.cs" />
