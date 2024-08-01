@@ -62,6 +62,27 @@ namespace CaplugaAPI.Controllers
             }
         }
 
+
+        [HttpGet]
+        [Route("ConsultaCarritoadm")]
+        public List<Detail> ConsultaCarritoadm()
+        {
+            try
+            {
+
+                using (var context = new CAPLUGAEntities())
+                {
+                    context.Configuration.LazyLoadingEnabled = false;
+                    return (from x in context.Detail
+                            select x).ToList();
+                }
+            }
+            catch (Exception)
+            {
+                return new List<Detail>();
+            }
+        }
+
         [HttpDelete]
         [Route("EliminarRegistroCarrito")]
         public void EliminarRegistroCarrito(long q)
