@@ -29,6 +29,7 @@ namespace Capluga.Entities
         public decimal Impuesto { get; set; }
 
         public decimal Total { get; set; }
+        public long MedicalImplementsID { get; set; }
 
     }
 }

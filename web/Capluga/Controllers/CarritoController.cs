@@ -95,5 +95,18 @@ namespace Capluga.Controllers
                 return View();
             }
         }
+        [HttpGet]
+        public ActionResult ConsultaFacturas()
+        {
+            var datos = modelCarrito.ConsultaFacturas(long.Parse(Session["UserID"].ToString()));
+            return View(datos);
+        }
+
+        [HttpGet]
+        public ActionResult ConsultaDetalleFactura(long q)
+        {
+            var datos = modelCarrito.ConsultaDetalleFactura(q);
+            return View(datos);
+        }
     }
 }

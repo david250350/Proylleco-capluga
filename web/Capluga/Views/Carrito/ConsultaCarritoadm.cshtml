@@ -1,36 +1,74 @@
 ﻿@model IEnumerable<Capluga.Entities.FacturaEnt>
+
 @{
     ViewBag.Title = "Consulta Carritos";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-<h2>Horarios Registrados</h2>
-
-<table class="table">
-    <thead>
-        <tr>
-            <th>MasterPurchaseID</th>
-
-            <th>Estado</th>
-            <th>Acción</th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var detail in Model)
-        {
-            <tr>
-                <td>@detail.MasterPurchaseID</td>
 
 
-                <td>@detail.PaymentStatus</td>
-
-                @if (detail.PaymentStatus == "PENDIENTE")
+<div class="col-12 grid-margin stretch-card">
+    <div class="card">
+        <div class="card-body">
+            <h2 class="card-title">Horarios Registrados</h2>
+            <br>
+            @if (ViewBag.MensajeUsuario != null)
+            {
+                <div class="alert alert-danger" role="alert" style="text-align:center">
+                    @ViewBag.MensajeUsuario
+                </div>
+            }
+            <div class="container">
+                @if (Model.Any())
                 {
-                    <td style="text-align:center">
-                        <a href="@Url.Action("ActualizarEstadoPago", "Carrito", new { q = detail.MasterPurchaseID })"><i class="fa fa-refresh fa-lg"></i></a>
-                    </td>
+                    <div class="table-responsive">
+                        <table id="DataTable" class="table table-bordered table-hover">
+                            <thead class="thead-light">
+                                <tr>
+                                    <th>MasterPurchaseID</th>
+                                    <th>Cliente</th>
+                                    <th>Producto</th>
+                                    <th>Estado</th>
+                                    <th>Acción</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var detail in Model)
+                                {
+                                    <tr>
+                                        <td>@detail.MasterPurchaseID</td>
+                                        <td>@detail.UserName @detail.Surnames</td>
+                                        <td>@detail.Name</td>
+                                        <td>@detail.PaymentStatus</td>
 
+                                        <td style="text-align:center">
+                                            @if (detail.PaymentStatus == "PENDIENTE")
+                                            {
+                                                <a href="#" onclick="confirmStateChange('@Url.Action("ActualizarEstadoPago", "Carrito", new { q = detail.MasterPurchaseID })')">
+                                                    <i class="fa fa-refresh fa-lg"></i>
+                                                </a>
+                                            }
+                                            else
+                                            {
+                                                <span>No disponible</span>
+                                            }
+                                        </td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
                 }
-            </tr>
-        }
-    </tbody>
-</table>
+                else
+                {
+                    <div class="col-12 alert alert-info" role="alert" style="text-align: center; margin-top: 5%;">
+                        No hay carritos registrados en este momento
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+

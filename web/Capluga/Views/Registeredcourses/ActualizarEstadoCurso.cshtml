@@ -1,0 +1,44 @@
+﻿@model IEnumerable<Capluga.Entities.FacturaCursoEnt>
+@{
+    ViewBag.Title = "Consulta Matriculas";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="content-wrapper d-flex align-items-center auth px-0">
+    <div class="row w-100 mx-0">
+        <div class="col-lg-10 mx-auto">
+            <div class="auth-form-light text-left py-5 px-4 px-sm-5">
+                <h2>Horarios Registrados</h2>
+
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>MasterPurchaseCurseID</th>
+
+                            <th>Estado</th>
+                            <th>Acción</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var detail in Model)
+                        {
+                            <tr>
+                                <td>@detail.MasterPurchaseCurseID</td>
+
+                                <td>@detail.PaymentStatus</td>
+
+                                @if (detail.PaymentStatus == "PENDIENTE")
+                                {
+                                    <td style="text-align:center">
+                                        <a href="@Url.Action("RegisteredcoursesController", "Registeredcourses", new { q = detail.MasterPurchaseCurseID })"><i class="fa fa-refresh fa-lg"></i></a>
+                                    </td>
+
+                                }
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>

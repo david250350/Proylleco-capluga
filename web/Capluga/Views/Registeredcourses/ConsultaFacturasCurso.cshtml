@@ -1,0 +1,65 @@
+﻿@model IEnumerable<Capluga.Entities.FacturaCursoEnt>
+
+@{
+    ViewBag.Title = "ConsultaFacturas";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="col-12 grid-margin stretch-card">
+    <div class="card">
+        <div class="card-body">
+            <div class="d-flex justify-content-between align-items-center">
+                <h2 class="card-title text-uppercase" style="color: #1A237E; font-weight: bold;">
+                    <i class="fa fa-shopping-bag" aria-hidden="true"></i> Mis Cursos
+                </h2>
+            </div>
+            <br>
+
+            @if (ViewBag.MensajeUsuario != null)
+            {
+                <div class="alert alert-danger" role="alert" style="text-align:center">
+                    @ViewBag.MensajeUsuario
+                </div>
+            }
+
+            @if (Model.Count() > 0)
+            {
+                <div class="container">
+                    <table id="DataTable" class="table table-bordered table-hover">
+                        <thead class="thead-light">
+                            <tr>
+                                <th>Número de Factura</th>
+                                <th>Fecha de Matricula</th>
+                                <th>Total de la compra</th>
+                                <th>Ver detalle</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var item in Model)
+                            {
+                                <tr>
+                                    <td style="text-align:center"># @item.MasterPurchaseCurseID</td>
+                                    <td style="text-align:center">@item.PurchaseDate</td>
+                                    <td style="text-align:center">@item.TotalPurchase.ToString("C", new System.Globalization.CultureInfo("es-CR"))</td>
+
+                                    <td style="text-align:center">
+                                        <a href="@Url.Action("ConsultaDetalleFacturaCurso", "Registeredcourses", new { q = item.MasterPurchaseCurseID })"><i class="fa fa-search fa-lg"></i></a>
+                                    </td>
+
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            }
+            else
+            {
+                <div class="col-12 alert alert-info" role="alert" style="text-align: center; margin-top: 5%;">
+                    No hay productos agregados en este momento
+                </div>
+            }
+
+        </div>
+    </div>
+</div>
+

@@ -189,6 +189,7 @@
     <Compile Include="Controllers\LoginController.cs" />
     <Compile Include="Controllers\MedicalCoursesController.cs" />
     <Compile Include="Controllers\ProductoController.cs" />
+    <Compile Include="Controllers\RegisteredcoursesController.cs" />
     <Compile Include="Controllers\RolController.cs" />
     <Compile Include="Controllers\UsuarioController.cs" />
     <Compile Include="Controllers\ValuesController.cs" />
@@ -200,8 +201,10 @@
     </Compile>
     <Compile Include="Entities\AgendaEnt.cs" />
     <Compile Include="Entities\CarritoEnt.cs" />
+    <Compile Include="Entities\FacturaCursoEnt.cs" />
     <Compile Include="Entities\FacturaEnt.cs" />
     <Compile Include="Entities\HorarioEnt.cs" />
+    <Compile Include="Entities\InscripCursEnt.cs" />
     <Compile Include="Entities\ProductoEnt.cs" />
     <Compile Include="Entities\RoleEnt.cs" />
     <Compile Include="Entities\UbicacionEnt.cs" />

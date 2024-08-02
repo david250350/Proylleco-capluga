@@ -1,0 +1,101 @@
+﻿@model IEnumerable<Capluga.Entities.FacturaEnt>
+
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<div class="container">
+    <div class="container mt-5">
+        <div class="row">
+            <div class="col-12">
+                <div class="card border-0 shadow">
+                    <div class="card-body">
+
+
+                        <div class="d-flex justify-content-between align-items-center">
+                            <h2 class="card-title text-uppercase" style="color: #1A237E; font-weight: bold;">
+                                <i class="fa fa-file-text" aria-hidden="true"></i> Detalle Factura
+                            </h2>
+                       
+                            <div class="col-6 text-right">
+                                <img src="~/Images/Logo.png" alt="Logo" class="logo" style="height: 80px;">
+                            </div>
+                        </div>
+
+                        <hr class="my-4">
+
+                        <div class="row mb-4">
+                            <div class="col-sm-8 text-dark">
+                                <div>Factura #: <strong>@Model.FirstOrDefault().MasterPurchaseID</strong></div>
+
+                                <div>Fecha: <strong>@Model.FirstOrDefault().PurchaseDate.ToString("dd/MM/yyyy")</strong></div>
+
+                            </div>
+                            <div class="col-sm-4 text-right">
+                                <h6 class="text-dark">Cliente: <strong>@Model.FirstOrDefault().UserName @Model.FirstOrDefault().Surnames</strong></h6>
+
+
+                            </div>
+                        </div>
+
+
+                        <table class="table table-hover text-dark">
+                            <thead class="thead-light">
+                                <tr>
+
+                                    <th>Nombre</th>
+                                    <th>Cantidad</th>
+                                    <th>Precio X Und</th>
+                                    <th>Impuesto X Und</th>
+                                    <th>SubTotal</th>
+                                    <th>Impuesto</th>
+                                    <th>Total</th>
+                                    <th>Pago</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var item in Model)
+                                {
+                                    <tr>
+
+                                        <td>@item.Name</td>
+                                        <td>@item.PaidQuantity</td>
+                                        <td>@item.PaidPrice.ToString("C")</td>
+                                        <td>@item.Tax.ToString("C")</td>
+                                        <td>@item.SubTotal.ToString("C")</td>
+                                        <td>@item.Impuesto.ToString("C")</td>
+                                        <td>@item.Total.ToString("C")</td>
+                                        <td>@item.PaymentStatus</td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+
+
+
+
+                        <div class="text-right mt-4">
+                            <h4>Total: <span class="text-dark">@Model.Sum(item => item.Total).ToString("C")</span></h4>
+                        </div>
+
+
+
+                        <div class="invoice-footer mt-5">
+                            <div class="text-right">
+                                @using (Html.BeginForm("DescargarPDF", "Document", FormMethod.Post, new { @class = "d-inline" }))
+                                {
+                                    @Html.AntiForgeryToken()
+                                    @Html.Hidden("masterPurchaseID", Model.FirstOrDefault().MasterPurchaseID)
+                                    <button type="submit" class="btn btn-primary mr-2" style="background-color: #1A237E; color: white;">Descarga PDF</button>
+                                }
+
+
+                            </div>
+                        </div>
+
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

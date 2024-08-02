@@ -1,0 +1,86 @@
+﻿@model IEnumerable<Capluga.Entities.InscripCursEnt>
+
+@{
+    ViewBag.Title = "ConsultaInscripciones";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+            <div class="col-12 grid-margin stretch-card">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="d-flex justify-content-between align-items-center">
+                            <h2 class="card-title text-uppercase" style="color: #1A237E; font-weight: bold;">
+                                <i class="fa fa-shopping-cart" aria-hidden="true"></i> Información del Matricula
+                            </h2>
+                        </div>
+                        <br>
+                        @if (ViewBag.MensajeUsuario != null)
+                        {
+                            <div class="alert alert-danger" role="alert" style="text-align:center">
+                                @ViewBag.MensajeUsuario
+                            </div>
+                        }
+                    <div class="container">
+                        @if (Model.Any())
+                        {
+                            <table id="DataTable" class="table table-bordered table-hover">
+                                <thead class="thead-light">
+                                    <tr>
+                                        <th>Nombre</th>
+                                        <th>Cantidad</th>
+                                        <th>Precio Unitario</th>
+                                       
+                                        <th>SubTotal</th>
+                                        <th>Impuesto</th>
+                                        <th>Total</th>
+                                        <th>Acción</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach (var item in Model)
+                                    {
+                                        <tr>
+                                            <td>@item.Name</td>
+                                            <td>@item.Quantity</td>
+                                            <td>@item.Price.ToString("C", new System.Globalization.CultureInfo("es-CR"))</td>
+                                       
+                                            <td>@item.SubTotal.ToString("C", new System.Globalization.CultureInfo("es-CR"))</td>
+                                            <td>@item.Impuesto.ToString("C", new System.Globalization.CultureInfo("es-CR"))</td>
+                                            <td>@item.Total.ToString("C", new System.Globalization.CultureInfo("es-CR"))</td>
+
+                                            <td style="text-align:center">
+                                                <a href="#" onclick="confirmDelete('@Url.Action("EliminarRegistroCurso", "Registeredcourses", new { q = item.RegisteredcoursesID })')">
+                                                    <i class="fa fa-remove fa-lg"></i>
+                                                </a>
+                                            </td>
+                                        </tr>
+
+                                       
+                                    }
+                                </tbody>
+                            </table>
+                            <div class="row" style="margin-top: 2%;">
+                                <div class="col-4">
+                                    <p style="font-weight:900; text-align:center; line-height: 40px;"> El monto total a pagar es de: @decimal.Parse(Session["TotalPago"].ToString()).ToString("C", new System.Globalization.CultureInfo("es-CR")) </p>
+                                </div>
+                                <div class="col-4">
+
+                                    @using (Html.BeginForm("Matricula", "Registeredcourses", FormMethod.Post, new { id = "paymentForm" }))
+                                    {
+                                        <button type="button" onclick="confirmPayment()" class="btn" style="background-color: #1A237E; color: white;">Inscribir</button>
+                                    }
+
+                                  
+                                </div>
+                            </div>
+                        }
+                        else
+                        {
+                            <div class="alert alert-info" role="alert">
+                                No hay matriculas agregadas en este momento.
+                            </div>
+                        }
+                    </div>
+                    </div>
+            </div>
+                </div>

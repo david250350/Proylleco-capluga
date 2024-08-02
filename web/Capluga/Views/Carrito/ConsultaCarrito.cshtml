@@ -7,7 +7,11 @@
 <div class="col-12 grid-margin stretch-card">
     <div class="card">
         <div class="card-body">
-            <h2 class="card-title">Información del Carrito</h2>
+            <div class="d-flex justify-content-between align-items-center">
+                <h2 class="card-title text-uppercase" style="color: #1A237E; font-weight: bold;">
+                    <i class="fa fa-shopping-cart" aria-hidden="true"></i> Información del Carrito
+                </h2>
+            </div>
             <br>
 
             @if (ViewBag.MensajeUsuario != null)
@@ -21,7 +25,7 @@
                 {
 
                     <table id="DataTable" class="table table-bordered table-hover">
-                        <thead>
+                        <thead class="thead-light">
                             <tr>
                                 <th>Nombre</th>
                                 <th>Cantidad</th>
@@ -62,7 +66,7 @@
 
                             @using (Html.BeginForm("PagarCarrito", "Carrito", FormMethod.Post, new { id = "paymentForm" }))
                             {
-                                <button type="button" onclick="confirmPayment()" class="btn btn-primary">Pedir</button>
+                                <button type="button" onclick="confirmPayment()" class="btn" style="background-color: #1A237E; color: white;">Pedir</button>
                             }
 
                         </div>
@@ -77,8 +81,5 @@
 
             </div>
         </div>
+    </div>
 </div>
-</div>
-
-
-

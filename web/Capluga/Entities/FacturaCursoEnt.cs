@@ -3,13 +3,13 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 
-namespace CaplugaAPI.Entities
+namespace Capluga.Entities
 {
-    public class FacturaEnt
+    public class FacturaCursoEnt
     {
 
-        public long MasterPurchaseID { get; set; }
-        public long DetailID { get; set; }
+        public long MasterPurchaseCurseID { get; set; }
+        public long DetailCurseID { get; set; }
         public long UserID { get; set; }
         public DateTime PurchaseDate { get; set; }
         public decimal TotalPurchase { get; set; }
@@ -28,10 +28,5 @@ namespace CaplugaAPI.Entities
         public decimal Impuesto { get; set; }
 
         public decimal Total { get; set; }
-
-
-        public long MedicalImplementsID { get; set; }
-   
-
     }
 }

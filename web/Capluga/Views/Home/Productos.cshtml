@@ -17,26 +17,26 @@
             <input type="text" id="buscar" class="form-control" placeholder="Buscar..." aria-label="Buscar" aria-describedby="button-addon2">
         </div>
 
-        <div class="row mt-3">
-            <div class="col-2">
-                <label for="rangoPrecio">Rango de Precio:</label>
-                <input type="number" id="precioMin" class="form-control" placeholder="Mínimo">
-                <input type="number" id="precioMax" class="form-control mt-1" placeholder="Máximo">
-            </div>
-            <div class="col-3">
-                <label for="ordenFiltro">Ordenar por:</label>
-                <select id="ordenFiltro" class="form-control">
-                    <option value="none">Seleccionar</option>
-                    <option value="precioAsc">Precio: Menor a Mayor</option>
-                    <option value="precioDesc">Precio: Mayor a Menor</option>
-                    <option value="nombreAsc">Nombre: A a Z</option>
-                    <option value="nombreDesc">Nombre: Z a A</option>
-                </select>
-            </div>
-            <div class="col-2">
-                <button class="btn btn-primary mt-4" onclick="aplicarFiltros()">Aplicar Filtros</button>
-            </div>
+    <div class="row mt-3">
+        <div class="col-2">
+            <label for="rangoPrecio">Rango de Precio:</label>
+            <input type="number" id="precioMin" class="form-control" placeholder="Mínimo">
+            <input type="number" id="precioMax" class="form-control mt-1" placeholder="Máximo">
         </div>
+        <div class="col-3">
+            <label for="ordenFiltro">Ordenar por:</label>
+            <select id="ordenFiltro" class="form-control">
+                <option value="none">Seleccionar</option>
+                <option value="precioAsc">Precio: Menor a Mayor</option>
+                <option value="precioDesc">Precio: Mayor a Menor</option>
+                <option value="nombreAsc">Nombre: A a Z</option>
+                <option value="nombreDesc">Nombre: Z a A</option>
+            </select>
+        </div>
+        <div class="col-2">
+            <button type="submit" class="btn btn-primary mt-4" style="background-color: #1A237E; color: white;" onclick="aplicarFiltros()">Aplicar Filtros</button>
+        </div>
+    </div>
     </div>
 
     @*<br />

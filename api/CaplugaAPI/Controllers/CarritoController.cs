@@ -65,7 +65,7 @@ namespace CaplugaAPI.Controllers
 
         [HttpGet]
         [Route("ConsultaCarritoadm")]
-        public List<Detail> ConsultaCarritoadm()
+        public List<FacturaEnt> ConsultaCarritoadm()
         {
             try
             {
@@ -74,12 +74,27 @@ namespace CaplugaAPI.Controllers
                 {
                     context.Configuration.LazyLoadingEnabled = false;
                     return (from x in context.Detail
-                            select x).ToList();
+                            join p in context.MedicalImplements on x.MedicalImplementsID equals p.MedicalImplementsID
+                            join z in context.MasterPurchase on x.MasterPurchaseID equals z.MasterPurchaseID 
+                            join u in context.Users on z.UserID equals u.UserID
+                            
+                            select new FacturaEnt
+                            { 
+                            DetailID = x.DetailID,
+                            MasterPurchaseID = x.MasterPurchaseID,
+                           MedicalImplementsID = x.MedicalImplementsID,
+                           PaymentStatus = x.PaymentStatus,
+                           UserID = z.UserID,
+                           Name = p.Name,
+                           UserName = u.UserName,
+                           Surnames = u.Surnames
+                            
+                            }).ToList();
                 }
             }
             catch (Exception)
             {
-                return new List<Detail>();
+                return new List<FacturaEnt>();
             }
         }
 
@@ -97,6 +112,9 @@ namespace CaplugaAPI.Controllers
                 context.SaveChanges();
             }
         }
+
+  
+
 
         [HttpPost]
         [Route("PagarCarrito")]
@@ -120,5 +138,50 @@ namespace CaplugaAPI.Controllers
             }
 
         }
+        [HttpGet]
+        [Route("ConsultaFacturas")]
+        public List<MasterPurchase> ConsultaFacturas(long q)
+        {
+            using (var context = new CAPLUGAEntities())
+            {
+                context.Configuration.LazyLoadingEnabled = false;
+                return (from x in context.MasterPurchase
+                        where x.UserID == q
+                        select x).ToList();
+            }
+        }
+
+        [HttpGet]
+        [Route("ConsultaDetalleFactura")]
+        public object ConsultaDetalleFactura(long q)
+        {
+            using (var context = new CAPLUGAEntities())
+            {
+                context.Configuration.LazyLoadingEnabled = false;
+                return (from x in context.Detail
+                        join y in context.MedicalImplements on x.MedicalImplementsID equals y.MedicalImplementsID
+                        join z in context.MasterPurchase on x.MasterPurchaseID equals z.MasterPurchaseID
+                        join c in context.Users on z.UserID equals c.UserID
+                        join a in context.Addresses on c.AddressID equals a.AddressID
+                        where x.MasterPurchaseID == q
+                        select new
+                        {
+                            x.MasterPurchaseID,
+                            y.Name,
+                            x.PaidPrice,
+                            x.PaidQuantity,
+                            x.Tax,
+                            x.PaymentStatus,
+                            z.Users.UserName,
+                            z.Users.Surnames,
+                            x.MasterPurchase.PurchaseDate,
+                            SubTotal = (x.PaidPrice * x.PaidQuantity),
+                            Impuesto = (x.Tax * x.PaidQuantity),
+                            Total = (x.PaidPrice * x.PaidQuantity) + (x.Tax * x.PaidQuantity)
+
+                        }).ToList();
+            }
+        }
+
     }
 }

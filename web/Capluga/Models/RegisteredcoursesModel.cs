@@ -9,92 +9,94 @@ using Capluga.Entities;
 
 namespace Capluga.Models
 {
-    public class CarritoModel
+    public class RegisteredcoursesModel
     {
 
         public string rutaServidor = ConfigurationManager.AppSettings["RutaApi"];
 
-        public string RegistrarCarrito(CarritoEnt entidad)
+        public string RegistrarInscripcion(InscripCursEnt entidad)
         {
             using (var client = new HttpClient())
             {
-                var urlApi = rutaServidor + "RegistrarCarrito";
+                var urlApi = rutaServidor + "RegistrarInscripcion";
                 var jsonData = JsonContent.Create(entidad);
                 var res = client.PostAsync(urlApi, jsonData).Result;
                 return res.Content.ReadFromJsonAsync<string>().Result;
             }
         }
 
-        public List<CarritoEnt> ConsultarCarrito(long q)
+        public List<InscripCursEnt> ConsultarInscripcion(long q)
         {
             using (var client = new HttpClient())
             {
-                var urlApi = rutaServidor + "ConsultarCarrito?q=" + q;
+                var urlApi = rutaServidor + "ConsultarInscripcion?q=" + q;
                 var res = client.GetAsync(urlApi).Result;
-                return res.Content.ReadFromJsonAsync<List<CarritoEnt>>().Result;
+                return res.Content.ReadFromJsonAsync<List<InscripCursEnt>>().Result;
             }
         }
 
-
-        public void EliminarRegistroCarrito(long q)
+        public List<FacturaCursoEnt> ConsultaFacturasCurso(long q)
         {
             using (var client = new HttpClient())
             {
-                var urlApi = rutaServidor + "EliminarRegistroCarrito?q=" + q;
+                var urlApi = rutaServidor + "ConsultaFacturasCurso?q=" + q;
+                var res = client.GetAsync(urlApi).Result;
+                return res.Content.ReadFromJsonAsync<List<FacturaCursoEnt>>().Result;
+            }
+        }
+
+        public List<FacturaCursoEnt> ConsultaDetalleFacturaCurso(long q)
+        {
+            using (var client = new HttpClient())
+            {
+                var urlApi = rutaServidor + "ConsultaDetalleFacturaCurso?q=" + q;
+                var res = client.GetAsync(urlApi).Result;
+                return res.Content.ReadFromJsonAsync<List<FacturaCursoEnt>>().Result;
+            }
+        }
+
+        public void EliminarRegistroCurso(long q)
+        {
+            using (var client = new HttpClient())
+            {
+                var urlApi = rutaServidor + "EliminarRegistroCurso?q=" + q;
                 var res = client.DeleteAsync(urlApi).Result;
             }
         }
-        public List<FacturaEnt> ConsultaCarritoadm()
+
+        public int Matricula(InscripCursEnt entidad)
         {
             using (var client = new HttpClient())
             {
-                var urlApi = rutaServidor + "ConsultaCarritoadm";
-                var res = client.GetAsync(urlApi).Result;
-                return res.Content.ReadFromJsonAsync<List<FacturaEnt>>().Result;
-            }
-        }
-
-
-        public int PagarCarrito(CarritoEnt entidad)
-        {
-            using (var client = new HttpClient())
-            {
-                var urlApi = rutaServidor + "PagarCarrito";
+                var urlApi = rutaServidor + "Matricula";
                 var jsonData = JsonContent.Create(entidad);
                 var res = client.PostAsync(urlApi, jsonData).Result;
                 return res.Content.ReadFromJsonAsync<int>().Result;
             }
         }
 
-
-        public string ActualizarEstadoPago(FacturaEnt entidad)
+    
+        public string ActualizarEstadoCurso(FacturaCursoEnt entidad)
         {
             using (var client = new HttpClient())
             {
-                var urlApi = rutaServidor + "ActualizarEstadoPago";
+                var urlApi = rutaServidor + "ActualizarEstadoCurso";
                 var jsonData = JsonContent.Create(entidad);
                 var res = client.PutAsync(urlApi, jsonData).Result;
                 return res.Content.ReadFromJsonAsync<string>().Result;
             }
         }
-        public List<FacturaEnt> ConsultaFacturas(long q)
+
+
+        public List<FacturaCursoEnt> EstadoCurso()
         {
             using (var client = new HttpClient())
             {
-                var urlApi = rutaServidor + "ConsultaFacturas?q=" + q;
+                var urlApi = rutaServidor + "EstadoCurso";
                 var res = client.GetAsync(urlApi).Result;
-                return res.Content.ReadFromJsonAsync<List<FacturaEnt>>().Result;
+                return res.Content.ReadFromJsonAsync<List<FacturaCursoEnt>>().Result; // Leer como lista de FacturaCursoEnt
             }
         }
 
-        public List<FacturaEnt> ConsultaDetalleFactura(long q)
-        {
-            using (var client = new HttpClient())
-            {
-                var urlApi = rutaServidor + "ConsultaDetalleFactura?q=" + q;
-                var res = client.GetAsync(urlApi).Result;
-                return res.Content.ReadFromJsonAsync<List<FacturaEnt>>().Result;
-            }
-        }
     }
 }
