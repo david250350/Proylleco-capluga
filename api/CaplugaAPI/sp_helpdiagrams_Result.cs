@@ -10,17 +10,13 @@
 namespace CaplugaAPI
 {
     using System;
-    using System.Collections.Generic;
     
-    public partial class ErrorLogs
+    public partial class sp_helpdiagrams_Result
     {
-        public long LogID { get; set; }
-        public System.DateTime Timestamp { get; set; }
-        public string ErrorMessage { get; set; }
-        public string Source { get; set; }
-        public string AdditionalInformation { get; set; }
-        public long UserID { get; set; }
-    
-        public virtual Users Users { get; set; }
+        public string Database { get; set; }
+        public string Name { get; set; }
+        public int ID { get; set; }
+        public string Owner { get; set; }
+        public int OwnerID { get; set; }
     }
 }

@@ -4,25 +4,23 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-
-
 <div class="col-12 grid-margin stretch-card">
     <div class="card">
+        
+    </div>
+
+    <div class="card">
         <div class="card-body">
-            <h2 class="card-title">Información de Usuarios</h2>
-
+            <h2 class="card-title">Información de Productos</h2>
             <div style="text-align:center">
-
                 <form action="@Url.Action("ProductoPDF", "Document")" method="post">
                     <button type="submit" class="btn btn-success">Descargar PDF</button>
                 </form>
             </div>
             <div class="container">
-                @if (Model.Count() > 0)
+                @if (Model.Any())
                 {
-
                     <table id="DataTable" class="table table-bordered table-hover">
-
                         <thead class="thead-light">
                             <tr>
                                 <th>Nombre</th>
@@ -43,56 +41,44 @@
                                     <td>@item.Description</td>
                                     <td>@item.Quantity</td>
                                     <td>@item.Price.ToString("C", new System.Globalization.CultureInfo("es-CR"))</td>
+                                    <td>
+                                        <img src="@item.Image" style="width:125px; height:125px; border-radius:0px;">
+                                    </td>
                                     <td>@(item.State ? "Activo" : "Inactivo")</td>
                                     <td style="text-align:center">
-                                    <img src="@item.Image" style="width:125px; height:125px; border-radius:0px;">
-                                    </td>
-                                 
-                                    <td style="text-align:center">
                                         <a onclick="confirmStateChange('@Url.Action("ActualizarEstadoProducto", "Producto", new { q = item.MedicalImplementsID })')">
-                                        <i class="fa fa-refresh fa-lg"></i></a>
-
+                                            <i class="fa fa-refresh fa-lg"></i>
+                                        </a>
                                     </td>
-
-
                                     <td style="text-align:center">
-                                        <!-- Acciones como editar o eliminar -->
                                         <a href="@Url.Action("ActualizarProducto", "Producto", new { q = item.MedicalImplementsID })"><i class="fa fa-edit fa-lg"></i>&nbsp;&nbsp;</a>
-                                        &nbsp;&nbsp;&nbsp;
-                                        @*<a href="@Url.Action("EliminarProducto", "Producto", new { id = item.MedicalImplementsID })" class="btn btn-danger"><i class="fa fa-trash"></i>Eliminar</a>*@
                                     </td>
                                 </tr>
                             }
                         </tbody>
                     </table>
-
                 }
                 else
                 {
                     <div class="col-12 alert alert-info" role="alert" style="text-align: center; margin-top: 5%;">
-                        No hay productos en este momento
+                        No hay productos en este momento.
                     </div>
                 }
+                <div class="card-body">
+                    <h2 class="card-title">Dashboard de Precios de Productos</h2>
+                    <canvas id="priceChart" width="400" height="200"></canvas>
+                </div>
             </div>
         </div>
-</div>
     </div>
+</div>
 
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script src="~/Scripts/Dash.js"></script>
 <script>
-    function confirmPayment() {
-        Swal.fire({
-            title: '¿Estás seguro?',
-            text: "Confirmar Pedido.",
-            icon: 'question',
-            showCancelButton: true,
-            confirmButtonColor: '#3085d6',
-            cancelButtonColor: '#d33',
-            confirmButtonText: 'Confirmar ',
-            cancelButtonText: 'Cancelar'
-        }).then((result) => {
-            if (result.isConfirmed) {
-                document.getElementById('paymentForm').submit(); // Envía el formulario de pago
-            }
-        });
-    }
+    window.onload = function() {
+        var productos = @Html.Raw(Json.Encode(Model.Select(p => new { p.Name, p.Price })));
+        console.log(productos); // Verifica los datos en la consola
+        crearDashboardProductos(productos);
+    };
 </script>

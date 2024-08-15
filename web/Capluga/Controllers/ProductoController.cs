@@ -13,13 +13,27 @@ namespace Capluga.Controllers
     {
 
         ProductoModel modelProducto = new ProductoModel();
-
         [HttpGet]
         public ActionResult Productos()
         {
             var datos = modelProducto.Productos();
+            if (datos == null || !datos.Any())
+            {
+                ViewBag.MensajeUsuario = "No se han encontrado productos.";
+            }
             return View(datos);
         }
+
+        [HttpGet]
+        public ActionResult ProductosOrdenadosPorPrecio()
+        {
+            var datos = modelProducto.Productos().OrderBy(p => p.Price).ToList();
+            return View("Productos", datos); // Reutiliza la vista "Productos"
+        }
+
+
+
+
 
         [HttpGet]
         public ActionResult RegistrarProducto()

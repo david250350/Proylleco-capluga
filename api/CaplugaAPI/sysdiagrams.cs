@@ -12,15 +12,12 @@ namespace CaplugaAPI
     using System;
     using System.Collections.Generic;
     
-    public partial class ErrorLogs
+    public partial class sysdiagrams
     {
-        public long LogID { get; set; }
-        public System.DateTime Timestamp { get; set; }
-        public string ErrorMessage { get; set; }
-        public string Source { get; set; }
-        public string AdditionalInformation { get; set; }
-        public long UserID { get; set; }
-    
-        public virtual Users Users { get; set; }
+        public string name { get; set; }
+        public int principal_id { get; set; }
+        public int diagram_id { get; set; }
+        public Nullable<int> version { get; set; }
+        public byte[] definition { get; set; }
     }
 }
