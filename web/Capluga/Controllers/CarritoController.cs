@@ -34,8 +34,15 @@ namespace Capluga.Controllers
         {
             var datos = modelCarrito.ConsultarCarrito(long.Parse(Session["UserID"].ToString()));
             Session["TotalPago"] = datos.AsEnumerable().Sum(x => x.Total);
+
+            int cantidadTotal = datos.Sum(x => x.Quantity);
+            string mensajeUsuario = ObtenerMensajePorCantidad(cantidadTotal);
+
+            ViewBag.MensajeUsuario = mensajeUsuario;
+
             return View(datos);
         }
+
 
 
         [HttpGet]
@@ -108,5 +115,40 @@ namespace Capluga.Controllers
             var datos = modelCarrito.ConsultaDetalleFactura(q);
             return View(datos);
         }
+
+
+
+        private string ObtenerMensajePorCantidad(int cantidad)
+        {
+            if (cantidad == 1)
+            {
+                return "¿Estás seguro que es todo lo que necesitas? Te invitamos a revisar más productos.";
+            }
+            else if (cantidad > 1 && cantidad <= 5)
+            {
+                return "¡Gracias por agregar más productos! ¿Necesitas algo más?";
+            }
+            else if (cantidad > 5 && cantidad <= 10)
+            {
+                return "¡Estás haciendo una gran compra! Sigue agregando más si lo necesitas.";
+            }
+            else if (cantidad > 10 && cantidad <= 15)
+            {
+                return "¡Tienes muchos productos en tu carrito! ¿Listo para finalizar?";
+            }
+            else if (cantidad > 15)
+            {
+                return "¡Carrito lleno! Estás listo para una compra grande.";
+            }
+            else
+            {
+                return string.Empty;
+            }
+        }
+
+
+
+
+
     }
 }

@@ -6,7 +6,6 @@
 
 <div class="col-12 grid-margin stretch-card">
     <div class="card">
-        
     </div>
 
     <div class="card">
@@ -30,7 +29,7 @@
                                 <th>Imagen</th>
                                 <th>Estado</th>
                                 <th>Cambiar Estado</th>
-                                <th>Atualizar</th>
+                                <th>Actualizar</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -65,7 +64,7 @@
                     </div>
                 }
                 <div class="card-body">
-                    <h2 class="card-title">Dashboard de Precios de Productos</h2>
+                    <h2 class="card-title">Precios de Productos</h2>
                     <canvas id="priceChart" width="400" height="200"></canvas>
                 </div>
             </div>
@@ -74,10 +73,11 @@
 </div>
 
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@2.0.0"></script>
 <script src="~/Scripts/Dash.js"></script>
 <script>
     window.onload = function() {
-        var productos = @Html.Raw(Json.Encode(Model.Select(p => new { p.Name, p.Price })));
+        var productos = @Html.Raw(Json.Encode(Model.Select(p => new { p.Name, p.Price, p.Quantity })));
         console.log(productos); // Verifica los datos en la consola
         crearDashboardProductos(productos);
     };

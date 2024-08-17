@@ -10,12 +10,12 @@ using Capluga.Entities;
 using System.IO;
 using Capluga.Models;
 
+
 namespace Capluga.Controllers
 {
     public class MedicalCoursesController : Controller
     {
         MedicalCoursesModel CursoModel = new MedicalCoursesModel();
-
 
         [HttpGet]
         public ActionResult RegistrarCursos()
@@ -43,8 +43,7 @@ namespace Capluga.Controllers
                 CursoModel.ActualizarRutaCurso(entidad);
 
                 return RedirectToAction("ConsultaCursos", "MedicalCourses");
-               
-        }
+            }
             else
             {
                 ViewBag.MensajeUsuario = "No se ha podido registrar su producto";
@@ -56,10 +55,20 @@ namespace Capluga.Controllers
         public ActionResult ConsultaCursos()
         {
             var datos = CursoModel.ConsultaCursos();
+
+            // Crear una lista de objetos anónimos con los márgenes de ganancia
+            var margenesGanancia = datos.Select(curso => new
+            {
+                curso.Name,
+                curso.Price,
+                MargenGanancia = curso.Price * 0.20m // 20% de ganancia
+            }).ToList();
+
+            // Pasar la lista de márgenes de ganancia a la vista
+            ViewBag.MargenesGanancia = margenesGanancia;
+
             return View(datos);
         }
-
-
 
         [HttpGet]
         public ActionResult ActualizarEstadoCurso(long q)
@@ -80,7 +89,6 @@ namespace Capluga.Controllers
             }
         }
 
-
         [HttpGet]
         public ActionResult ActualizarCurso(long q)
         {
@@ -95,7 +103,6 @@ namespace Capluga.Controllers
             }
             return View(datos);
         }
-
 
         [HttpPost]
         public ActionResult ActualizarCurso(HttpPostedFileBase ImgCurso, CursoEnt entidad)
@@ -115,7 +122,6 @@ namespace Capluga.Controllers
 
                     CursoModel.ActualizarRutaCurso(entidad);
                 }
-
 
                 return RedirectToAction("ConsultaCursos", "MedicalCourses");
             }
@@ -143,6 +149,5 @@ namespace Capluga.Controllers
             }
             return View(curso);
         }
-    
-}
+    }
 }

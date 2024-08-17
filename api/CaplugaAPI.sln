@@ -5,6 +5,8 @@ VisualStudioVersion = 17.10.34916.146
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CaplugaAPI", "CaplugaAPI\CaplugaAPI.csproj", "{AB52F2BB-853F-48A0-B4ED-BB7FFEB6B4B2}"
 EndProject
+Project("{00D1A9C2-B5F0-4AF3-8072-F6C62B433612}") = "CAPLUGABD", "CAPLUGA\CAPLUGABD.sqlproj", "{F504B7D0-6AE6-4061-AAC0-BD883F7DDE5D}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +17,12 @@ Global
 		{AB52F2BB-853F-48A0-B4ED-BB7FFEB6B4B2}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{AB52F2BB-853F-48A0-B4ED-BB7FFEB6B4B2}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{AB52F2BB-853F-48A0-B4ED-BB7FFEB6B4B2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F504B7D0-6AE6-4061-AAC0-BD883F7DDE5D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F504B7D0-6AE6-4061-AAC0-BD883F7DDE5D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F504B7D0-6AE6-4061-AAC0-BD883F7DDE5D}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
+		{F504B7D0-6AE6-4061-AAC0-BD883F7DDE5D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F504B7D0-6AE6-4061-AAC0-BD883F7DDE5D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F504B7D0-6AE6-4061-AAC0-BD883F7DDE5D}.Release|Any CPU.Deploy.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

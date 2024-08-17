@@ -11,7 +11,6 @@
             <h2 class="card-title">Información de los cursos</h2>
 
             <div style="text-align:center">
-
                 <form action="@Url.Action("CursoPDF", "Document")" method="post" style="display:inline;">
                     <button type="submit" class="btn btn-success">Generar PDF</button>
                 </form>
@@ -48,11 +47,34 @@
                                     </td>
                                     <td style="text-align:center">
                                         <a onclick="confirmStateChange('@Url.Action("ActualizarEstadoCurso", "MedicalCourses", new { q = item.MedicalCourseID })')">
-                                            <i class="fa fa-refresh fa-lg"></i></a>
-                                        </td>
+                                            <i class="fa fa-refresh fa-lg"></i>
+                                        </a>
+                                    </td>
                                     <td style="text-align:center">
                                         <a href="@Url.Action("ActualizarCurso", "MedicalCourses", new { q = item.MedicalCourseID })"><i class="fa fa-edit fa-lg"></i></a>
                                     </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+
+                    <!-- Tabla de Márgenes de Ganancia -->
+                    <h3 style="margin-top: 20px;">Márgenes de Ganancia por Curso</h3>
+                    <table class="table table-bordered table-hover">
+                        <thead class="thead-light">
+                            <tr>
+                                <th>Nombre del Curso</th>
+                                <th>Precio</th>
+                                <th>Margen de Ganancia (20%)</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var margen in ViewBag.MargenesGanancia)
+                            {
+                                <tr>
+                                    <td>@((dynamic)margen).Name</td>
+                                    <td>@((dynamic)margen).Price.ToString("C", new System.Globalization.CultureInfo("es-CR"))</td>
+                                    <td>@((dynamic)margen).MargenGanancia.ToString("C", new System.Globalization.CultureInfo("es-CR"))</td>
                                 </tr>
                             }
                         </tbody>

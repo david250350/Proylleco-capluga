@@ -16,7 +16,6 @@ namespace Capluga.Entities
         public string Image { get; set; }
         public bool State { get; set; }
         public DateTime DateandTime { get; set; }
-
-
+       
     }
 }

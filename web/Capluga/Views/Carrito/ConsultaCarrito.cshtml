@@ -20,66 +20,67 @@
                     @ViewBag.MensajeUsuario
                 </div>
             }
-            <div class="container">
-                @if (Model.Any())
-                {
+        <div class="container">
+            @if (Model.Any())
+            {
 
-                    <table id="DataTable" class="table table-bordered table-hover">
-                        <thead class="thead-light">
+                <table id="DataTable" class="table table-bordered table-hover">
+                    <thead class="thead-light">
+                        <tr>
+                            <th>Nombre</th>
+                            <th>Cantidad</th>
+                            <th>Precio Unitario</th>
+                            <th>SubTotal</th>
+                            <th>Impuesto</th>
+                            <th>Total</th>
+                            <th>Eliminar</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model)
+                        {
                             <tr>
-                                <th>Nombre</th>
-                                <th>Cantidad</th>
-                                <th>Precio Unitario</th>
-                                <th>SubTotal</th>
-                                <th>Impuesto</th>
-                                <th>Total</th>
-                                <th>Eliminar</th>
+                                <td>@item.Name</td>
+                                <td>@item.Quantity</td>
+                                <td>@item.Price.ToString("C", new System.Globalization.CultureInfo("es-CR"))</td>
+                                <td>@item.SubTotal.ToString("C", new System.Globalization.CultureInfo("es-CR"))</td>
+                                <td>@item.Impuestos.ToString("C", new System.Globalization.CultureInfo("es-CR"))</td>
+                                <td>@item.Total.ToString("C", new System.Globalization.CultureInfo("es-CR"))</td>
+
+
+                                <td style="text-align:center">
+                                    <a href="#" onclick="confirmDelete('@Url.Action("EliminarRegistroCarrito", "Carrito", new { q = item.CartID })')">
+                                        <i class="fa fa-remove fa-lg"></i>
+                                    </a>
+                                </td>
                             </tr>
-                        </thead>
-                        <tbody>
-                            @foreach (var item in Model)
-                            {
-                                <tr>
-                                    <td>@item.Name</td>
-                                    <td>@item.Quantity</td>
-                                    <td>@item.Price.ToString("C", new System.Globalization.CultureInfo("es-CR"))</td>
-                                    <td>@item.SubTotal.ToString("C", new System.Globalization.CultureInfo("es-CR"))</td>
-                                    <td>@item.Impuestos.ToString("C", new System.Globalization.CultureInfo("es-CR"))</td>
-                                    <td>@item.Total.ToString("C", new System.Globalization.CultureInfo("es-CR"))</td>
+                        }
+                    </tbody>
+                </table>
 
-
-                                    <td style="text-align:center">
-                                        <a href="#" onclick="confirmDelete('@Url.Action("EliminarRegistroCarrito", "Carrito", new { q = item.CartID })')">
-                                            <i class="fa fa-remove fa-lg"></i>
-                                        </a>
-                                    </td>
-                                </tr>
-                            }
-                        </tbody>
-                    </table>
-
-                    <div class="row" style="margin-top: 2%;">
-                        <div class="col-4">
-                            <p style="font-weight:900; text-align:initial; line-height: 40px;"> El monto total a pagar es de: @decimal.Parse(Session["TotalPago"].ToString()).ToString("C", new System.Globalization.CultureInfo("es-CR")) </p>
-                        </div>
-                        <div class="col-4">
-
-                            @using (Html.BeginForm("PagarCarrito", "Carrito", FormMethod.Post, new { id = "paymentForm" }))
-                            {
-                                <button type="button" onclick="confirmPayment()" class="btn" style="background-color: #1A237E; color: white;">Pedir</button>
-                            }
-
-                        </div>
+                <div class="row" style="margin-top: 2%;">
+                    <div class="col-4">
+                        <p style="font-weight:900; text-align:initial; line-height: 40px;"> El monto total a pagar es de: @decimal.Parse(Session["TotalPago"].ToString()).ToString("C", new System.Globalization.CultureInfo("es-CR")) </p>
                     </div>
-                }
-                else
-                {
-                    <div class="col-12 alert alert-info" role="alert" style="text-align: center; margin-top: 5%;">
-                        No hay productos agregados en este momento
-                    </div>
-                }
+                    <div class="col-4">
 
-            </div>
+                        @using (Html.BeginForm("PagarCarrito", "Carrito", FormMethod.Post, new { id = "paymentForm" }))
+                        {
+                            <button type="button" onclick="confirmPayment()" class="btn" style="background-color: #1A237E; color: white;">Pedir</button>
+                        }
+
+                    </div>
+                </div>
+            }
+            else
+            {
+                <div class="col-12 alert alert-info" role="alert" style="text-align: center; margin-top: 5%;">
+                    No hay productos agregados en este momento
+                </div>
+            }
+           
+
+        </div>
         </div>
     </div>
 </div>
