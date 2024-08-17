@@ -79,6 +79,7 @@ namespace Capluga.Controllers
 
                 // Si el método se completa sin errores, asume éxito
                 TempData["SuccessMessage"] = "Cita eliminada exitosamente.";
+                return RedirectToAction("ConsultaCita");
             }
             catch (Exception ex)
             {

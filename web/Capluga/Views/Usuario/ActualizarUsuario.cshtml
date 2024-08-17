@@ -3,8 +3,9 @@
 @{
     ViewBag.Title = "ActualizarUsuario";
     Layout = "~/Views/Shared/_Layout.cshtml";
-    var ageValue = Model.Age.ToString("yyyy-MM-dd");
+    var ageValue = Model?.Age != null ? Model.Age.ToString("yyyy-MM-dd") : "";
 }
+
 
 <div class="col-12 grid-margin stretch-card">
     <div class="card">
@@ -24,41 +25,42 @@
                 {
                     @Html.HiddenFor(m => m.UserID)
 
-            <div class="form-group">
-                <label>Nombre</label>
-                @Html.TextBoxFor(m => m.UserName, new { @class = "form-control form-control-lg", @placeholder = "Nombre", @type = "text" })
-                @Html.ValidationMessageFor(m => m.UserName, "", new { @class = "text-danger" })
-            </div>
-            <div class="form-group">
-                <label>Apellidos</label>
-                @Html.TextBoxFor(m => m.Surnames, new { @class = "form-control form-control-lg", @placeholder = "Apellidos", @type = "text" })
-                @Html.ValidationMessageFor(m => m.Surnames, "", new { @class = "text-danger" })
-            </div>
-            <div class="form-group">
-                <label>Correo Electronico</label>
-                @Html.TextBoxFor(m => m.Email, new { @class = "form-control form-control-lg", @placeholder = "Correo Electronico", @type = "email" })
-                @Html.ValidationMessageFor(m => m.Email, "", new { @class = "text-danger" })
-            </div>
-            <div class="form-group">
-                <label>Contrasenna</label>
-                @Html.TextBoxFor(m => m.Password, new { @class = "form-control form-control-lg", @placeholder = "Contrasenna", @type = "password" })
-                @Html.ValidationMessageFor(m => m.Password, "", new { @class = "text-danger" })
-            </div>
-            <div class="form-group">
-                <label>Fecha de nacimiento</label>
-                @Html.TextBoxFor(m => m.Age, new { @class = "form-control form-control-lg", @type = "date", @Value = ageValue })
-                
-            </div>
-            <div class="form-group">
-                <label>Telefono</label>
-                @Html.TextBoxFor(m => m.PhoneNumber, new { @class = "form-control form-control-lg", @placeholder = "Telefono", @type = "text" })
-                @Html.ValidationMessageFor(m => m.PhoneNumber, "", new { @class = "text-danger" })
-            </div>
-            <div class="form-group">
-                <label>Rol de Usuario</label>
-                @Html.TextBoxFor(m => m.RoleID, new { @class = "form-control form-control-lg", @placeholder = "Rol", @type = "text" })
-               
-            </div>
+                    <div class="form-group">
+                        <label>Nombre</label>
+                        @Html.TextBoxFor(m => m.UserName, new { @class = "form-control form-control-lg", @placeholder = "Nombre", @type = "text" })
+                        @Html.ValidationMessageFor(m => m.UserName, "", new { @class = "text-danger" })
+                    </div>
+                    <div class="form-group">
+                        <label>Apellidos</label>
+                        @Html.TextBoxFor(m => m.Surnames, new { @class = "form-control form-control-lg", @placeholder = "Apellidos", @type = "text" })
+                        @Html.ValidationMessageFor(m => m.Surnames, "", new { @class = "text-danger" })
+                    </div>
+                    <div class="form-group">
+                        <label>Correo Electrónico</label>
+                        @Html.TextBoxFor(m => m.Email, new { @class = "form-control form-control-lg", @placeholder = "Correo Electrónico", @type = "email" })
+                        @Html.ValidationMessageFor(m => m.Email, "", new { @class = "text-danger" })
+                    </div>
+
+                    <div class="form-group">
+                        <label>Contrasenna</label>
+                        @Html.TextBoxFor(m => m.Password, new { @class = "form-control form-control-lg", @placeholder = "Contrasenna", @type = "password" })
+                        @Html.ValidationMessageFor(m => m.Password, "", new { @class = "text-danger" })
+                    </div>
+                    <div class="form-group">
+                        <label>Fecha de nacimiento</label>
+                        @Html.TextBoxFor(m => m.Age, new { @class = "form-control form-control-lg", @type = "date", @Value = ageValue })
+
+                    </div>
+                    <div class="form-group">
+                        <label>Telefono</label>
+                        @Html.TextBoxFor(m => m.PhoneNumber, new { @class = "form-control form-control-lg", @placeholder = "Telefono", @type = "text" })
+                        @Html.ValidationMessageFor(m => m.PhoneNumber, "", new { @class = "text-danger" })
+                    </div>
+                    <div class="form-group">
+                        <label>Rol de Usuario</label>
+                        @Html.TextBoxFor(m => m.RoleID, new { @class = "form-control form-control-lg", @placeholder = "Rol", @type = "text" })
+
+                    </div>
                     <div class="form-group">
                         <label>Provincia</label>
                         @Html.DropDownListFor(m => m.Ubicacion.State, new SelectList(Enumerable.Empty<SelectListItem>(), "Value", "Text"),

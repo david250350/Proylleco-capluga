@@ -41,7 +41,8 @@ namespace Capluga.Controllers
             {
                 return View();
             }
-                entidad.Image = string.Empty;
+
+            entidad.Image = string.Empty;
             entidad.State = true;
 
             long medicalCourseID = CursoModel.RegistrarCursos(entidad);
@@ -94,7 +95,7 @@ namespace Capluga.Controllers
             {
                 return View();
             }
-                string respuesta = CursoModel.ActualizarCurso(entidad);
+            string respuesta = CursoModel.ActualizarCurso(entidad);
 
             if (respuesta == "OK")
             {

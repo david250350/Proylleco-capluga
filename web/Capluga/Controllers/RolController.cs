@@ -30,10 +30,7 @@ namespace Capluga.Controllers
         [HttpPost]
         public ActionResult CrearRol(RoleEnt entidad)
         {
-            if (!ModelState.IsValid)
-            {
-                return View(entidad);
-            }
+          
 
             string respuesta = modelroles.CrearRol(entidad);
 
@@ -58,10 +55,7 @@ namespace Capluga.Controllers
         [HttpPost]
         public ActionResult ActualizarRol(RoleEnt entidad)
         {
-            if (!ModelState.IsValid)
-            {
-                return View(entidad);
-            }
+           
             string respuesta = modelroles.ActualizarRol(entidad);
 
             if (respuesta == "OK")

@@ -19,12 +19,16 @@ namespace CaplugaAPI.Controllers
             using (var context = new CAPLUGAEntities())
             {
                 var datos = (from x in context.Cart
-                             where x.UserID == cart.CartID
+                             where x.UserID == cart.UserID
                                 && x.MedicalImplementsID == cart.MedicalImplementsID
                              select x).FirstOrDefault();
 
                 if (datos == null)
                 {
+                    Cart registro = new Cart();
+                    registro.UserID = cart.UserID;
+                    registro.MedicalImplementsID = cart.MedicalImplementsID;
+                    registro.Quantity = cart.Quantity;
                     context.Cart.Add(cart);
                     context.SaveChanges();
                 }

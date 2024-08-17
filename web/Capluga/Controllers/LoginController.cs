@@ -61,10 +61,7 @@ namespace Capluga.Controllers
         [HttpPost]
         public ActionResult RegistrarCuenta(UsuarioEnt entidad)
         {
-            if (!ModelState.IsValid)
-            {
-                return View();
-            }
+         
                 string respuesta = usuarioModel.RegistrarCuenta(entidad);
 
             if (respuesta == "OK")
@@ -87,10 +84,7 @@ namespace Capluga.Controllers
         [HttpPost]
         public ActionResult RecuperarCuenta(UsuarioEnt entidad)
         {
-            if (!ModelState.IsValid)
-            {
-                return View();
-            }
+            
                 string respuesta = usuarioModel.RecuperarCuenta(entidad);
 
             if (respuesta == "OK")
@@ -114,10 +108,7 @@ namespace Capluga.Controllers
         [HttpPost]
         public ActionResult CambiarContrasenna(UsuarioEnt entidad)
         {
-            if (!ModelState.IsValid)
-            {
-                return View(); 
-            }
+           
                 string respuesta = usuarioModel.CambiarContrasenna(entidad);
 
             if (respuesta == "OK")

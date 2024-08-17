@@ -70,19 +70,24 @@ namespace Capluga.Controllers
         public ActionResult ActualizarUsuario(long q)
         {
             var datos = usuarioModel.ConsultaUsuario(q);
+            if (datos == null)
+            {
+                // Manejar el caso donde no se encuentren datos
+                return HttpNotFound();
+            }
             return View(datos);
         }
 
         [HttpPost]
         public ActionResult ActualizarUsuario(UsuarioEnt entidad)
         {
-         
 
+         
             string respuesta = usuarioModel.ActualizarCuenta(entidad);
 
             if (respuesta == "OK")
             {
-                return RedirectToAction("Productos", "Home");
+                return RedirectToAction("VistaProducto", "Producto");
             }
             else
             {
