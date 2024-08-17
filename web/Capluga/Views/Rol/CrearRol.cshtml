@@ -5,13 +5,10 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-
 <div class="content-wrapper d-flex align-items-center auth px-0">
     <div class="row w-100 mx-0">
         <div class="col-lg-10 mx-auto">
             <div class="auth-form-light text-left py-5 px-4 px-sm-5">
-
-
                 <main>
                     <div class="content-wrapper d-flex align-items-center auth px-0">
                         <div class="row w-100 mx-0">
@@ -21,7 +18,8 @@
                                     {
                                         @Html.AntiForgeryToken()
 
-                                        <h2>Registrar Horario</h2>
+                                        <h2>Registrar Rol</h2>
+
                                         <div class="form-group">
                                             <label class="control-label" for="RolName">
                                                 <i class="fas fa-calendar-alt"></i> Rol
@@ -30,22 +28,27 @@
                                             @Html.ValidationMessageFor(model => model.RolName, "", new { @class = "text-danger" })
                                         </div>
 
-                                      
-                                       
                                         <div class="form-group">
                                             <div class="col-md-offset-2 col-md-10">
                                                 <button type="button" class="btn btn-primary" onclick="confirmInsert()">
-                                                     Registrar
+                                                    Registrar
                                                 </button>
                                             </div>
                                         </div>
+
+                                        if (!string.IsNullOrEmpty(ViewBag.MensajeUsuario))
+                                        {
+                                            <div class="alert alert-danger">
+                                                @ViewBag.MensajeUsuario
+                                            </div>
+                                        }
+
                                     }
                                 </div>
                             </div>
                         </div>
                     </div>
                 </main>
-
             </div>
         </div>
     </div>

@@ -22,6 +22,13 @@
                                         {
                                             @Html.AntiForgeryToken()
 
+                                            if (ViewBag.MensajeUsuario != null)
+                                            {
+                                                <div class ="alert alert-danger" role="alert" style="text-align:center">
+                                                    @ViewBag.MensajeUsuario
+                                            </div>
+                                        }
+
                                             <h2>Registrar Horario</h2>
                                             <div class="form-group">
                                                 <label class="control-label" for="Dname">

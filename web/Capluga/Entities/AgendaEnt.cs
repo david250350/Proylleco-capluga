@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
@@ -19,8 +20,15 @@ namespace Capluga.Entities
         public string Street { get; set; }
         public string ZipCode { get; set; }
         public virtual UbicacionEnt Ubicacion { get; set; }
+
+
+        [Required(ErrorMessage = "El asunto es obligatorio.")]
         public string Name { get; set; }
+
+        [Required(ErrorMessage = "La descripción es obligatoria.")]
         public string Description { get; set; }
+
+        [Required(ErrorMessage = "Debe seleccionar un horario.")]
         public long ScheduleID { get; set; }
 
         public string UserName { get; set; }

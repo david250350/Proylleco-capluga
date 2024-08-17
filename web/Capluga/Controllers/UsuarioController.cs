@@ -52,6 +52,7 @@ namespace Capluga.Controllers
         [HttpPost]
         public ActionResult PerfilUsuario(UsuarioEnt entidad)
         {
+        
             string respuesta = usuarioModel.ActualizarCuenta(entidad);
 
             if (respuesta == "OK")
@@ -75,6 +76,8 @@ namespace Capluga.Controllers
         [HttpPost]
         public ActionResult ActualizarUsuario(UsuarioEnt entidad)
         {
+         
+
             string respuesta = usuarioModel.ActualizarCuenta(entidad);
 
             if (respuesta == "OK")

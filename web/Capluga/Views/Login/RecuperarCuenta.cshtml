@@ -27,6 +27,7 @@
                     <div class="form-group">
                         <label>Por favor ingrese su correo electrónico</label>
                         @Html.TextBoxFor(m => m.Email, new { @class = "form-control form-control-lg", @placeholder = "Correo electrónico", @type = "text" })
+                        @Html.ValidationMessageFor(m => m.Email, "", new { @class = "text-danger" })
                     </div>
                     <div class="mt-3">
                         <input type="submit" class="btn btn-block btn-success btn-lg font-weight-medium auth-form-btn" value="RECUPERAR CUENTA">

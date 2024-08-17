@@ -117,7 +117,7 @@
                                         <ul>
                                             <li><a href="@Url.Action("About", "Home")">Acerca de nosotros</a></li>
                                             <li><a href="@Url.Action("VistaCurso", "MedicalCourses")">Cursos</a></li>
-                                            <li><a href="@Url.Action("Productos", "Home")">Productos</a></li>
+                                            <li><a href="@Url.Action("VistaProducto", "Producto")">Producto</a></li>
                                             <li><a href="@Url.Action("RegistrarCita", "AgendaCita")">Agendar Cita</a></li>
                                             <li><a href="@Url.Action("ConsultaCarrito", "Carrito")">Carrito</a></li>
                                             @if (@Session["Nombre"] == null)
@@ -126,6 +126,7 @@
                                             }
                                             else
                                             {
+                                                
                                                 <li class="nav-item dropdown">
                                                     <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                                         <i class="fa fa-user-circle"></i> @Session["Nombre"].ToString()
@@ -350,7 +351,7 @@
                  "medicalImplementsID": medicalImplementsID
              },
              success: function (data) {
-                 window.location.href = '@Url.Action("Productos", "Home")';
+                 window.location.href = '@Url.Action("VistaProducto", "Producto")';
              }
          });
      }

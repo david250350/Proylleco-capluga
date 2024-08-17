@@ -38,63 +38,63 @@
                             </div>
                         </div>
 
-                       
-                            <table class="table table-hover text-dark">
-                                <thead class="thead-light">
+
+                        <table class="table table-hover text-dark">
+                            <thead class="thead-light">
+                                <tr>
+
+                                    <th>Nombre</th>
+                                    <th>Cantidad</th>
+                                    <th>Precio X Und</th>
+                                    <th>Impuesto X Und</th>
+                                    <th>SubTotal</th>
+                                    <th>Impuesto</th>
+                                    <th>Total</th>
+                                    <th>Pago</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var item in Model)
+                                {
                                     <tr>
 
-                                        <th>Nombre</th>
-                                        <th>Cantidad</th>
-                                        <th>Precio X Und</th>
-                                        <th>Impuesto X Und</th>
-                                        <th>SubTotal</th>
-                                        <th>Impuesto</th>
-                                        <th>Total</th>
-                                        <th>Pago</th>
+                                        <td>@item.Name</td>
+                                        <td>@item.PaidQuantity</td>
+                                        <td>@item.PaidPrice.ToString("C")</td>
+                                        <td>@item.Tax.ToString("C")</td>
+                                        <td>@item.SubTotal.ToString("C")</td>
+                                        <td>@item.Impuesto.ToString("C")</td>
+                                        <td>@item.Total.ToString("C")</td>
+                                        <td>@item.PaymentStatus</td>
                                     </tr>
-                                </thead>
-                                <tbody>
-                                    @foreach (var item in Model)
-                                    {
-                                        <tr>
-
-                                            <td>@item.Name</td>
-                                            <td>@item.PaidQuantity</td>
-                                            <td>@item.PaidPrice.ToString("C")</td>
-                                            <td>@item.Tax.ToString("C")</td>
-                                            <td>@item.SubTotal.ToString("C")</td>
-                                            <td>@item.Impuesto.ToString("C")</td>
-                                            <td>@item.Total.ToString("C")</td>
-                                            <td>@item.PaymentStatus</td>
-                                        </tr>
-                                    }
-                                </tbody>
-                            </table>
-                        </div>
-
-                        <div class="text-right mt-4">
-                            <h5>Total: <span class="text-primary">@Model.Sum(item => item.Total).ToString("C")</span></h5>
-                        </div>
-
-
-
-                        <div class="invoice-footer mt-5">
-                            <div class="text-right">
-                                @using (Html.BeginForm("DescargarPDF", "Document", FormMethod.Post, new { @class = "d-inline" })) // Añade 'd-inline' para alinear inline
-                                {
-                                    @Html.AntiForgeryToken()
-                                    @Html.Hidden("masterPurchaseID", Model.FirstOrDefault().MasterPurchaseCurseID)
-                                    <button type="submit" class="btn btn-primary mr-2"style="background-color: #1A237E; color: white;">Descarga PDF</button>
-                                  
                                 }
-
-                               
-                                
-                            </div>
-                        </div>
-
-
+                            </tbody>
+                        </table>
                     </div>
+
+                    <div class="text-right mt-4">
+                        <h4>Total: <span class="text-dark">@Model.Sum(item => item.Total).ToString("C")</span></h4>
+                    </div>
+
+
+
+                    <div class="invoice-footer mt-5">
+                        <div class="text-right">
+                            @using (Html.BeginForm("CFac", "Document", FormMethod.Post, new { @class = "d-inline" })) // Añade 'd-inline' para alinear inline
+                            {
+                                @Html.AntiForgeryToken()
+                                @Html.Hidden("masterPurchaseID", Model.FirstOrDefault().MasterPurchaseCurseID)
+                                <button type="submit" class="btn btn-primary mr-2" style="background-color: #1A237E; color: white;">Descarga PDF</button>
+
+                            }
+
+
+
+                        </div>
+                    </div>
+
+
+                </div>
                 </div>
             </div>
         </div>

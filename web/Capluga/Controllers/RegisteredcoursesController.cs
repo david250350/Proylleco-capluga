@@ -86,16 +86,16 @@ namespace Capluga.Controllers
         }
 
         [HttpGet]
-        public ActionResult ActualizarEstadoCurso(long q)
+        public ActionResult ActualizarEstadoPC(long q)
         {
             var entidad = new FacturaCursoEnt();
             entidad.MasterPurchaseCurseID = q;
 
-            string respuesta = modelRegister.ActualizarEstadoCurso(entidad);
+            string respuesta = modelRegister.ActualizarEstadoPC(entidad);
 
             if (respuesta == "OK")
             {
-                return RedirectToAction("EstadoCurso", "Registeredcourses"); // Redirige a la acción que renderiza la vista 'EstadoCurso'
+                return RedirectToAction("EstadoCurso", "Registeredcourses");
             }
             else
             {
@@ -103,14 +103,12 @@ namespace Capluga.Controllers
                 return View();
             }
         }
-
-
-
         [HttpGet]
         public ActionResult EstadoCurso()
         {
             var datos = modelRegister.EstadoCurso();
             return View(datos);
         }
+
     }
 }

@@ -74,20 +74,16 @@ namespace Capluga.Models
                 return res.Content.ReadFromJsonAsync<int>().Result;
             }
         }
-
-    
-        public string ActualizarEstadoCurso(FacturaCursoEnt entidad)
+        public string ActualizarEstadoPC(FacturaCursoEnt entidad)
         {
             using (var client = new HttpClient())
             {
-                var urlApi = rutaServidor + "ActualizarEstadoCurso";
+                var urlApi = rutaServidor + "ActualizarEstadoPC";
                 var jsonData = JsonContent.Create(entidad);
                 var res = client.PutAsync(urlApi, jsonData).Result;
                 return res.Content.ReadFromJsonAsync<string>().Result;
             }
         }
-
-
         public List<FacturaCursoEnt> EstadoCurso()
         {
             using (var client = new HttpClient())
@@ -97,6 +93,5 @@ namespace Capluga.Models
                 return res.Content.ReadFromJsonAsync<List<FacturaCursoEnt>>().Result; // Leer como lista de FacturaCursoEnt
             }
         }
-
     }
 }

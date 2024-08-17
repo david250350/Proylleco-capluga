@@ -1,9 +1,9 @@
 ﻿@using PagedList;
 @using PagedList.Mvc;
-@model IPagedList<Capluga.Entities.CursoEnt>
+@model IPagedList<Capluga.Entities.ProductoEnt>
 
 @{
-    ViewBag.Title = "Cursos";
+    ViewBag.Title = "Producto";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 <!-- Filtros -->
@@ -45,24 +45,24 @@
                 <div class="col-12 col-sm-6 col-md-4 col-lg-4 mb-4 align-items-stretch filtro-card" data-precio="@item.Price" data-nombre="@item.Name">
                     <div class="card text-center w-100">
                         <div class="card-body">
-                            <a href="@Url.Action("DetallesCurso", "MedicalCourses", new { id = item.MedicalCourseID })">
+                            <a href="@Url.Action("DetallesProducto", "Producto", new { id = item.MedicalImplementsID })">
                                 <img src="@item.Image" width="150" height="150">
                             </a>
                             <br /><br />
                             <h4 class="card-title">
-                                <a href="@Url.Action("DetallesCurso", "MedicalCourses", new { id = item.MedicalCourseID })">@item.Name</a>
+                                <a href="@Url.Action("DetallesProducto", "Producto", new { id = item.MedicalImplementsID })">@item.Name</a>
                             </h4>
-                            <p class="card-text">Fecha del Curso: @item.DateandTime</p>
-                            <p class="card-text">Cupos: @item.Quantity - @item.Price.ToString("C", new System.Globalization.CultureInfo("es-CR"))</p>
+                            @*<p class="card-text">@item.Description</p>*@
+                            <p class="card-text">Unidades: @item.Quantity - @item.Price.ToString("C", new System.Globalization.CultureInfo("es-CR"))</p>
                             @if (Session["UserID"] != null)
                             {
                                 <div class="row">
                                     <div class="col-3"></div>
                                     <div class="col-4" style="text-align:right!important">
-                                        <input id="prd-@item.MedicalCourseID" type="number" class="form-control" />
+                                        <input id="prd-@item.MedicalImplementsID" type="number" class="form-control">
                                     </div>
                                     <div class="col-4" style="text-align:left">
-                                        <a onclick="RegistrarInscripcion(@item.MedicalCourseID, @item.Quantity)" class="btn btn-outline-primary"><i class="fa fa-cart-plus"></i></a>
+                                        <a onclick="AgrearCarrito(@item.MedicalImplementsID, @item.Quantity)" class="btn btn-outline-primary"><i class="fa fa-cart-plus"></i></a>
                                     </div>
                                 </div>
                             }
@@ -74,7 +74,7 @@
         else
         {
             <div class="col-12 alert alert-info" role="alert" style="text-align: center; margin-top: 5%;">
-                No hay cursos registrados en este momento
+                No hay productos registrados en este momento
             </div>
         }
     </div>
@@ -82,7 +82,7 @@
 
 <div class="row">
     <div class="col-12 text-center">
-        @Html.PagedListPager(Model, page => Url.Action("VistaCurso", new { page }), new PagedListRenderOptions
+        @Html.PagedListPager(Model, page => Url.Action("VistaProducto", new { page }), new PagedListRenderOptions
         {
             DisplayLinkToFirstPage = PagedListDisplayMode.Never,
             DisplayLinkToLastPage = PagedListDisplayMode.Never,
