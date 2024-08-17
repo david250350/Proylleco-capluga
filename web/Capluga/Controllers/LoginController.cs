@@ -31,6 +31,27 @@ namespace Capluga.Controllers
             return View();
         }
 
+        [HttpPost]
+        public ActionResult IniciarSesion(UsuarioEnt entidad)
+        {
+        
+                var respuesta = usuarioModel.IniciarSesion(entidad);
+
+            if (respuesta != null)
+            {
+                Session["UserID"] = respuesta.UserID;
+                Session["Nombre"] = respuesta.UserName;
+                Session["Rol"] = respuesta.RoleID;
+                Session["AddressID"] = respuesta.AddressID;
+                return RedirectToAction("VistaProducto", "Producto");
+            }
+            else
+            {
+                ViewBag.MensajeUsuario = "Usuario o contraseña incorrectas, por favor verifique sus credenciales.";
+                return View();
+            }
+        }
+
         [HttpGet]
         public ActionResult RegistrarCuenta()
         {
@@ -40,7 +61,8 @@ namespace Capluga.Controllers
         [HttpPost]
         public ActionResult RegistrarCuenta(UsuarioEnt entidad)
         {
-            string respuesta = usuarioModel.RegistrarCuenta(entidad);
+         
+                string respuesta = usuarioModel.RegistrarCuenta(entidad);
 
             if (respuesta == "OK")
             {
@@ -52,27 +74,7 @@ namespace Capluga.Controllers
                 return View();
             }
         }
-
-        [HttpPost]
-        public ActionResult IniciarSesion(UsuarioEnt entidad)
-        {
-            var respuesta = usuarioModel.IniciarSesion(entidad);
-
-            if (respuesta != null)
-            {
-                Session["UserID"] = respuesta.UserID;
-                Session["Nombre"] = respuesta.UserName;
-                Session["Rol"] = respuesta.RoleID;
-                Session["AddressID"] = respuesta.AddressID;
-                return RedirectToAction("Productos", "Home");
-            }
-            else
-            {
-                ViewBag.MensajeUsuario = "Usuario o contraseña incorrectas, por favor verifique sus credenciales.";
-                return View();
-            }
-        }
-
+        
         [HttpGet]
         public ActionResult RecuperarCuenta()
         {
@@ -82,7 +84,8 @@ namespace Capluga.Controllers
         [HttpPost]
         public ActionResult RecuperarCuenta(UsuarioEnt entidad)
         {
-            string respuesta = usuarioModel.RecuperarCuenta(entidad);
+            
+                string respuesta = usuarioModel.RecuperarCuenta(entidad);
 
             if (respuesta == "OK")
             {
@@ -93,7 +96,9 @@ namespace Capluga.Controllers
                 ViewBag.MensajeUsuario = "No se ha podido recuperar su información";
                 return View();
             }
-        }
+        } 
+
+
         [HttpGet]
         public ActionResult CambiarContrasenna()
         {
@@ -103,7 +108,8 @@ namespace Capluga.Controllers
         [HttpPost]
         public ActionResult CambiarContrasenna(UsuarioEnt entidad)
         {
-            string respuesta = usuarioModel.CambiarContrasenna(entidad);
+           
+                string respuesta = usuarioModel.CambiarContrasenna(entidad);
 
             if (respuesta == "OK")
             {

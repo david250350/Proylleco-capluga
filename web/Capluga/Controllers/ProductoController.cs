@@ -1,5 +1,6 @@
 ﻿using Capluga.Entities;
 using Capluga.Models;
+using PagedList;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -13,6 +14,20 @@ namespace Capluga.Controllers
     {
 
         ProductoModel modelProducto = new ProductoModel();
+
+
+        [HttpGet]
+        public ActionResult VistaProducto(int? page)
+        {
+
+            int pageSize = 10;
+            int pageNumber = (page ?? 1);
+            var datos = modelProducto.Productos();
+            return View(datos.ToPagedList(pageNumber, pageSize));
+        }
+
+
+
         [HttpGet]
         public ActionResult Productos()
         {
@@ -31,10 +46,6 @@ namespace Capluga.Controllers
             return View("Productos", datos); // Reutiliza la vista "Productos"
         }
 
-
-
-
-
         [HttpGet]
         public ActionResult RegistrarProducto()
         {
@@ -46,6 +57,10 @@ namespace Capluga.Controllers
         [HttpPost]
         public ActionResult RegistrarProducto(HttpPostedFileBase ImgProducto, ProductoEnt entidad)
         {
+            if (!ModelState.IsValid)
+            {
+                return View();
+            }
             entidad.Image = string.Empty;
             entidad.State = true;
 
@@ -53,15 +68,18 @@ namespace Capluga.Controllers
 
             if (MedicalImplementsID > 0)
             {
-                string extension = Path.GetExtension(Path.GetFileName(ImgProducto.FileName));
-                string ruta = AppDomain.CurrentDomain.BaseDirectory + "Images\\" + MedicalImplementsID + extension;
-                ImgProducto.SaveAs(ruta);
+                if (ImgProducto != null)
+                {
 
-                entidad.Image = "/Images/" + MedicalImplementsID + extension;
-                entidad.MedicalImplementsID = MedicalImplementsID;
+                    string extension = Path.GetExtension(Path.GetFileName(ImgProducto.FileName));
+                    string ruta = AppDomain.CurrentDomain.BaseDirectory + "Images\\" + MedicalImplementsID + extension;
+                    ImgProducto.SaveAs(ruta);
 
-                modelProducto.ActualizarRutaProducto(entidad);
+                    entidad.Image = "/Images/" + MedicalImplementsID + extension;
+                    entidad.MedicalImplementsID = MedicalImplementsID;
 
+                    modelProducto.ActualizarRutaProducto(entidad);
+                }
                 return RedirectToAction("Productos", "Producto");
             }
             else
@@ -100,6 +118,10 @@ namespace Capluga.Controllers
         [HttpPost]
         public ActionResult ActualizarProducto(HttpPostedFileBase ImgProducto, ProductoEnt entidad)
         {
+            if (!ModelState.IsValid)
+            {
+                return View();
+            }
             string respuesta = modelProducto.ActualizarProducto(entidad);
 
             if (respuesta == "OK")
@@ -124,6 +146,7 @@ namespace Capluga.Controllers
                 return View();
             }
         }
+
         [HttpGet]
         public ActionResult DetallesProducto(long id)
         {

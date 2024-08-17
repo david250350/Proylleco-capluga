@@ -30,54 +30,65 @@
                             <div class="form-group">
                                 <label>Nombre</label>
                                 @Html.TextBoxFor(m => m.UserName, new { @class = "form-control form-control-lg", @placeholder = "Nombre", @type = "text" })
+                                @Html.ValidationMessageFor(m => m.UserName, "", new { @class = "text-danger" })
                             </div>
                             <div class="form-group">
                                 <label>Apellidos</label>
                                 @Html.TextBoxFor(m => m.Surnames, new { @class = "form-control form-control-lg", @placeholder = "Apellidos", @type = "text" })
+                                @Html.ValidationMessageFor(m => m.Surnames, "", new { @class = "text-danger" })
                             </div>
                             <div class="form-group">
                                 <label>Correo Electrónico</label>
                                 @Html.TextBoxFor(m => m.Email, new { @class = "form-control form-control-lg", @placeholder = "capluga@correo.com", @type = "email" })
+                                @Html.ValidationMessageFor(m => m.Email, "", new { @class = "text-danger" })
                             </div>
                             <div class="form-group">
                                 <label>Contraseña</label>
                                 @Html.TextBoxFor(m => m.Password, new { @class = "form-control form-control-lg", @placeholder = "Contraseña", @type = "password" })
+                                @Html.ValidationMessageFor(m => m.Password, "", new { @class = "text-danger" })
                             </div>
                             <div class="form-group">
                                 <label>Fecha de nacimiento</label>
                                 @Html.TextBoxFor(m => m.Age, new { @class = "form-control form-control-lg", @type = "date" })
+                                @Html.ValidationMessageFor(m => m.Age, "", new { @class = "text-danger" })
                             </div>
                             <div class="form-group">
                                 <label>Teléfono</label>
                                 @Html.TextBoxFor(m => m.PhoneNumber, new { @class = "form-control form-control-lg", @placeholder = "1234-5678", @type = "text" })
+                                @Html.ValidationMessageFor(m => m.PhoneNumber, "", new { @class = "text-danger" })
                             </div>
                             <div class="form-group">
                                 <label>País</label>
                                 @Html.TextBoxFor(m => m.Ubicacion.Country, new { @class = "form-control form-control-lg", @value = "Costa Rica", @placeholder = "Costa Rica", @type = "text", @disabled = "isDisabled" })
+                                @Html.ValidationMessageFor(m => m.Ubicacion.Country, "", new { @class = "text-danger" })
                             </div>
                             <div class="form-group">
                                 <label>Provincia</label>
                                 @Html.DropDownListFor(m => m.Ubicacion.State, new SelectList(Enumerable.Empty<SelectListItem>(), "Value", "Text"),
                                "Seleccione una Provincia", new { @class = "form-control form-control-lg", id = "provincia-dropdown" })
-
+                                @Html.ValidationMessageFor(m => m.Ubicacion.State, "", new { @class = "text-danger" })
                             </div>
                             <div class="form-group">
                                 <label>Catón</label>
                                 @Html.DropDownListFor(m => m.Ubicacion.City, new SelectList(Enumerable.Empty<SelectListItem>(), "Value", "Text"),
                                "Seleccione un Cantón", new { @class = "form-control form-control-lg", id = "canton-dropdown" })
+                                @Html.ValidationMessageFor(m => m.Ubicacion.City, "", new { @class = "text-danger" })
                             </div>
                             <div class="form-group">
                                 <label>Distrito</label>
                                 @Html.DropDownListFor(m => m.Ubicacion.District, new SelectList(Enumerable.Empty<SelectListItem>(), "Value", "Text"),
                                "Seleccione un Distrito", new { @class = "form-control form-control-lg", id = "distrito-dropdown" })
+                                @Html.ValidationMessageFor(m => m.Ubicacion.District, "", new { @class = "text-danger" })
                             </div>
                             <div class="form-group">
                                 <label>Código Postal</label>
                                 @Html.TextBoxFor(m => m.Ubicacion.ZipCode, new { @class = "form-control form-control-lg", @placeholder = "12345", @type = "text", @maxlength = "50" })
+                                @Html.ValidationMessageFor(m => m.Ubicacion.ZipCode, "", new { @class = "text-danger" })
                             </div>
                             <div class="form-group">
                                 <label>Dirección exacta</label>
                                 @Html.TextBoxFor(m => m.Ubicacion.Street, new { @class = "form-control form-control-lg", @placeholder = "Dirección exacta", @type = "text", @maxlength = "50" })
+                                @Html.ValidationMessageFor(m => m.Ubicacion.Street, "", new { @class = "text-danger" })
                             </div>
                         </div>
                         <div class="form-group">

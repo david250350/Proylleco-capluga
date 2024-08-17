@@ -18,10 +18,12 @@ namespace Capluga.Controllers
 {
     public class DocumentController : Controller
     {
-        
+
         ProductoModel modelProducto = new ProductoModel();
         MedicalCoursesModel modelCurso = new MedicalCoursesModel();
         AgendaCitaModel modelAgenda = new AgendaCitaModel();
+        CarritoModel modelCarrito = new CarritoModel();
+        RegisteredcoursesModel modelRegid = new RegisteredcoursesModel();
 
         [HttpPost]
         public ActionResult ProductoPDF()
@@ -271,6 +273,191 @@ namespace Capluga.Controllers
                 return File(bytes, "application/pdf", "Lista_Citas.pdf");
             }
         }
+        [HttpPost]
+        public ActionResult DescargarPDF(int masterPurchaseID)
+        {
+            // Suponemos que esta llamada obtiene los datos necesarios
+            List<FacturaEnt> facturas = modelCarrito.ConsultaDetalleFactura(masterPurchaseID);
 
+            if (facturas == null || !facturas.Any())
+            {
+                return Content("No se encontraron datos para generar la factura.");
+            }
+
+            using (MemoryStream memoryStream = new MemoryStream())
+            {
+                Document documento = new Document(PageSize.A4);
+                PdfWriter writer = PdfWriter.GetInstance(documento, memoryStream);
+                documento.Open();
+
+                var primeraFactura = facturas.FirstOrDefault();
+
+                if (primeraFactura != null)
+                {
+                    // Definir fuentes
+                    Font fontTitulo = FontFactory.GetFont(FontFactory.HELVETICA_BOLD, 16, BaseColor.BLACK);
+                    Font fontSubtitulo = FontFactory.GetFont(FontFactory.HELVETICA_BOLD, 12, BaseColor.BLACK);
+                    Font fontCuerpo = FontFactory.GetFont(FontFactory.HELVETICA, 10, BaseColor.BLACK);
+
+                    // Agregar un logo
+                    string imageURL = Server.MapPath("~/Images/Logo.png"); // Asegúrate de tener esta imagen en tu proyecto
+                    Image logo = Image.GetInstance(imageURL);
+                    logo.ScaleToFit(50f, 50f);
+                    logo.SpacingBefore = 10;
+                    logo.SpacingAfter = 10;
+                    logo.Alignment = Element.ALIGN_RIGHT;
+                    documento.Add(logo);
+
+                    // Título de la factura
+                    documento.Add(new Paragraph("Factura", fontTitulo));
+
+                    // Línea separadora
+                    LineSeparator separator = new LineSeparator(1f, 100f, BaseColor.DARK_GRAY, Element.ALIGN_CENTER, -1);
+                    documento.Add(new Chunk(separator));
+
+                    // Datos de la factura
+                    documento.Add(new Paragraph($"Factura #: {primeraFactura.MasterPurchaseID}", fontSubtitulo));
+                    documento.Add(new Paragraph($"Fecha: {primeraFactura.PurchaseDate.ToString("dd/MM/yyyy")}", fontCuerpo));
+                    documento.Add(new Paragraph($"Cliente ID: {primeraFactura.UserName}", fontCuerpo));
+                    documento.Add(new Paragraph("\n"));
+
+                    // Crear una tabla para los detalles de la factura
+                    PdfPTable table = new PdfPTable(new float[] { 3, 1, 2, 1, 2 }) { WidthPercentage = 100 };
+                    table.DefaultCell.Padding = 5;
+
+                    // Definir el estilo del encabezado de la tabla
+                    BaseColor colorEncabezado = new BaseColor(0, 121, 182); // Un azul oscuro
+                    Font fontEncabezado = FontFactory.GetFont(FontFactory.HELVETICA_BOLD, 10, BaseColor.WHITE);
+
+                    // Añadir los encabezados de la tabla
+                    PdfPCell cell = new PdfPCell(new Phrase("Nombre del Producto", fontEncabezado)) { BackgroundColor = colorEncabezado };
+                    table.AddCell(cell);
+
+                    cell = new PdfPCell(new Phrase("Cantidad", fontEncabezado)) { BackgroundColor = colorEncabezado };
+                    table.AddCell(cell);
+
+                    cell = new PdfPCell(new Phrase("Precio Unitario", fontEncabezado)) { BackgroundColor = colorEncabezado };
+                    table.AddCell(cell);
+
+                    cell = new PdfPCell(new Phrase("Impuesto", fontEncabezado)) { BackgroundColor = colorEncabezado };
+                    table.AddCell(cell);
+
+                    cell = new PdfPCell(new Phrase("Subtotal", fontEncabezado)) { BackgroundColor = colorEncabezado };
+                    table.AddCell(cell);
+
+                    // Rellenar la tabla con los detalles de la factura
+                    foreach (var item in facturas)
+                    {
+                        table.AddCell(new Phrase(item.Name, fontCuerpo));
+                        table.AddCell(new Phrase(item.PaidQuantity.ToString(), fontCuerpo));
+                        table.AddCell(new Phrase(item.PaidPrice.ToString("C"), fontCuerpo));
+                        table.AddCell(new Phrase(item.Tax.ToString("C"), fontCuerpo));
+                        table.AddCell(new Phrase(item.SubTotal.ToString("C"), fontCuerpo));
+                    }
+
+                    // Añadir la tabla al documento
+                    documento.Add(table);
+
+                    // Total general de la factura
+                    documento.Add(new Paragraph("Total: " + facturas.Sum(x => x.Total).ToString("C"), fontTitulo));
+
+                    documento.Close();
+                }
+
+                byte[] bytes = memoryStream.ToArray();
+                return File(bytes, "application/pdf", $"Factura_{masterPurchaseID}.pdf");
+            }
+        }
+
+        [HttpPost]
+        public ActionResult CFac(int masterPurchaseID)
+        {
+            // Suponemos que esta llamada obtiene los datos necesarios
+            List<FacturaCursoEnt> facturas = modelRegid.ConsultaDetalleFacturaCurso(masterPurchaseID);
+
+            if (facturas == null || !facturas.Any())
+            {
+                return Content("No se encontraron datos para generar la factura.");
+            }
+
+            using (MemoryStream memoryStream = new MemoryStream())
+            {
+                Document documento = new Document(PageSize.A4);
+                PdfWriter writer = PdfWriter.GetInstance(documento, memoryStream);
+                documento.Open();
+
+                var primeraFactura = facturas.FirstOrDefault();
+
+                if (primeraFactura != null)
+                {
+                    // Definir fuentes
+                    Font fontTitulo = FontFactory.GetFont(FontFactory.HELVETICA_BOLD, 16, BaseColor.BLACK);
+                    Font fontSubtitulo = FontFactory.GetFont(FontFactory.HELVETICA_BOLD, 12, BaseColor.BLACK);
+                    Font fontCuerpo = FontFactory.GetFont(FontFactory.HELVETICA, 10, BaseColor.BLACK);
+
+                    // Agregar un logo
+                    string imageURL = Server.MapPath("~/Images/Logo.png"); // Asegúrate de tener esta imagen en tu proyecto
+                    Image logo = Image.GetInstance(imageURL);
+                    logo.ScaleToFit(50f, 50f);
+                    logo.SpacingBefore = 10;
+                    logo.SpacingAfter = 10;
+                    logo.Alignment = Element.ALIGN_RIGHT;
+                    documento.Add(logo);
+
+                    // Título de la factura
+                    documento.Add(new Paragraph("Factura de Curso", fontTitulo));
+
+                    // Línea separadora
+                    LineSeparator separator = new LineSeparator(1f, 100f, BaseColor.DARK_GRAY, Element.ALIGN_CENTER, -1);
+                    documento.Add(new Chunk(separator));
+
+                    // Datos de la factura
+                    documento.Add(new Paragraph($"Factura #: {primeraFactura.MasterPurchaseCurseID}", fontSubtitulo));
+                    documento.Add(new Paragraph($"Fecha: {primeraFactura.PurchaseDate.ToString("dd/MM/yyyy")}", fontCuerpo));
+                    documento.Add(new Paragraph($"Cliente: {primeraFactura.UserName} {primeraFactura.Surnames}", fontCuerpo));
+                    documento.Add(new Paragraph("\n"));
+
+                    // Crear una tabla para los detalles de la factura
+                    PdfPTable table = new PdfPTable(new float[] { 3, 1, 2, 2, 2, 2, 2, 2 }) { WidthPercentage = 100 };
+                    table.DefaultCell.Padding = 5;
+
+                    // Definir el estilo del encabezado de la tabla
+                    BaseColor colorEncabezado = new BaseColor(0, 121, 182); // Un azul oscuro
+                    Font fontEncabezado = FontFactory.GetFont(FontFactory.HELVETICA_BOLD, 10, BaseColor.WHITE);
+
+                    // Añadir los encabezados de la tabla
+                    string[] encabezados = { "Nombre", "Cantidad", "Precio X Und", "Impuesto X Und", "SubTotal", "Impuesto", "Total", "Pago" };
+                    foreach (var encabezado in encabezados)
+                    {
+                        PdfPCell cell = new PdfPCell(new Phrase(encabezado, fontEncabezado)) { BackgroundColor = colorEncabezado };
+                        table.AddCell(cell);
+                    }
+
+                    // Rellenar la tabla con los detalles de la factura
+                    foreach (var item in facturas)
+                    {
+                        table.AddCell(new Phrase(item.Name, fontCuerpo));
+                        table.AddCell(new Phrase(item.PaidQuantity.ToString(), fontCuerpo));
+                        table.AddCell(new Phrase(item.PaidPrice.ToString("C"), fontCuerpo));
+                        table.AddCell(new Phrase(item.Tax.ToString("C"), fontCuerpo));
+                        table.AddCell(new Phrase(item.SubTotal.ToString("C"), fontCuerpo));
+                        table.AddCell(new Phrase(item.Impuesto.ToString("C"), fontCuerpo));
+                        table.AddCell(new Phrase(item.Total.ToString("C"), fontCuerpo));
+                        table.AddCell(new Phrase(item.PaymentStatus, fontCuerpo));
+                    }
+
+                    // Añadir la tabla al documento
+                    documento.Add(table);
+
+                    // Total general de la factura
+                    documento.Add(new Paragraph("Total: " + facturas.Sum(x => x.Total).ToString("C"), fontTitulo));
+
+                    documento.Close();
+                }
+
+                byte[] bytes = memoryStream.ToArray();
+                return File(bytes, "application/pdf", $"FacturaCurso_{masterPurchaseID}.pdf");
+            }
+        }
     }
 }

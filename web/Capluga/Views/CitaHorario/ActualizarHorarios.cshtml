@@ -16,6 +16,13 @@
                     {
                         @Html.AntiForgeryToken()
 
+                        if (ViewBag.MensajeUsuario != null)
+                        {
+                            <div class ="alert alert-danger" role="alert" style="text-align:center">
+                                @ViewBag.MensajeUsuario
+                    </div>
+                }
+
                         @Html.HiddenFor(model => model.ScheduleID)
 
                         <h2>Actualizar Horario</h2>
@@ -48,8 +55,8 @@
 
 
                     }
-                </main>
-            </div>
+                    </main>
+                </div>
         </div>
     </div>
 </div>

@@ -30,18 +30,22 @@
                                 @placeholder = "Nombre",
                                @type = "text"
                            })
+                            @Html.ValidationMessageFor(m => m.Name, "", new { @class = "text-danger" })
                         </div>
                         <div class="form-group">
                             <label>Descripción</label>
                             @Html.TextBoxFor(m => m.Description, new { @class = "form-control form-control-lg", @placeholder = "Descripción", @type = "text" })
+                            @Html.ValidationMessageFor(m => m.Description, "", new { @class = "text-danger" })
                         </div>
                         <div class="form-group">
                             <label>Cantidad</label>
                             @Html.TextBoxFor(m => m.Quantity, new { @class = "form-control form-control-lg", @placeholder = "Cantidad", @type = "number" })
+                            @Html.ValidationMessageFor(m => m.Quantity, "", new { @class = "text-danger" })
                         </div>
                         <div class="form-group">
                             <label>Precio</label>
                             @Html.TextBoxFor(m => m.Price, new { @class = "form-control form-control-lg", @placeholder = "Precio", @type = "number" })
+                            @Html.ValidationMessageFor(m => m.Price, "", new { @class = "text-danger" })
                         </div>
 
                         <div class="form-group">

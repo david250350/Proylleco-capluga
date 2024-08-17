@@ -45,6 +45,7 @@ namespace Capluga.Controllers
             if (respuesta.Equals("OK", StringComparison.OrdinalIgnoreCase))
             {
                 TempData["SuccessMessage"] = "La cita ha sido registrada con éxito.";
+                return RedirectToAction("RegistrarCita");
             }
             else
             {
@@ -78,11 +79,13 @@ namespace Capluga.Controllers
 
                 // Si el método se completa sin errores, asume éxito
                 TempData["SuccessMessage"] = "Cita eliminada exitosamente.";
+                return RedirectToAction("ConsultaCita");
             }
             catch (Exception ex)
             {
                 // Si hay una excepción, maneja el error
                 TempData["ErrorMessage"] = "No se pudo eliminar la cita: " + ex.Message;
+                return RedirectToAction("ConsultaCita");
             }
 
             // Redirige independientemente del resultado para evitar ejecución doble

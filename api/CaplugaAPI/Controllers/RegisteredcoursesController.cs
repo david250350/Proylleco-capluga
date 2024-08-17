@@ -138,14 +138,14 @@ namespace CaplugaAPI.Controllers
         }
 
         [HttpPut]
-        [Route("ActualizarEstadoCurso")]
-        public string ActualizarEstadoCurso(FacturaCursoEnt entidad)
+        [Route("ActualizarEstadoPC")]
+        public string ActualizarEstadoPC(FacturaCursoEnt entidad)
         {
             using (var context = new CAPLUGAEntities())
             {
                 context.ApprovePaymentTuition(entidad.MasterPurchaseCurseID);
 
-                return "OK";
+                return "OK"; // Asegúrate de que solo se retorna "OK"
             }
         }
 

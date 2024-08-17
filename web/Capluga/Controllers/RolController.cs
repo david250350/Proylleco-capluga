@@ -25,25 +25,25 @@ namespace Capluga.Controllers
             return View();
         }
 
-        //esto hay que valorarlo 
+
 
         [HttpPost]
         public ActionResult CrearRol(RoleEnt entidad)
         {
+          
 
             string respuesta = modelroles.CrearRol(entidad);
 
             if (respuesta == "OK")
-            { 
+            {
                 return RedirectToAction("ListaRoles", "Rol");
             }
             else
             {
-                ViewBag.MensajeUsuario = "No se ha podido registrar";
-                return View();
+                ViewBag.MensajeUsuario = "No se ha podido registrar.";
+                return View(entidad);
             }
         }
-
 
 
         [HttpGet]
@@ -55,6 +55,7 @@ namespace Capluga.Controllers
         [HttpPost]
         public ActionResult ActualizarRol(RoleEnt entidad)
         {
+           
             string respuesta = modelroles.ActualizarRol(entidad);
 
             if (respuesta == "OK")

@@ -2,14 +2,14 @@
 
 @{
     ViewBag.Title = "Actualizar Rol";
-    Layout = "~/Views/Shared/_Layout.cshtml"; // Asume que tienes un layout definido
+    Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
 <div class="content-wrapper d-flex align-items-center auth px-0">
     <div class="row w-100 mx-0">
         <div class="col-lg-4 mx-auto">
             <div class="auth-form-light text-left py-5 px-4 px-sm-5">
-                <h4 class="card-title">Roles</h4>
+                <h4 class="card-title">Actualizar Rol</h4>
 
                 @if (ViewBag.MensajeUsuario != null)
                 {
@@ -24,26 +24,23 @@
 
                     <div class="form-group">
                         <label>Rol</label>
-                        @Html.TextBoxFor(m => m.RolName, new 
-                   { 
-                       @class = "form-control form-control-lg", 
-                       @placeholder = "Rol", 
-                       @type = "text" 
-                   })
+                        @Html.TextBoxFor(m => m.RolName, new
+                        {
+                            @class = "form-control form-control-lg",
+                            @placeholder = "Rol",
+                            @type = "text"
+                        })
+                        @Html.ValidationMessageFor(m => m.RolName, "", new { @class = "text-danger" })
                     </div>
 
                     <div class="form-group">
                         <div class="col-md-offset-2 col-md-10">
                             <button type="button" class="btn btn-primary" onclick="confirmUpdate()">
-                                 Actualizar
+                                Actualizar
                             </button>
-
                         </div>
                     </div>
-
-
                 }
-
             </div>
         </div>
     </div>

@@ -1,43 +1,64 @@
 ﻿@model IEnumerable<Capluga.Entities.FacturaCursoEnt>
 @{
-    ViewBag.Title = "Consulta Matriculas";
+    ViewBag.Title = "Pago Curso";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
+<div class="col-12 grid-margin stretch-card">
+    <div class="card">
+        <div class="card-body">
+            <h2 class="card-title">Pago Curso</h2>
+            <br>
+            @if (ViewBag.MensajeUsuario != null)
+            {
+                <div class="alert alert-danger" role="alert" style="text-align:center">
+                    @ViewBag.MensajeUsuario
+                </div>
+            }
+            <div class="container">
+                @if (Model.Any())
+                {
+                    <div class="table-responsive">
+                        <table id="DataTable" class="table table-bordered table-hover">
+                            <thead class="thead-light">
+                                <tr>
+                                    <th>MasterPurchaseID</th>
 
-<div class="content-wrapper d-flex align-items-center auth px-0">
-    <div class="row w-100 mx-0">
-        <div class="col-lg-6 mx-auto">
-            <div class="auth-form-light text-left py-5 px-4 px-sm-5">
-                <h2>Solicitud de Matriculas</h2>
-
-                <table class="table">
-                    <thead>
-                        <tr>
-                            <th>Numenoro de Facturas</th>
-
-                            <th>Estado</th>
-                            <th>Acción</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @foreach (var detail in Model)
-                        {
-                            <tr>
-                                <td>@detail.MasterPurchaseCurseID</td>
-
-                                <td>@detail.PaymentStatus</td>
-
-                                @if (detail.PaymentStatus == "PENDIENTE")
+                                    <th>Estado</th>
+                                    <th>Acción</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var detail in Model)
                                 {
-                                    <td style="text-align:center">
-                                        <a href="@Url.Action("ActualizarEstadoCurso", "Registeredcourses", new { q = detail.MasterPurchaseCurseID })"><i class="fa fa-refresh fa-lg"></i></a>
-                                    </td>
+                                    <tr>
+                                        <td>@detail.MasterPurchaseCurseID</td>
 
+
+                                        <td>@detail.PaymentStatus</td>
+                                        <td style="text-align:center">
+                                            @if (detail.PaymentStatus == "PENDIENTE")
+                                            {
+                                                <a href="#" onclick="confirmStateChange('@Url.Action("ActualizarEstadoPC", "Registeredcourses", new { q = detail.MasterPurchaseCurseID })')">
+                                                    <i class="fa fa-refresh fa-lg"></i>
+                                                </a>
+                                            }
+                                            else
+                                            {
+                                                <span>No disponible</span>
+                                            }
+                                        </td>
+                                    </tr>
                                 }
-                            </tr>
-                        }
-                    </tbody>
-                </table>
+                            </tbody>
+                        </table>
+                    </div>
+                }
+                else
+                {
+                    <div class="col-12 alert alert-info" role="alert" style="text-align: center; margin-top: 5%;">
+                        No hay carritos registrados en este momento
+                    </div>
+                }
             </div>
         </div>
     </div>
