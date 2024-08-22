@@ -77,14 +77,16 @@ namespace Capluga.Controllers
             var datos = CursoModel.ConsultaCurso(q);
             if (datos == null)
             {
-                return View();
+                // Si no se encuentra, devolver un nuevo modelo o manejar el caso de manera apropiada
+                datos = new CursoEnt(); // Asigna un modelo vacío en lugar de devolver `null`
             }
             if (datos.DateandTime == DateTime.MinValue)
             {
-                datos.DateandTime = DateTime.Now; // Set a default value if needed
+                datos.DateandTime = DateTime.Now; // Establece un valor predeterminado si es necesario
             }
             return View(datos);
         }
+
 
 
         [HttpPost]
@@ -158,61 +160,7 @@ namespace Capluga.Controllers
             }
         }
 
-<<<<<<< HEAD
-        [HttpGet]
-        public ActionResult ActualizarCurso(long q)
-        {
-            var datos = CursoModel.ConsultaCurso(q);
-            if (datos == null)
-            {
-                return HttpNotFound();
-            }
-            if (datos.DateandTime == DateTime.MinValue)
-            {
-                datos.DateandTime = DateTime.Now; // Set a default value if needed
-            }
-            return View(datos);
-        }
 
-        [HttpPost]
-        public ActionResult ActualizarCurso(HttpPostedFileBase ImgCurso, CursoEnt entidad)
-        {
-            string respuesta = CursoModel.ActualizarCurso(entidad);
-
-            if (respuesta == "OK")
-            {
-                if (ImgCurso != null)
-                {
-                    string extension = Path.GetExtension(Path.GetFileName(ImgCurso.FileName));
-                    string ruta = AppDomain.CurrentDomain.BaseDirectory + "Images\\" + entidad.MedicalCourseID + extension;
-                    ImgCurso.SaveAs(ruta);
-
-                    entidad.Image = "/Images/" + entidad.MedicalCourseID + extension;
-                    entidad.MedicalCourseID = entidad.MedicalCourseID;
-
-                    CursoModel.ActualizarRutaCurso(entidad);
-                }
-
-                return RedirectToAction("ConsultaCursos", "MedicalCourses");
-            }
-            else
-            {
-                ViewBag.MensajeUsuario = "No se ha podido actualizar la información del Curso";
-                return View();
-            }
-        }
-
-        [HttpGet]
-        public ActionResult VistaCurso()
-        {
-            var datos = CursoModel.ConsultaCursos();
-            return View(datos);
-        }
-
-=======
-
-       
->>>>>>> 44b6fd92914204f3358f1c4c4a0d78d09d3e0228
         [HttpGet]
         public ActionResult DetallesCurso(long id)
         {

@@ -1,30 +1,55 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Configuration;
-using System.Linq;
+using System.IO;
 using System.Net.Mail;
-using System.Web;
 
 namespace CaplugaAPI.Entities
 {
     public class Utilitarios
     {
-
-        public void EnviarCorreo(string destino, string asunto, string contenido)
+        public void EnviarCorreo(string destino, string asunto, string contenido, byte[] archivoAdjunto = null, string nombreArchivoAdjunto = null)
         {
-            MailMessage message = new MailMessage();
-            message.From = new MailAddress(ConfigurationManager.AppSettings["cuentaCorreo"]);
-            message.To.Add(new MailAddress(destino));
+            MailAddress addressForm = new MailAddress(ConfigurationManager.AppSettings["cuentaCorreo"], "CAPLUGA");
+            MailAddress addressTo = new MailAddress(destino);
+            MailMessage message = new MailMessage(addressForm, addressTo);
             message.Subject = asunto;
-            message.Body = contenido;
-            message.Priority = MailPriority.Normal;
             message.IsBodyHtml = true;
+            message.Priority = MailPriority.Normal;
+            message.Body = contenido;
 
-            SmtpClient client = new SmtpClient("smtp.office365.com", 587);
-            client.Credentials = new System.Net.NetworkCredential(ConfigurationManager.AppSettings["cuentaCorreo"], ConfigurationManager.AppSettings["claveCorreo"]);
+            // Adjuntar archivo si existe
+            if (archivoAdjunto != null && nombreArchivoAdjunto != null)
+            {
+                // Crear el MemoryStream y mantenerlo abierto mientras se adjunta
+                var stream = new MemoryStream(archivoAdjunto);
+                var adjunto = new Attachment(stream, nombreArchivoAdjunto);
+                message.Attachments.Add(adjunto);
+            }
+            SmtpClient client = new SmtpClient("smtp.gmail.com");
+            client.Port = 587;
+            client.UseDefaultCredentials = false;
             client.EnableSsl = true;
-            client.Send(message);
+            client.Credentials = new System.Net.NetworkCredential(ConfigurationManager.AppSettings["cuentaCorreo"], ConfigurationManager.AppSettings["claveCorreo"]);
+            try
+            {
+                client.Send(message);
+            }
+            catch (SmtpException ex)
+            {
+                System.Diagnostics.Trace.TraceInformation("Exception caught in CreateTestMessage2(): {0}",
+                    ex.ToString());
+                Console.WriteLine("Exception caught in CreateTestMessage2(): {0}",
+                    ex.ToString());
+            }
+            finally
+            {
+                // Limpiar los recursos
+                foreach (Attachment attachment in message.Attachments)
+                {
+                    attachment.ContentStream.Close(); // Cerrar el contenido del stream
+                    attachment.Dispose(); // Limpiar los recursos
+                }
+            }
         }
-
     }
 }

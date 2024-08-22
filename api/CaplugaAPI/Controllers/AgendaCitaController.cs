@@ -1,6 +1,7 @@
 ﻿using CaplugaAPI.Entities;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Net;
@@ -10,8 +11,10 @@ using System.Web.Http.Results;
 
 namespace CaplugaAPI.Controllers
 {
+    
     public class AgendaCitaController : ApiController
     {
+        Utilitarios util = new Utilitarios();
 
         [HttpPost]
         [Route("RegistrarCita")]
@@ -38,10 +41,14 @@ namespace CaplugaAPI.Controllers
 
                 horario.IsBooked = true;
 
-                context.AppointmentScheduling.Add(nuevaCita);
-                context.SaveChanges();
+                if (CorreoAgenda(nuevaCita.UserID, nuevaCita, horario))
+                {
+                    context.AppointmentScheduling.Add(nuevaCita);
+                    context.SaveChanges();
 
-                return Ok("La cita ha sido registrada con éxito.");
+                    return Ok("La cita ha sido registrada con éxito.");
+                }
+                return NotFound();
             }
         }
 
@@ -160,6 +167,31 @@ namespace CaplugaAPI.Controllers
                 context.AppointmentScheduling.Remove(cita);
                 context.SaveChanges();
                 return Ok(); // Retorna un código de estado 200 indicando que todo salió bien
+            }
+        }
+        public bool CorreoAgenda(long usuarioID, AppointmentScheduling cita, ScheduleAppointment horario)
+        {
+            try
+            {
+                using (var context = new CAPLUGAEntities())
+                {
+                    var usuario = context.Users.FirstOrDefault(u => u.UserID == usuarioID);
+
+                    string rutaArchivo = AppDomain.CurrentDomain.BaseDirectory + "Templates\\AgendaCita.html";
+                    string html = File.ReadAllText(rutaArchivo);
+                    html = html.Replace("@@Nombre", usuario.UserName);
+                    html = html.Replace("@@Hora", horario.DateandTime.ToString("dd/MM/yyyy"));
+                    html = html.Replace("@@Asunto", cita.Name);
+                    html = html.Replace("@@Decripcion", cita.Description);
+
+                    util.EnviarCorreo(usuario.Email, "Confirmación de Cita", html);
+
+                    return true;
+                }
+            }
+            catch (Exception ex)
+            {
+                return false;
             }
         }
     }

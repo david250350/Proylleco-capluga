@@ -23,10 +23,13 @@ namespace Capluga.Entities
 
 
         [Required(ErrorMessage = "El asunto es obligatorio.")]
+        [StringLength(100, ErrorMessage = "El asunto no puede tener más de 100 caracteres.")]
         public string Name { get; set; }
 
         [Required(ErrorMessage = "La descripción es obligatoria.")]
+        [StringLength(500, ErrorMessage = "La descripción no puede tener más de 500 caracteres.")]
         public string Description { get; set; }
+
 
         [Required(ErrorMessage = "Debe seleccionar un horario.")]
         public long ScheduleID { get; set; }

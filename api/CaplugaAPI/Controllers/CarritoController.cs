@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Data.SqlClient;
+using System.IO;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
@@ -11,6 +12,8 @@ namespace CaplugaAPI.Controllers
 {
     public class CarritoController : ApiController
     {
+
+        Utilitarios util = new Utilitarios();
 
         [HttpPost]
         [Route("RegistrarCarrito")]
@@ -130,18 +133,35 @@ namespace CaplugaAPI.Controllers
             }
         }
 
+
         [HttpPut]
         [Route("ActualizarEstadoPago")]
         public string ActualizarEstadoPago(FacturaEnt entidad)
         {
             using (var context = new CAPLUGAEntities())
             {
+                DocumentController documentController = new DocumentController();
+                var factura = context.MasterPurchase.FirstOrDefault(u => u.MasterPurchaseID == entidad.MasterPurchaseID);
+                List<Detail> detalles = (from x in context.Detail
+                                         where x.MasterPurchaseID == entidad.MasterPurchaseID
+                                         select x).ToList();
+                var usuario = context.Users.FirstOrDefault(u => u.UserID == factura.UserID);
+
+                byte[] pdf = documentController.ProductoPDF(factura, detalles, usuario);
+
+                string rutaArchivo = AppDomain.CurrentDomain.BaseDirectory + "Templates\\Facturacion.html";
+                string html = File.ReadAllText(rutaArchivo);
+                html = html.Replace("@@Nombre", usuario.UserName);
+                html = html.Replace("@@Total", factura.TotalPurchase.ToString());
+
+                util.EnviarCorreo(usuario.Email, "Factura de compra CAPLUGA", html, pdf, "CAPLUGA_Factura_" + factura.MasterPurchaseID + ".pdf");
+
                 context.ApprovePaymentDetails(entidad.MasterPurchaseID);
 
                 return "OK";
             }
-
         }
+
         [HttpGet]
         [Route("ConsultaFacturas")]
         public List<MasterPurchase> ConsultaFacturas(long q)

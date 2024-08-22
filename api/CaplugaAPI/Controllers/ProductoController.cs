@@ -18,7 +18,10 @@ namespace CaplugaAPI.Controllers
             using (var context = new CAPLUGAEntities())
             {
                 context.Configuration.LazyLoadingEnabled = false;
-                return context.MedicalImplements.ToList();
+                return (from x in context.MedicalImplements
+                        where x.Quantity > 0
+                        || x.State != false
+                        select x).ToList();
             }
         }
 

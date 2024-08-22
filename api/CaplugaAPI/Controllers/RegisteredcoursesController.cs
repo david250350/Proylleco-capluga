@@ -1,15 +1,19 @@
 ﻿using CaplugaAPI.Entities;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
+using System.util;
 using System.Web.Http;
 
 namespace CaplugaAPI.Controllers
 {
     public class RegisteredcoursesController : ApiController
     {
+
+        Utilitarios util = new Utilitarios();
 
         [HttpPost]
         [Route("RegistrarInscripcion")]
@@ -143,6 +147,22 @@ namespace CaplugaAPI.Controllers
         {
             using (var context = new CAPLUGAEntities())
             {
+
+                DocumentController documentController = new DocumentController();
+                var factura = context.MasterPurchaseCurse.FirstOrDefault(c => c.MasterPurchaseCurseID == entidad.MasterPurchaseCurseID);
+                List<DetailCurse> cursos = (from x in context.DetailCurse
+                                               where x.MasterPurchaseCurseID == entidad.MasterPurchaseCurseID
+                                               select x).ToList();
+                var usuario = context.Users.FirstOrDefault(u => u.UserID == factura.UserID);
+                byte[] pdf = documentController.CursoPDF(factura, cursos, usuario);
+
+                string rutaArchivo = AppDomain.CurrentDomain.BaseDirectory + "Templates\\Facturacion.html";
+                string html = File.ReadAllText(rutaArchivo);
+                html = html.Replace("@@Nombre", usuario.UserName);
+                html = html.Replace("@@Total", factura.TotalPurchase.ToString());
+
+                util.EnviarCorreo(usuario.Email, "Factura de compra CAPLUGA", html, pdf, "CAPLUGA_Factura_" + factura.MasterPurchaseCurseID + ".pdf");
+
                 context.ApprovePaymentTuition(entidad.MasterPurchaseCurseID);
 
                 return "OK"; // Asegúrate de que solo se retorna "OK"

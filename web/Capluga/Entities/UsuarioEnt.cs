@@ -21,6 +21,7 @@ namespace Capluga.Entities
         [DataType(DataType.Password)]
         public string Password { get; set; }
 
+        [Required(ErrorMessage = "La contraseña temporal es obligatoria.")]
         public string Temporary { get; set; }
         public DateTime RegistrationDate { get; set; }
         public bool State { get; set; }
