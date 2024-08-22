@@ -1,0 +1,22 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Error</title>
+    <link href="~/Content/Site.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+    <div class="container">
+        <h1 class="text-danger">¡Oops! Algo salió mal.</h1>
+        <h2 class="text-warning">Error en el procesamiento de la solicitud.</h2>
+        <p>
+            Lamentamos el inconveniente. Por favor, intente nuevamente más tarde o contacte al administrador del sistema.
+        </p>
+        @if (ViewBag.ErrorMessage != null)
+        {
+            <p class="text-danger">@ViewBag.ErrorMessage</p>
+        }
+    </div>
+</body>
+</html>
