@@ -3,6 +3,10 @@
 @{
     ViewBag.Title = "Index";
     Layout = "~/Views/Shared/_Layout.cshtml";
+
+    var totalUsuarios = Model.Count();
+    var usuariosActivos = Model.Count(u => u.State);
+    var usuariosInactivos = totalUsuarios - usuariosActivos;
 }
 <div class="col-12 grid-margin stretch-card">
     <div class="card">
@@ -34,7 +38,7 @@
                                     <td>@(item.State ? "Activo" : "Inactivo")</td>
 
 
-                               
+
                                     <td style="text-align:center">
                                         <a onclick="confirmStateChange('@Url.Action("ActualizarEstadoUsuario", "Usuario", new { q = item.UserID })')">
                                             <i class="fa fa-refresh fa-lg"></i>
@@ -58,6 +62,26 @@
                 }
 
             </div>
+            <!-- Mostrar el total de usuarios -->
+            <div class="mb-4 text-center">
+                <h4>Total de Usuarios Registrados: @totalUsuarios</h4>
+            </div>
+
+            <!-- Contenedor del gráfico, centrado y más pequeño -->
+            <div class="d-flex justify-content-center">
+                <div style="max-width: 300px;">
+                    <canvas id="usuariosChart" width="300" height="300"></canvas>
+                </div>
+            </div>
+
         </div>
+    </div>
 </div>
-</div>
+
+<!-- Inputs ocultos para pasar datos al JS -->
+<input type="hidden" id="totalUsuarios" value="@totalUsuarios" />
+<input type="hidden" id="usuariosActivos" value="@usuariosActivos" />
+<input type="hidden" id="usuariosInactivos" value="@usuariosInactivos" />
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script src="~/Scripts/Dashusuario.js"></script>

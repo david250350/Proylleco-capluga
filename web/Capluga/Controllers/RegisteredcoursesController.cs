@@ -1,4 +1,5 @@
-﻿using Capluga.Entities;
+﻿using Capluga.App_Start;
+using Capluga.Entities;
 using Capluga.Models;
 using System;
 using System.Collections.Generic;
@@ -8,6 +9,7 @@ using System.Web.Mvc;
 
 namespace Capluga.Controllers
 {
+    
     public class RegisteredcoursesController : Controller
     {
         RegisteredcoursesModel modelRegister = new RegisteredcoursesModel();
@@ -103,6 +105,7 @@ namespace Capluga.Controllers
                 return View();
             }
         }
+        [AdminFilter]
         [HttpGet]
         public ActionResult EstadoCurso()
         {

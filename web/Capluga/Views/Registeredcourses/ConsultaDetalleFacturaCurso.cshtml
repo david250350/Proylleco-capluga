@@ -60,11 +60,11 @@
 
                                         <td>@item.Name</td>
                                         <td>@item.PaidQuantity</td>
-                                        <td>@item.PaidPrice.ToString("C")</td>
-                                        <td>@item.Tax.ToString("C")</td>
-                                        <td>@item.SubTotal.ToString("C")</td>
-                                        <td>@item.Impuesto.ToString("C")</td>
-                                        <td>@item.Total.ToString("C")</td>
+                                        <td>@item.PaidPrice.ToString("C", new System.Globalization.CultureInfo("es-CR"))</td>
+                                        <td>@item.Tax.ToString("C", new System.Globalization.CultureInfo("es-CR"))</td>
+                                        <td>@item.SubTotal.ToString("C", new System.Globalization.CultureInfo("es-CR"))</td>
+                                        <td>@item.Impuesto.ToString("C", new System.Globalization.CultureInfo("es-CR"))</td>
+                                        <td>@item.Total.ToString("C", new System.Globalization.CultureInfo("es-CR"))</td>
                                         <td>@item.PaymentStatus</td>
                                     </tr>
                                 }
@@ -73,7 +73,7 @@
                     </div>
 
                     <div class="text-right mt-4">
-                        <h4>Total: <span class="text-dark">@Model.Sum(item => item.Total).ToString("C")</span></h4>
+                        <h4>Total: <span class="text-dark">@Model.Sum(item => item.Total).ToString("C", new System.Globalization.CultureInfo("es-CR"))</span></h4>
                     </div>
 
 

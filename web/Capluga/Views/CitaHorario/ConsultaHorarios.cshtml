@@ -2,6 +2,15 @@
 @{
     ViewBag.Title = "Consulta Horarios";
     Layout = "~/Views/Shared/_Layout.cshtml";
+
+
+    var horariosPorDia = Model.GroupBy(h => h.DateandTime.DayOfWeek)
+                                  .Select(g => new { Dia = g.Key, TotalCitas = g.Count() })
+                                  .OrderBy(g => g.Dia)
+                                  .ToList();
+
+    var dias = horariosPorDia.Select(h => h.Dia.ToString()).ToList();
+    var totalCitasPorDia = horariosPorDia.Select(h => h.TotalCitas).ToList();
 }
 
 
@@ -48,6 +57,21 @@
                     </div>
                 }
             </div>
+            <div class="mb-4 text-center">
+                <h4>Distribución de Horarios por Día de la Semana</h4>
+                <div class="d-flex justify-content-center">
+                    <div style="max-width: 300px;">
+                        <canvas id="citasPorDiaRoscaChart" width="300" height="300"></canvas>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 </div>
+
+<!-- Inputs ocultos para pasar datos al JS -->
+<input type="hidden" id="dias" value='@Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(dias))' />
+<input type="hidden" id="totalCitasPorDia" value='@Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(totalCitasPorDia))' />
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script src="~/Scripts/DashHorarios.js"></script>

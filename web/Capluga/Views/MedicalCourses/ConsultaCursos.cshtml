@@ -3,6 +3,9 @@
 @{
     ViewBag.Title = "Cursos";
     Layout = "~/Views/Shared/_Layout.cshtml";
+
+    var labels = Model.Select(c => c.Name).ToList();
+    var data = Model.Select(c => c.Price * 0.20M).ToList(); // Suponiendo un margen de ganancia del 20%
 }
 
 <div class="col-12 grid-margin stretch-card">
@@ -57,28 +60,12 @@
                             }
                         </tbody>
                     </table>
-
-                    <!-- Tabla de Márgenes de Ganancia -->
+                    <!-- Gráfico de Márgenes de Ganancia -->
                     <h3 style="margin-top: 20px;">Márgenes de Ganancia por Curso</h3>
-                    <table class="table table-bordered table-hover">
-                        <thead class="thead-light">
-                            <tr>
-                                <th>Nombre del Curso</th>
-                                <th>Precio</th>
-                                <th>Margen de Ganancia (20%)</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            @foreach (var margen in ViewBag.MargenesGanancia)
-                            {
-                                <tr>
-                                    <td>@((dynamic)margen).Name</td>
-                                    <td>@((dynamic)margen).Price.ToString("C", new System.Globalization.CultureInfo("es-CR"))</td>
-                                    <td>@((dynamic)margen).MargenGanancia.ToString("C", new System.Globalization.CultureInfo("es-CR"))</td>
-                                </tr>
-                            }
-                        </tbody>
-                    </table>
+                    <canvas id="margenGananciaChart" width="400" height="200"></canvas>
+
+                    <input type="hidden" id="chartLabels" value='@Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(labels))' />
+                    <input type="hidden" id="chartData" value='@Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(data))' />
                 }
                 else
                 {
@@ -89,4 +76,9 @@
             </div>
         </div>
     </div>
-</div>
+
+            </div>
+
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script src="~/Scripts/DashCurso.js"></script>

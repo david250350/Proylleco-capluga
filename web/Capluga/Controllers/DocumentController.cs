@@ -350,16 +350,16 @@ namespace Capluga.Controllers
                     {
                         table.AddCell(new Phrase(item.Name, fontCuerpo));
                         table.AddCell(new Phrase(item.PaidQuantity.ToString(), fontCuerpo));
-                        table.AddCell(new Phrase(item.PaidPrice.ToString("C"), fontCuerpo));
-                        table.AddCell(new Phrase(item.Tax.ToString("C"), fontCuerpo));
-                        table.AddCell(new Phrase(item.SubTotal.ToString("C"), fontCuerpo));
+                        table.AddCell(new Phrase(item.PaidPrice.ToString("C", new System.Globalization.CultureInfo("es-CR")), fontCuerpo));
+                        table.AddCell(new Phrase(item.Tax.ToString("C", new System.Globalization.CultureInfo("es-CR")), fontCuerpo));
+                        table.AddCell(new Phrase(item.SubTotal.ToString("C", new System.Globalization.CultureInfo("es-CR")), fontCuerpo));
                     }
 
                     // Añadir la tabla al documento
                     documento.Add(table);
 
                     // Total general de la factura
-                    documento.Add(new Paragraph("Total: " + facturas.Sum(x => x.Total).ToString("C"), fontTitulo));
+                    documento.Add(new Paragraph("Total: " + facturas.Sum(x => x.Total).ToString("C", new System.Globalization.CultureInfo("es-CR")), fontTitulo));
 
                     documento.Close();
                 }
@@ -438,11 +438,11 @@ namespace Capluga.Controllers
                     {
                         table.AddCell(new Phrase(item.Name, fontCuerpo));
                         table.AddCell(new Phrase(item.PaidQuantity.ToString(), fontCuerpo));
-                        table.AddCell(new Phrase(item.PaidPrice.ToString("C"), fontCuerpo));
-                        table.AddCell(new Phrase(item.Tax.ToString("C"), fontCuerpo));
-                        table.AddCell(new Phrase(item.SubTotal.ToString("C"), fontCuerpo));
-                        table.AddCell(new Phrase(item.Impuesto.ToString("C"), fontCuerpo));
-                        table.AddCell(new Phrase(item.Total.ToString("C"), fontCuerpo));
+                        table.AddCell(new Phrase(item.PaidPrice.ToString("C", new System.Globalization.CultureInfo("es-CR")), fontCuerpo));
+                        table.AddCell(new Phrase(item.Tax.ToString("C", new System.Globalization.CultureInfo("es-CR")), fontCuerpo));
+                        table.AddCell(new Phrase(item.SubTotal.ToString("C", new System.Globalization.CultureInfo("es-CR")), fontCuerpo));
+                        table.AddCell(new Phrase(item.Impuesto.ToString("C", new System.Globalization.CultureInfo("es-CR")), fontCuerpo));
+                        table.AddCell(new Phrase(item.Total.ToString("C" , new System.Globalization.CultureInfo("es-CR")), fontCuerpo));
                         table.AddCell(new Phrase(item.PaymentStatus, fontCuerpo));
                     }
 
@@ -450,7 +450,7 @@ namespace Capluga.Controllers
                     documento.Add(table);
 
                     // Total general de la factura
-                    documento.Add(new Paragraph("Total: " + facturas.Sum(x => x.Total).ToString("C"), fontTitulo));
+                    documento.Add(new Paragraph("Total: " + facturas.Sum(x => x.Total).ToString("C", new System.Globalization.CultureInfo("es-CR")), fontTitulo));
 
                     documento.Close();
                 }

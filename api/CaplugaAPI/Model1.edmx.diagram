@@ -4,7 +4,7 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="34cb3910394941a99dd92004b17626a1" Name="Diagram1">
+      <Diagram DiagramId="924d3a5aa6c441929aa431fe7c900d76" Name="Diagram1">
         <EntityTypeShape EntityType="CAPLUGAModel.Addresses" Width="1.5" PointX="0.75" PointY="9.875" IsExpanded="true" />
         <EntityTypeShape EntityType="CAPLUGAModel.AppointmentScheduling" Width="1.5" PointX="3" PointY="9.875" IsExpanded="true" />
         <EntityTypeShape EntityType="CAPLUGAModel.Cart" Width="1.5" PointX="8.25" PointY="7.125" IsExpanded="true" />
