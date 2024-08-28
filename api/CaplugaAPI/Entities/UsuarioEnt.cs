@@ -17,7 +17,7 @@ namespace CaplugaAPI.Entities
         public bool State { get; set; }
         public DateTime Age { get; set; }
         public string PhoneNumber { get; set; }
-        public string RoleID { get; set; }
+        public string RolesID { get; set; }
         public string AddressID { get; set; }
         public virtual UbicacionEnt Ubicacion { get; set; }
     }

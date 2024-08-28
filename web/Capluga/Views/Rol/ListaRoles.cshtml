@@ -28,20 +28,20 @@
                             @foreach (var item in Model)
                             {
                                 <tr>
-                                    <td>@item.RoleID</td>
-                                    <td>@item.RolName</td>
+                                    <td>@item.RolesID</td>
+                                    <td>@item.RoleName</td>
 
 
 
                                     <td style="text-align:center">
                                         <!-- Acciones como editar o eliminar -->
-                                        <a href="@Url.Action("ActualizarRol", "Rol", new { q = item.RoleID })"><i class="fa fa-edit fa-lg"></i>&nbsp;&nbsp;</a>
+                                        <a href="@Url.Action("ActualizarRol", "Rol", new { q = item.RolesID })"><i class="fa fa-edit fa-lg"></i>&nbsp;&nbsp;</a>
                                         &nbsp;&nbsp;&nbsp;
 
                                     </td>
 
                                     <td style="text-align:center">
-                                        <a href="#" onclick="confirmDelete('@Url.Action("EliminarRol", "Rol", new { q = item.RoleID })')">
+                                        <a href="#" onclick="confirmDelete('@Url.Action("EliminarRol", "Rol", new { q = item.RolesID })')">
                                             <i class="fa fa-remove fa-lg"></i>
                                         </a>
                                     </td>

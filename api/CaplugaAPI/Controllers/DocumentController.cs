@@ -43,15 +43,25 @@ namespace CaplugaAPI.Controllers
                 logo.Alignment = Element.ALIGN_RIGHT;
                 documento.Add(logo);
 
-                // Título del documento
-                documento.Add(new Paragraph("Factura CAPLUGA", fontTitulo));
+                // Add company information
+                Paragraph companyInfo = new Paragraph();
+                companyInfo.Add(new Chunk("CAPLUGA FACTURA", fontTitulo));
+                companyInfo.Add(Chunk.NEWLINE);
+                companyInfo.Add(new Chunk("Dirección:  Cuidad Colón, San José, Costa Rica", fontCuerpo));
+                companyInfo.Add(Chunk.NEWLINE);
+                companyInfo.Add(new Chunk("Teléfono: +506 8405 7710", fontCuerpo));
+                companyInfo.Add(Chunk.NEWLINE);
+                companyInfo.Add(new Chunk("Email: capluga2020@gmail.com", fontCuerpo));
+                documento.Add(companyInfo);
 
                 // Línea separadora
                 LineSeparator separator = new LineSeparator(1f, 100f, BaseColor.DARK_GRAY, Element.ALIGN_CENTER, -1);
                 documento.Add(new Chunk(separator));
 
                 // Datos del documento
+                documento.Add(new Paragraph($"Factura #: {factura.MasterPurchaseID}", fontCuerpo));
                 documento.Add(new Paragraph($"Fecha: {factura.PurchaseDate.ToString("dd/MM/yyyy")}", fontCuerpo));
+                documento.Add(new Paragraph($"Cliente: {factura.Users.UserName} {factura.Users.Surnames}", fontCuerpo));
                 documento.Add(new Paragraph("\n"));
 
                 // Crear una tabla para los detalles de la factura
@@ -130,15 +140,25 @@ namespace CaplugaAPI.Controllers
                 logo.Alignment = Element.ALIGN_RIGHT;
                 documento.Add(logo);
 
-                // Título del documento
-                documento.Add(new Paragraph("Lista de Cursos", fontTitulo));
+                // Add company information
+                Paragraph companyInfo = new Paragraph();
+                companyInfo.Add(new Chunk("CAPLUGA FACTURA", fontTitulo));
+                companyInfo.Add(Chunk.NEWLINE);
+                companyInfo.Add(new Chunk("Dirección:  Cuidad Colón, San José, Costa Rica", fontCuerpo));
+                companyInfo.Add(Chunk.NEWLINE);
+                companyInfo.Add(new Chunk("Teléfono: +506 8405 7710", fontCuerpo));
+                companyInfo.Add(Chunk.NEWLINE);
+                companyInfo.Add(new Chunk("Email: capluga2020@gmail.com", fontCuerpo));
+                documento.Add(companyInfo);
 
                 // Línea separadora
                 LineSeparator separator = new LineSeparator(1f, 100f, BaseColor.DARK_GRAY, Element.ALIGN_CENTER, -1);
                 documento.Add(new Chunk(separator));
 
                 // Datos del documento
+                documento.Add(new Paragraph($"Factura #: {factura.MasterPurchaseCurseID}", fontCuerpo));
                 documento.Add(new Paragraph($"Fecha: {DateTime.Now.ToString("dd/MM/yyyy")}", fontCuerpo));
+                documento.Add(new Paragraph($"Cliente: {factura.Users.UserName} {factura.Users.Surnames}", fontCuerpo));
                 documento.Add(new Paragraph("\n"));
 
                 // Crear una tabla para los detalles de los cursos

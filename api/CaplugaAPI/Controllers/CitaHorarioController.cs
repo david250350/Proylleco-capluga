@@ -97,30 +97,25 @@ namespace CaplugaAPI.Controllers
             {
                 using (var context = new CAPLUGAEntities())
                 {
-                    // Filtra los horarios para obtener solo aquellos que no están reservados
                     var datos = context.ScheduleAppointment
-                                        .Where(x => !x.IsBooked) // Asume que tienes un campo IsBooked en tu modelo
-                                        .OrderBy(x => x.DateandTime) // Ordena por fecha para mejor agrupación visual
+                                        .Where(x => !x.IsBooked)
+                                        .OrderBy(x => x.DateandTime)
                                         .ToList();
-
                     List<System.Web.Mvc.SelectListItem> horarios = new List<System.Web.Mvc.SelectListItem>();
                     foreach (var item in datos)
                     {
-                        // Incluye el nombre del día de la semana en el texto
-                        string displayText = $"{item.DateandTime.ToString("dddd, dd/MM/yyyy HH:mm")}";
+                        string displayText = $"{item.DateandTime.ToString("dddd", new System.Globalization.CultureInfo("es-ES"))}, {item.DateandTime.ToString("dd/MM/yyyy HH:mm")}";
                         horarios.Add(new System.Web.Mvc.SelectListItem
                         {
                             Value = item.ScheduleID.ToString(),
                             Text = displayText
                         });
                     }
-
                     return horarios;
                 }
             }
             catch (Exception)
             {
-                // Considera loguear la excepción para un mejor diagnóstico
                 return new List<System.Web.Mvc.SelectListItem>();
             }
         }

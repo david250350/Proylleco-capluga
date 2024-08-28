@@ -91,6 +91,8 @@ namespace CaplugaAPI.Controllers
                             MasterPurchaseID = x.MasterPurchaseID,
                            MedicalImplementsID = x.MedicalImplementsID,
                            PaymentStatus = x.PaymentStatus,
+                           PaidQuantity = x.PaidQuantity,
+                           TotalPurchase = z.TotalPurchase,
                            UserID = z.UserID,
                            Name = p.Name,
                            UserName = u.UserName,

@@ -171,7 +171,7 @@ namespace CaplugaAPI.Controllers
 
         [HttpGet]
         [Route("EstadoCurso")]
-        public List<DetailCurse> EstadoCurso()
+        public List<FacturaCursoEnt> EstadoCurso()
         {
             try
             {
@@ -179,12 +179,29 @@ namespace CaplugaAPI.Controllers
                 {
                     context.Configuration.LazyLoadingEnabled = false;
                     return (from x in context.DetailCurse
-                            select x).ToList();
+                            join p in context.MedicalCourses on x.MedicalCourseID equals p.MedicalCourseID
+                            join z in context.MasterPurchaseCurse on x.MasterPurchaseCurseID equals z.MasterPurchaseCurseID
+                            join u in context.Users on z.UserID equals u.UserID
+
+                            select new FacturaCursoEnt
+                            {
+                                DetailCurseID = x.DetailCurseID,
+                                MasterPurchaseCurseID = x.MasterPurchaseCurseID,
+                                medicalCourseID = x.MedicalCourseID,
+                                PaymentStatus = x.PaymentStatus,
+                                PaidQuantity = x.PaidQuantity,
+                                TotalPurchase = z.TotalPurchase,
+                                UserID = z.UserID,
+                                Name = p.Name,
+                                UserName = u.UserName,
+                                Surnames = u.Surnames
+
+                            }).ToList();
                 }
             }
             catch (Exception)
             {
-                return new List<DetailCurse>();
+                return new List<FacturaCursoEnt>();
             }
         }
     }

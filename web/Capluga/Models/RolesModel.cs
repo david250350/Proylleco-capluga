@@ -2,8 +2,10 @@
 using System;
 using System.Collections.Generic;
 using System.Configuration;
+using System.Linq;
 using System.Net.Http;
 using System.Net.Http.Json;
+using System.Web.Mvc;
 
 namespace Capluga.Models
 {
@@ -73,5 +75,6 @@ namespace Capluga.Models
                 var res = client.DeleteAsync(urlApi).Result;
             }
         }
+
     }
 }

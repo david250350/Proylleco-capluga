@@ -20,17 +20,17 @@
 
                 @using (Html.BeginForm("ActualizarRol", "Rol", FormMethod.Post, new { @class = "pt-3", @enctype = "multipart/form-data" }))
                 {
-                    @Html.HiddenFor(m => m.RoleID)
+                    @Html.HiddenFor(m => m.RolesID)
 
                     <div class="form-group">
                         <label>Rol</label>
-                        @Html.TextBoxFor(m => m.RolName, new
+                        @Html.TextBoxFor(m => m.RoleName, new
                         {
                             @class = "form-control form-control-lg",
                             @placeholder = "Rol",
                             @type = "text"
                         })
-                        @Html.ValidationMessageFor(m => m.RolName, "", new { @class = "text-danger" })
+                        @Html.ValidationMessageFor(m => m.RoleName, "", new { @class = "text-danger" })
                     </div>
 
                     <div class="form-group">

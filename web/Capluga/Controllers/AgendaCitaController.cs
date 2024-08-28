@@ -87,38 +87,6 @@ namespace Capluga.Controllers
                 TempData["ErrorMessage"] = "No se pudo eliminar la cita: " + ex.Message;
                 return RedirectToAction("ConsultaCita");
             }
-
-            // Redirige independientemente del resultado para evitar ejecución doble
-            return RedirectToAction("ConsultaCita", "AgendaCita", new { userID = long.Parse(Session["UserID"].ToString()) });
         }
-
-
-        [HttpGet]
-        public ActionResult Actualizarcita(long q)
-        {
-            var datos = modelAgenda.ConsultaCita(q);
-           
-            return View(datos);
-        }
-
-
-
-        [HttpPost]
-        public ActionResult Actualizarcita(AgendaEnt entidad)
-        {
-            string respuesta = modelAgenda.Actualizarcita(entidad);
-
-            if (respuesta == "OK")
-            {
-                return RedirectToAction("AgendaCita", "ConsultaCitas");
-            }
-            else
-            {
-                ViewBag.MensajeUsuario = "No se ha podido Actualizar la cita";
-                ViewBag.horarios = claseHorario.verHorarios();
-                return View();
-            }
-        }
-
     }
 }

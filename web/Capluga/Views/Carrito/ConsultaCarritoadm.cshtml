@@ -5,7 +5,6 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-
 <div class="col-12 grid-margin stretch-card">
     <div class="card">
         <div class="card-body">
@@ -20,30 +19,34 @@
             <div class="container">
                 @if (Model.Any())
                 {
+                    var groupedData = Model.GroupBy(m => m.MasterPurchaseID).ToList();
                     <div class="table-responsive">
                         <table id="DataTable" class="table table-bordered table-hover">
                             <thead class="thead-light">
                                 <tr>
-                                    <th>MasterPurchaseID</th>
+                                    <th>ID Producto</th>
                                     <th>Cliente</th>
-                                    <th>Producto</th>
+                                    <th>Productos</th>
+                                    <th>Valor Total</th>
                                     <th>Estado</th>
                                     <th>Acción</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                @foreach (var detail in Model)
+                                @foreach (var group in groupedData)
                                 {
                                     <tr>
-                                        <td>@detail.MasterPurchaseID</td>
-                                        <td>@detail.UserName @detail.Surnames</td>
-                                        <td>@detail.Name</td>
-                                        <td>@detail.PaymentStatus</td>
-
+                                        <td>@group.Key</td>
+                                        <td>@group.First().UserName @group.First().Surnames</td>
+                                        <td>
+                                            @string.Join(", ", group.Select(p => p.Name))
+                                        </td>
+                                        <td>@group.First().TotalPurchase.ToString("C", new System.Globalization.CultureInfo("es-CR"))</td>
+                                        <td>@group.First().PaymentStatus</td>
                                         <td style="text-align:center">
-                                            @if (detail.PaymentStatus == "PENDIENTE")
+                                            @if (group.First().PaymentStatus == "PENDIENTE")
                                             {
-                                                <a href="#" onclick="confirmStateChange('@Url.Action("ActualizarEstadoPago", "Carrito", new { q = detail.MasterPurchaseID })')">
+                                                <a href="#" onclick="confirmStateChange('@Url.Action("ActualizarEstadoPago", "Carrito", new { q = group.Key })')">
                                                     <i class="fa fa-refresh fa-lg"></i>
                                                 </a>
                                             }
@@ -68,7 +71,3 @@
         </div>
     </div>
 </div>
-
-
-
-

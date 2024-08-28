@@ -7,7 +7,7 @@ namespace CaplugaAPI.Entities
 {
     public class RoleEnt
     {
-        public long RoleID { get; set; }
-        public string RolName { get; set; }
+        public long RolesID { get; set; }
+        public string RoleName { get; set; }
     }
 }

@@ -122,7 +122,7 @@ namespace CaplugaAPI.Controllers
             usuario.State = user.State;
             usuario.Age = user.Age;
             usuario.PhoneNumber = user.PhoneNumber;
-            usuario.RoleID = user.RolesID.ToString();
+            usuario.RolesID = user.RolesID.ToString();
             usuario.AddressID = user.AddressID.ToString();
 
             return usuario;

@@ -1,4 +1,5 @@
 ﻿@model IEnumerable<Capluga.Entities.ProductoEnt>
+
 @{
     ViewBag.Title = "Productos";
     Layout = "~/Views/Shared/_Layout.cshtml";
@@ -64,7 +65,7 @@
                     </div>
                 }
                 <div class="card-body">
-                    <h2 class="card-title">Precios de Productos</h2>
+                    <h2 class="card-title">Precios de Productos y Valor total</h2>
                     <canvas id="priceChart" width="400" height="200"></canvas>
                 </div>
             </div>
@@ -73,12 +74,90 @@
 </div>
 
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels"></script>
 
-<script src="~/Scripts/Dash.js"></script>
 <script>
     window.onload = function() {
         var productos = @Html.Raw(Json.Encode(Model.Select(p => new { p.Name, p.Price, p.Quantity })));
-        console.log(productos); // Verifica los datos en la consola
-        crearDashboardProductos(productos);
-    };
+        console.log("Productos:", productos);
+
+        if (productos.length > 0) {
+            var ctx = document.getElementById('priceChart').getContext('2d');
+            if (!ctx) {
+                console.error("No se pudo obtener el contexto del canvas.");
+                return;
+            }
+
+            var colores = generarColoresDiferentes(productos.length);
+
+            new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: productos.map(p => p.Name),
+                    datasets: [{
+                        label: 'Precio',
+                        data: productos.map(p => p.Price),
+                        backgroundColor: colores,
+                        borderColor: colores.map(c => darkenColor(c, 0.2)),
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    scales: {
+                        y: {
+                            beginAtZero: true
+                        }
+                    },
+                    plugins: {
+                        legend: {
+                            display: false
+                        },
+                        tooltip: {
+                            backgroundColor: 'rgba(0,0,0,0.7)',
+                            titleColor: '#fff',
+                            bodyColor: '#fff',
+                            borderColor: 'rgba(0,0,0,0.1)',
+                            borderWidth: 1
+                        },
+                        datalabels: {
+                            anchor: 'end',
+                            align: 'center',
+                            formatter: function (value, context) {
+                                var total = productos[context.dataIndex].Quantity * value;
+                                return total.toLocaleString('es-CR', { style: 'currency', currency: 'CRC' });
+                            },
+                            color: '#000',
+                            font: {
+                                weight: 'bold',
+                                size: 12
+                            },
+                            offset: -10,
+                            rotation: 0
+                        }
+                    }
+                },
+                plugins: [ChartDataLabels]
+            });
+        } else {
+            console.warn("No se encontraron productos para mostrar en el dashboard.");
+        }
+    };
+
+    function generarColoresDiferentes(num) {
+        var colores = [];
+        for (var i = 0; i < num; i++) {
+            colores.push('hsl(' + (i * 360 / num) + ', 70%, 50%)');
+        }
+        return colores;
+    }
+
+    function darkenColor(color, percent) {
+        var f = color.split(","),
+            t = percent < 0 ? 0 : 255,
+            p = percent < 0 ? percent * -1 : percent,
+            R = parseInt(f[0].slice(4)),
+            G = parseInt(f[1]),
+            B = parseInt(f[2]);
+        return "rgb(" + (Math.round((t - R) * p) + R) + "," + (Math.round((t - G) * p) + G) + "," + (Math.round((t - B) * p) + B) + ")";
+    }
 </script>

@@ -41,7 +41,7 @@ namespace Capluga.Controllers
             {
                 Session["UserID"] = respuesta.UserID;
                 Session["Nombre"] = respuesta.UserName;
-                Session["Rol"] = respuesta.RoleID;
+                Session["Rol"] = respuesta.RolesID;
                 Session["AddressID"] = respuesta.AddressID;
                 return RedirectToAction("VistaProducto", "Producto");
             }

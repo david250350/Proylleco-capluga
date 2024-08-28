@@ -14,7 +14,7 @@
     <!-- Incluir CSS de DataTables -->
     <link rel="stylesheet" href="https://cdn.datatables.net/1.11.5/css/jquery.dataTables.min.css">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/noUiSlider/15.6.0/nouislider.min.css" rel="stylesheet">
- 
+
 
 </head>
 <body>
@@ -127,7 +127,7 @@
                                             }
                                             else
                                             {
-                                                
+
                                                 <li class="nav-item dropdown">
                                                     <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                                         <i class="fa fa-user-circle"></i> @Session["Nombre"].ToString()
@@ -282,36 +282,36 @@
         });
     </script>
 
-     @*Inicializar DataTables*@ 
+    @*Inicializar DataTables*@
     <script>
-            $(document).ready(function () {
-                console.log("Document ready, initializing DataTable...");
-                console.log("jQuery version:", $.fn.jquery);
-                console.log("DataTable function exists:", typeof $.fn.DataTable === 'function');
+        $(document).ready(function () {
+            console.log("Document ready, initializing DataTable...");
+            console.log("jQuery version:", $.fn.jquery);
+            console.log("DataTable function exists:", typeof $.fn.DataTable === 'function');
 
-                if (typeof $.fn.DataTable === 'function') {
-                    $('#DataTable').DataTable({
-                        "language": {
-                            "url": "//cdn.datatables.net/plug-ins/1.10.19/i18n/Spanish.json"
-                        }
-                    });
-                } else {
-                    console.error("DataTable function is not available. Check if DataTables script is loaded correctly.");
-                }
-            });
-        </script>
+            if (typeof $.fn.DataTable === 'function') {
+                $('#DataTable').DataTable({
+                    "language": {
+                        "url": "//cdn.datatables.net/plug-ins/1.10.19/i18n/Spanish.json"
+                    }
+                });
+            } else {
+                console.error("DataTable function is not available. Check if DataTables script is loaded correctly.");
+            }
+        });
+    </script>
 
     @*<script>
-        $(document).ready(function () {
-            $('#DataTable').DataTable({
-                "language": {
-                    "url": "//cdn.datatables.net/plug-ins/1.10.19/i18n/Spanish.json"
-                },
-                "paging": true,
-                "info": false
-            });
-        });</script>
-    <script src="~/Scripts/confirm.js"></script>*@
+            $(document).ready(function () {
+                $('#DataTable').DataTable({
+                    "language": {
+                        "url": "//cdn.datatables.net/plug-ins/1.10.19/i18n/Spanish.json"
+                    },
+                    "paging": true,
+                    "info": false
+                });
+            });</script>
+        <script src="~/Scripts/confirm.js"></script>*@
 
     <script>
 

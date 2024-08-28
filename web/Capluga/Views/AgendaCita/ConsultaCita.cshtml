@@ -22,51 +22,47 @@
                     @ViewBag.MensajeUsuario
                 </div>
             }
-            <div class="container">
-                @if (Model.Any())
-                {
-
-                    <table id="tableShow" class="table table-bordered table-hover">
-                        <thead class="thead-light">
+        <div class="container">
+            @if (Model.Any())
+            {
+                <table id="DataTable" class="table table-bordered table-hover">
+                    <thead class="thead-light">
+                        <tr>
+                            <th>ID</th>
+                            <th>Nombre</th>
+                            <th>Asunto</th>
+                            <th>Descripcion</th>
+                            <th>Fecha de la Cita</th>
+                            <th>Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model)
+                        {
                             <tr>
-                                <th>ID</th>
-                                <th>Nombre</th>
-                                <th>Asunto</th>
-                                <th>Descripcion</th>
-                                <th>Fecha de la Cita</th>
-
+                                <td>@item.AppointmentID</td>
+                                <td>@item.UserName @item.Surnames</td>
+                                <td>@item.Name</td>
+                                <td>@item.Description</td>
+                                <td>@item.Dname @item.DateandTime</td>
+                                <td style="text-align:center">
+                                    <a href="#" onclick="confirmDelete('@Url.Action("EliminarRegistroCita", "AgendaCita", new { q = item.AppointmentID })')">
+                                        <i class="fa fa-remove fa-lg"></i>
+                                    </a>
+                                </td>
                             </tr>
-                        </thead>
-                        <tbody>
-                            @foreach (var item in Model)
-                            {
-                                <tr>
-                                    <td>@item.AppointmentID</td>
-                                    <td>@Model.FirstOrDefault().UserName @Model.FirstOrDefault().Surnames</td>
-                                    <td>@item.Name</td>
-                                    <td>@item.Description</td>
-                                    <td>@Model.FirstOrDefault().Dname @Model.FirstOrDefault().DateandTime</td>
+                        }
+                    </tbody>
+                </table>
+            }
+            else
+            {
+                <div class="col-12 alert alert-info" role="alert" style="text-align: center; margin-top: 5%;">
+                    No hay Citas Programadas en este momento
+                </div>
+            }
 
-
-                                    <td style="text-align:center">
-                                        <a href="#" onclick="confirmDelete('@Url.Action("EliminarRegistroCita", "AgendaCita", new { q = item.AppointmentID })')">
-                                            <i class="fa fa-remove fa-lg"></i>
-                                        </a>
-                                    </td>
-
-                                </tr>
-                            }
-                        </tbody>
-                    </table>
-                }
-                else
-                {
-                    <div class="col-12 alert alert-info" role="alert" style="text-align: center; margin-top: 5%;">
-                        No hay Citas Programadas en este momento
-                    </div>
-                }
-
-            </div>
+        </div>
 
         </div>
 </div>

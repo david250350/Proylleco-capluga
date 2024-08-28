@@ -58,9 +58,12 @@
                     </div>
                     <div class="form-group">
                         <label>Rol de Usuario</label>
-                        @Html.TextBoxFor(m => m.RoleID, new { @class = "form-control form-control-lg", @placeholder = "Rol", @type = "text" })
-
+                        @Html.DropDownListFor(m => m.RolesID, ViewBag.Roles as SelectList, "Seleccione un Rol", new { @class = "form-control form-control-lg" })
+                        @Html.ValidationMessageFor(m => m.RolesID, "", new { @class = "text-danger" })
                     </div>
+
+
+
                     <div class="form-group">
                         <label>Provincia</label>
                         @Html.DropDownListFor(m => m.Ubicacion.State, new SelectList(Enumerable.Empty<SelectListItem>(), "Value", "Text"),

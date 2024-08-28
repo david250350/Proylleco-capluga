@@ -1,35 +1,30 @@
 ﻿@model Capluga.Entities.AgendaEnt
-
 @{
     Layout = "~/Views/Shared/_Layout.cshtml";
     ViewBag.Title = "Registrar Cita";
 }
-
 
 <div class="content-wrapper auth px-0">
     <div class="row w-100 mx-0">
         <div class="col-lg-6 mx-auto">
             <div class="auth-form-light text-left py-5 px-4 px-sm-5">
                 <h2>@ViewBag.Title</h2>
-
                 @if (TempData["SuccessMessage"] != null)
                 {
                     <div class="alert alert-success">
                         @TempData["SuccessMessage"]
                     </div>
                 }
-
                 @if (ViewBag.ErrorMessage != null)
                 {
                     <div class="alert alert-danger">
-                        @ViewBag.ErrorMessage"
+                        @ViewBag.ErrorMessage
                     </div>
                 }
                 <div class="container">
                     @using (Html.BeginForm("RegistrarCita", "AgendaCita", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
                     {
                         @Html.AntiForgeryToken()
-
                         <div class="form-group">
                             @Html.LabelFor(model => model.Name, "Asunto", new { @class = "control-label col-md-2" })
                             <div class="col-md-10">
@@ -37,49 +32,23 @@
                                 @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })
                             </div>
                         </div>
-
                         <div class="form-group">
-                            @Html.LabelFor(model => model.Description, "Descripcion", new { @class = "control-label col-md-2" })
+                            @Html.LabelFor(model => model.Description, "Descripción", new { @class = "control-label col-md-2" })
                             <div class="col-md-10">
                                 @Html.EditorFor(model => model.Description, new { htmlAttributes = new { @class = "form-control" } })
                                 @Html.ValidationMessageFor(model => model.Description, "", new { @class = "text-danger" })
                             </div>
                         </div>
-
                         <div class="form-group">
                             @Html.LabelFor(model => model.ScheduleID, "Horario", new { @class = "control-label col-md-2" })
                             <div class="col-md-10">
-                                <select id="ScheduleID" name="ScheduleID" class="form-control">
-                                    @{
-                                        string lastDay = null;
-                                        foreach (var item in ViewBag.horarios as IEnumerable<System.Web.Mvc.SelectListItem>)
-                                        {
-
-                                            string currentDay = item.Text.Split(',')[0]; // Assumes the text starts with the day
-                                            if (currentDay != lastDay)
-                                            {
-                                                if (lastDay != null)
-                                                {
-                                                   
-                                                }
-                                                @:<optgroup label="@currentDay">
-                                                    lastDay = currentDay;
-                                                }
-
-                                                <option value="@item.Value">@item.Text</option>
-                                            }
-                                            if (lastDay != null)
-                                            {
-                                            @:</optgroup>
-                                        }
-                                    }
-                                    }
-                                </select>
-
-                                @Html.ValidationMessageFor(model => model.ScheduleID, "", new { @class = "text-danger" })
+                                <div class="horario-selector" onclick="openHorarioModal()">
+                                    <span id="horarioSeleccionado">Seleccione un horario</span>
+                                    <i class="fas fa-calendar-alt"></i>
+                                </div>
+                                @Html.HiddenFor(model => model.ScheduleID, new { id = "selectedScheduleID" })
                             </div>
                         </div>
-
                         <div class="form-group">
                             <div class="col-md-offset-2 col-md-10">
                                 <input type="submit" value="Registrar" class="btn btn-primary" />
@@ -88,6 +57,226 @@
                     }
                 </div>
             </div>
+        </div>
     </div>
 </div>
+
+<!-- Modal para horarios -->
+<div id="horarioModal" class="modal">
+    <div class="modal-content">
+        <span class="close" onclick="closeHorarioModal()">&times;</span>
+        <h2>Seleccione un horario</h2>
+        <div class="day-filter">
+            <button class="day-button active" onclick="filterDay('all')">Todos</button>
+            <button class="day-button" onclick="filterDay('lunes')">Lun</button>
+            <button class="day-button" onclick="filterDay('martes')">Mar</button>
+            <button class="day-button" onclick="filterDay('miércoles')">Mié</button>
+            <button class="day-button" onclick="filterDay('jueves')">Jue</button>
+            <button class="day-button" onclick="filterDay('viernes')">Vie</button>
+            <button class="day-button" onclick="filterDay('sábado')">Sáb</button>
+            <button class="day-button" onclick="filterDay('domingo')">Dom</button>
+        </div>
+        <div class="horario-options">
+            @{
+
+                var groupedHorarios = (ViewBag.horarios as IEnumerable<System.Web.Mvc.SelectListItem>)
+                    .GroupBy(x => DateTime.ParseExact(x.Text.Split(',')[1].Trim(), "dd/MM/yyyy HH:mm", null).Date)
+                    .OrderBy(g => g.Key);
+
+                foreach (var group in groupedHorarios)
+                {
+                    var date = group.Key;
+                    var dayName = date.ToString("dddd", new System.Globalization.CultureInfo("es-ES")).ToLower();
+                    <div class="horario-date" data-day="@dayName">
+                        <div class="date-indicator">
+                            <span class="day-name">@char.ToUpper(dayName[0])@dayName.Substring(1)</span> <!-- Corrección aquí -->
+                            <span class="day">@date.Day</span>
+                            <span class="month">@date.ToString("MMM").ToUpper()</span>
+                        </div>
+                        <div class="horario-details">
+                            @foreach (var item in group.OrderBy(x => DateTime.ParseExact(x.Text.Split(',')[1].Trim(), "dd/MM/yyyy HH:mm", null)))
+                            {
+                                <div class="horario-option" onclick="selectHorario('@item.Value', '@item.Text')">
+                                    @item.Text.Split(',')[1].Trim()
+                                    <span class="location">CAPLUGA</span>
+                                </div>
+                            }
+                        </div>
+                    </div>
+                }
+            }
+        </div>
+
     </div>
+</div>
+
+<style>
+    .horario-selector {
+        border: 1px solid #ced4da;
+        padding: 10px;
+        border-radius: 5px;
+        cursor: pointer;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    /* Estilos para el modal */
+    .modal {
+        display: none;
+        position: fixed;
+        z-index: 1;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        overflow: auto;
+        background-color: rgba(0,0,0,0.4);
+    }
+
+    .modal-content {
+        background-color: #fefefe;
+        margin: 15% auto;
+        padding: 20px;
+        border: 1px solid #888;
+        width: 80%;
+        max-width: 600px;
+        border-radius: 5px;
+    }
+
+    .close {
+        color: #aaa;
+        float: right;
+        font-size: 28px;
+        font-weight: bold;
+    }
+
+    .close:hover,
+    .close:focus {
+        color: black;
+        text-decoration: none;
+        cursor: pointer;
+    }
+
+    .horario-options {
+        max-height: 400px;
+        overflow-y: auto;
+    }
+
+    .horario-date {
+        display: flex;
+        padding: 10px;
+        border-bottom: 1px solid #e0e0e0;
+    }
+
+    .date-indicator {
+        width: 100px;
+        text-align: center;
+        padding-right: 15px;
+    }
+
+    .day-name {
+        font-size: 16px;
+        font-weight: bold;
+        display: block;
+        margin-bottom: 5px;
+    }
+
+    .day {
+        font-size: 24px;
+        font-weight: bold;
+        display: block;
+    }
+
+    .month {
+        font-size: 14px;
+        text-transform: uppercase;
+        color: #666;
+    }
+
+    .horario-details {
+        flex-grow: 1;
+    }
+
+    .horario-option {
+        padding: 10px;
+        cursor: pointer;
+    }
+
+    .horario-option:hover {
+        background-color: #f8f9fa;
+    }
+
+    .location {
+        display: block;
+        font-size: 12px;
+        color: #666;
+    }
+
+    .day-filter {
+        margin-bottom: 15px;
+        display: flex;
+        justify-content: space-between;
+    }
+
+    .day-button {
+        padding: 5px 10px;
+        border: 1px solid #007bff;
+        background-color: white;
+        color: #007bff;
+        cursor: pointer;
+        border-radius: 3px;
+    }
+
+    .day-button.active {
+        background-color: #007bff;
+        color: white;
+    }
+</style>
+
+<script>
+    var modal = document.getElementById("horarioModal");
+
+    function openHorarioModal() {
+        modal.style.display = "block";
+    }
+
+    function closeHorarioModal() {
+        modal.style.display = "none";
+    }
+
+    function selectHorario(value, text) {
+        document.getElementById('selectedScheduleID').value = value;
+        document.getElementById('horarioSeleccionado').textContent = text;
+        closeHorarioModal();
+    }
+
+    // Cerrar el modal si se hace clic fuera de él
+    window.onclick = function(event) {
+        if (event.target == modal) {
+            closeHorarioModal();
+        }
+    }
+
+    function filterDay(day) {
+        var dates = document.getElementsByClassName('horario-date');
+        var buttons = document.getElementsByClassName('day-button');
+
+        // Actualizar botones
+        for (var i = 0; i < buttons.length; i++) {
+            buttons[i].classList.remove('active');
+            if (buttons[i].innerText.toLowerCase().includes(day.substring(0, 3)) || (day === 'all' && buttons[i].innerText === 'Todos')) {
+                buttons[i].classList.add('active');
+            }
+        }
+
+        // Filtrar fechas
+        for (var i = 0; i < dates.length; i++) {
+            if (day === 'all' || dates[i].getAttribute('data-day') === day) {
+                dates[i].style.display = 'flex';
+            } else {
+                dates[i].style.display = 'none';
+            }
+        }
+    }
+</script>

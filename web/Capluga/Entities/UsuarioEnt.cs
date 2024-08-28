@@ -33,7 +33,7 @@ namespace Capluga.Entities
         [Required(ErrorMessage = "El teléfono es obligatorio.")]
         public string PhoneNumber { get; set; }
 
-        public string RoleID { get; set; }
+        public string RolesID { get; set; }
         public string AddressID { get; set; }
         public virtual UbicacionEnt Ubicacion { get; set; }
     }

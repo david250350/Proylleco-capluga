@@ -23,7 +23,7 @@ namespace CaplugaAPI.Controllers
             {
                 using (var context = new CAPLUGAEntities())
                 {
-                    context.InsertRol(entidad.RolName);
+                    context.InsertRol(entidad.RoleName);
                     return "OK";
                 }
             }
@@ -49,8 +49,8 @@ namespace CaplugaAPI.Controllers
                 {
                     listaEntidadResultado.Add(new RoleEnt
                     {
-                        RoleID = item.RolesID,
-                        RolName = item.RoleName
+                        RolesID = item.RolesID,
+                        RoleName = item.RoleName
                     });
                 }
 
@@ -69,8 +69,8 @@ namespace CaplugaAPI.Controllers
                            where x.RolesID == q
                            select new RoleEnt
                            {
-                               RoleID = x.RolesID,
-                               RolName = x.RoleName
+                               RolesID = x.RolesID,
+                               RoleName = x.RoleName
                            }).FirstOrDefault();
 
                 if (rol == null)
@@ -94,7 +94,7 @@ namespace CaplugaAPI.Controllers
 
                 using (var context = new CAPLUGAEntities())
                 {
-                    context.UpdateRol(entidad.RoleID, entidad.RolName);
+                    context.UpdateRol(entidad.RolesID, entidad.RoleName);
                     return "OK";
                 }
             }

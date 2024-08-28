@@ -122,8 +122,8 @@ namespace Capluga.Models
                     {
                         listaCombo.Add(new SelectListItem
                         {
-                            Text = item.RolName,
-                            Value = item.RoleID.ToString()
+                            Text = item.RoleName,
+                            Value = item.RolesID.ToString()
                         });
                     }
 

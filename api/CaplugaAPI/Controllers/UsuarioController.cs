@@ -30,7 +30,7 @@ namespace CaplugaAPI.Controllers
                         Surnames = item.Surnames,
                         Age = item.Age,
                         PhoneNumber = item.PhoneNumber,
-                        RoleID = item.RolesID.ToString(),
+                        RolesID = item.RolesID.ToString(),
                         AddressID = item.AddressID.ToString()
                     });
                 }
@@ -70,7 +70,7 @@ namespace CaplugaAPI.Controllers
                 usuario.State = entidad.State;
                 usuario.Age = entidad.Age;
                 usuario.PhoneNumber = entidad.PhoneNumber;
-                usuario.RoleID = entidad.RolesID.ToString();
+                usuario.RolesID = entidad.RolesID.ToString();
                 usuario.AddressID = entidad.AddressID.ToString();
                 usuario.Ubicacion = ubicacionEnt;
 
@@ -79,46 +79,61 @@ namespace CaplugaAPI.Controllers
         }
 
         [HttpPut]
-        [Route("ActualizarCuenta")]
-        public string ActualizarCuenta(UsuarioEnt entidad)
+[Route("ActualizarCuenta")]
+public string ActualizarCuenta(UsuarioEnt entidad)
+{
+    try
+    {
+        using (var conexion = new CAPLUGAEntities())
         {
-            try
-            {
-                using (var conexion = new CAPLUGAEntities())
-                {
-                    //Se selecciona el usuario y se actualiza
-                    var usuario = (from x in conexion.Users
-                                 where x.UserID == entidad.UserID
-                                 select x).FirstOrDefault();
-                    usuario.Email = entidad.Email;
-                    usuario.State = entidad.State;
-                    usuario.UserName = entidad.UserName;
-                    usuario.Surnames = entidad.Surnames;
-                    usuario.Age = entidad.Age;
-                    usuario.RolesID = Int64.Parse(entidad.RoleID);
-                    if (!string.IsNullOrEmpty(entidad.Password))
-                        usuario.Password = entidad.Password;
+            var usuario = (from x in conexion.Users
+                           where x.UserID == entidad.UserID
+                           select x).FirstOrDefault();
 
-                    //Se seleciona la dirrección y se actualiza
-                    var direccion = (from x in conexion.Addresses
-                                     where x.AddressID == usuario.AddressID
-                                     select x).FirstOrDefault();
-                    direccion.State = entidad.Ubicacion.State;
-                    direccion.City = entidad.Ubicacion.City;
-                    direccion.District = entidad.Ubicacion.District;
-                    direccion.ZipCode = entidad.Ubicacion.ZipCode;
-                    direccion.Street = entidad.Ubicacion.Street;
-
-                    //Se guarda los cambios
-                    conexion.SaveChanges();
-                    return "OK";
-                }
-            }
-            catch (Exception)
+            if (usuario == null)
             {
-                return string.Empty;
+                return "Usuario no encontrado";
             }
+
+            usuario.Email = entidad.Email;
+            // Remove this line to prevent changing the state
+            // usuario.State = entidad.State;
+            usuario.UserName = entidad.UserName;
+            usuario.Surnames = entidad.Surnames;
+            usuario.Age = entidad.Age;
+            usuario.RolesID = Int64.Parse(entidad.RolesID);
+            usuario.PhoneNumber = entidad.PhoneNumber;
+
+            if (!string.IsNullOrEmpty(entidad.Password))
+            {
+                usuario.Password = entidad.Password;
+            }
+
+            var direccion = (from x in conexion.Addresses
+                             where x.AddressID == usuario.AddressID
+                             select x).FirstOrDefault();
+
+            if (direccion == null)
+            {
+                direccion = new Addresses();
+                usuario.AddressID = direccion.AddressID;
+            }
+
+            direccion.State = entidad.Ubicacion.State;
+            direccion.City = entidad.Ubicacion.City;
+            direccion.District = entidad.Ubicacion.District;
+            direccion.ZipCode = entidad.Ubicacion.ZipCode;
+            direccion.Street = entidad.Ubicacion.Street;
+
+            conexion.SaveChanges();
+            return "OK";
         }
+    }
+    catch (Exception ex)
+    {
+        return "Error: " + ex.Message;
+    }
+}
 
         [HttpPut]
         [Route("ActualizarEstadoUsuario")]

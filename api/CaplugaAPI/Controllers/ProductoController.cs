@@ -20,7 +20,7 @@ namespace CaplugaAPI.Controllers
                 context.Configuration.LazyLoadingEnabled = false;
                 return (from x in context.MedicalImplements
                         where x.Quantity > 0
-                        || x.State != false
+                        
                         select x).ToList();
             }
         }

@@ -69,20 +69,25 @@ namespace Capluga.Controllers
         [HttpGet]
         public ActionResult ActualizarUsuario(long q)
         {
+            // Obtener los detalles del usuario para editar
             var datos = usuarioModel.ConsultaUsuario(q);
             if (datos == null)
             {
-                // Manejar el caso donde no se encuentren datos
                 return HttpNotFound();
             }
+
+            // Obtener los roles desde la API
+            var roles = rolesModel.ListaRoles();
+
+            // Crear SelectList usando las propiedades correctas
+            ViewBag.Roles = new SelectList(roles, "RolesID", "RoleName"); // RolesID será el Value y RoleName el Text
+
             return View(datos);
         }
 
         [HttpPost]
         public ActionResult ActualizarUsuario(UsuarioEnt entidad)
         {
-
-         
             string respuesta = usuarioModel.ActualizarCuenta(entidad);
 
             if (respuesta == "OK")
@@ -91,9 +96,15 @@ namespace Capluga.Controllers
             }
             else
             {
+                // Recargar los roles si ocurre un error
+                var roles = rolesModel.ListaRoles();
+                ViewBag.Roles = new SelectList(roles, "RolesID", "RoleName"); // RolesID será el Value y RoleName el Text
+
                 ViewBag.MensajeUsuario = "No se ha podido actualizar su información";
-                return View();
+                return View(entidad);
             }
         }
+
+
     }
 }
